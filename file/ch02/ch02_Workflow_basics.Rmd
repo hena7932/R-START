@@ -1,0 +1,130 @@
+---
+title: "Chap2_Workflow_Basic"
+author: "DeukJung"
+date: '2020 9 29 '
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# **2장 워크플로: 기초**
+
+## **2.1 코딩 기초**
+### 1. 계산기 기능  
+```{r}
+1 / 200 * 30
+(59 + 73 + 2) / 3
+sin(pi / 2)
+```
+  
+
+### 2. 객체 생성 기능  
+  - **<span style="color: red;"><-</span>** 를 사용  
+```{r}
+x <- 3*4
+```
+  - " = " 기호 사용하지 말 것
+  - " <- " 기호를 사용할 것 
+  **(<span style="color: red;">단축키: Alt + -</span>)**
+  - 코드를 볼 때 혼잡함을 방지하기 위해 공백을 꼭 사용하자!
+  
+## **2.2 이름에 들어갈 것**
+ 1. 객체의 이름은 문자로 시작
+
+ 2. <span style="color: red;">문자, 숫자, _, .</span> 만을 포함해야 함
+ 
+ 3. 여러 단어를 이어쓸 경우, 띄어쓰기 보다는 " <span style="color: red;">_</span> "로 구분하는 snake_case를 사용하여 구분할 것
+ 
+```r
+i_use_snake_case
+otherPeopleUseCamelCase
+some.people.use.periods
+And_aFew.People_RENOUNCEconvention
+```
+
+ 4. 객체를 확인하려면 이름을 타이핑하자.
+```{r}
+x
+```
+
+ 5. Rstudio 완성기능
+```{r}
+this_is_a_really_long_name <- 2.5
+```
+
+![RStudio완성기능](C:\Users\emrwn\Desktop\R_Education_Data\Review_R_edu\R_NCS_2020\Markdown\image./RStudio.jpg)
+
+ 6. 명령어를 수정해야할 경우, <span style="color: red;">Cmd/Ctrl + ↑</span> 를 사용하면 명령어 중 그 문자로 시작 하는 것들을 보여준다.
+ 
+ 7. 명령어를 정확히 입력하자
+```{r}
+r_rocks <- 2 ^ 3
+```
+
+```r
+r_rock
+#> Error: object 'r_rock' not found
+R_rocks
+#> Error: object 'R_rocks' not found
+```
+철자, 대문자, 소문자 등 정확히 입력하도록 한다.
+
+  
+## **2.3 함수 호출하기**
+
+- R은 다음과 같이 호출되는 내장 함수가 많이 있다.
+```r
+function_name(arg1 = val1, arg2 = val2, ...)
+```
+- 숫자 시퀀스 seq()를 이용해보자.
+![](C:\Users\emrwn\Desktop\R_Education_Data\Review_R_edu\R_NCS_2020\Markdown\image./seq.jpg)
+
+    - 팝업되는 툴팁은 해당함수의 인수와 목적을 알려준다.
+    - 도움이 더 필요하면 F1 키를 눌러서 하단 오른쪽 창의 Help 탭에 있는 세부내용을 참고하자.  
+    
+    
+    
+- 화살표로 원하는 함수를 선택했을 때 <span style="color: red;">Tab</span>을 누르면 여는 괄호( 와 닫는 괄호) 한 쌍이 생성된다.
+![](C:\Users\emrwn\Desktop\R_Education_Data\Review_R_edu\R_NCS_2020\Markdown\image./make_seq.jpg)
+  
+- 1, 10을 타이핑 하고 실행해보자. 
+```{r}
+seq(1, 10)
+```
+  
+- 따옴표를 활용하여 다음의 코드를 타이핑해보자.
+```{r}
+x <- "hello world"
+```
+
+    - 따옴표와 괄호는 항상 짝을 이루어야 한다.
+
+```r
+> x <- "hello
++
+```
+
+    - " 또는 )를 누락한 경우, 입력이 완료되자 않았다고 인식되어 +표시가 뜬다.
+  
+- 할당문을 완성했다고 값을 바로 볼 수는 없다. 명령어를 입력해야 값을 볼 수 있다.
+```{r}
+y <- seq(1, 10, length.out = 5)
+y
+```
+  
+- 결과를 즉시 확인하고 싶을 경우, 할당문을 괄호로 묶으면 할당이 되고 바로 스크린에 인쇄된다.
+```{r}
+(y <- seq(1, 10, length.out = 5))
+```
+  
+- 상단 오른쪽 창의 Enviroment에서 생성한 객체를 모두 볼 수 있다.
+![](C:\Users\emrwn\Desktop\R_Education_Data\Review_R_edu\R_NCS_2020\Markdown\image./enviroment.png)
+
+
