@@ -1,0 +1,71 @@
+---
+
+title: "Chap4"
+author: "DJ"
+date: '2020 10 5 '
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# **4장 워크플로: 스크립트**
+
+복잡한 ggplot2 그래프나 dplyr 파이프를 생성하면 콘솔 창이 부족해진다.  
+  
+따라서 더 많은 작업 공간을 확보하기 위해 스크립트 편집기를 사용하는 것이 좋다.  
+  
+파일 메뉴를 클릭하고 **<span style="color: red;">새 파일에서 R 스크립트를 선택</span>**하거나 키보드 단축키 **<span style="color: red;">Cmd/Ctrl + Shift + N</span>**을 사용하여 스크립트 파일을 열 수 있다.
+![](img/Insert_Script1.png)
+![](img/Insert_Script2.png)
+![](img./rstudio-editor.png)
+
+## 4.1 코드 실행하기
+
+- 스크립트 편집기는 복잡한 ggplot2 플롯이나 dplyr 작업의 긴 시퀀스를 생성하기에 좋다.
+
+- 단축기 Cmd/Ctrl + Enter 는 콘솔에서 커서가 위치한 줄의 R코드를 실행한다.
+
+- Cmd/Ctrl + Enter 를 반복적으로 입력하면 전체 스크립트를 쉽게 실행할 수 있다.
+
+```{r}
+library(dplyr)
+library(nycflights13)
+
+not_cancelled <- flights %>%
+  filter(!is.na(dep_delay), !is.na(arr_delay))
+
+not_cancelled %>%
+  group_by(year, month, day) %>%
+  summarize(mean = mean(dep_delay))
+```
+
+    - install.packages(nycflights13) 입력 까먹지 말기
+
+- Cmd/Ctrl + Shift + S를 사용하여 전체 스크립트를 한 번에 실행할 수 있다.
+
+- 스크립트에는 항상 필요한 패키지들을 먼저 설치하도록 하자.
+
+- 공유하려는 스크립트에 install.packages() 또는 setwd() 를 절대 포함해서는 안 된다.(다른 사람의 컴퓨터 설정을 변경하지 말 것)
+
+## 4.2 Rstudio 진단
+스크립트 편집기에서 빨간색 선과 사이드바의 X자 표시로 구문 오류를 강조 표시한다.
+
+![](img/rstudio-diagnostic.png)
+
+X자 위로 마우스를 가져가면 문제가 무엇인지 알 수 있다.
+
+![](img/rstudio-diagnostic-tip.png)
+
+또한, RStudio는 잠재적인 문제에 대해서도 알려준다.
+
+![](img/rstudio-diagnostic-warn.png)
+
+### 4.2.1 연습문제
+RStudio Tips 트위터 계정인 *@rstudiotips*에서 다양한 팁을 찾아볼 수 있다.
