@@ -1,0 +1,626 @@
+---
+title: "ch15_functions"
+author: "Sinhyung Park"
+date: '2020 10 7 '
+output: 
+  html_document:
+   toc: true
+   toc_float:
+     collapsed: false
+     smooth_scroll: true
+   theme: united
+   highlight: textmate
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE, message = FALSE)
+```
+
+```데이터 
+install.packages("tibble")
+library(tibble)
+```
+
+# Ch15_functions_함수
+
+
+## 15.1 들어가기 
+
+- 데이터 과학자로서의 역량을 향상시키는 좋은 방법은 함수를 작성하는 것  
+- 함수 작성의 **세 가지 장점**  
+1. 연상시키는 이름을 함수에 부여하여 코드를 이해하기 쉽게 만들 수 있다.   
+2. 요구사항이 변경되면 여러 곳이 아닌 한 곳의 코드만 업데이트하면 된다.   
+3. 복사하여 붙여넣을 때 실수가 발생할 가능성이 차단된다.  
+(예, 변수 이름을 한 위치에만 업데이트하고 다른 위치에는 하지 않음)
+
+
+### 15.2 함수를 언제 작성해야 하나? 
+
+- 코드 블록을 두 번 이상 복사하여 붙여넣을 때마다 함수를 작성하는 것을 고려해야한다. 
+
+**예를 들어 보자**  
+
+```{r}
+df <- tibble::tibble(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+
+df$a <- (df$a - min(df$a, na.rm = TRUE)) / 
+  (max(df$a, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+df$b <- (df$b - min(df$b, na.rm = TRUE)) / 
+  (max(df$b, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+df$c <- (df$c - min(df$c, na.rm = TRUE)) / 
+  (max(df$c, na.rm = TRUE) - min(df$c, na.rm = TRUE))
+df$d <- (df$d - min(df$d, na.rm = TRUE)) / 
+  (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
+```
+
+-  각 열이 0 에서 1까지 값을 갖도록 리스케일(rescale)하는 코드 
+- 위와 같이 작성하다 보면 복붙을 할 텐데 그러다보면 오타가 발생하기 마련
+
+-->> **반복코드를 함수로 추출**
+
+```{r}
+df
+```
+
+
+```{r}
+(df$a - min(df$a, na.rm = TRUE)) / 
+  (max(df$a, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+```
+- 이 코드는 입력이 df$a 하나이다. 
+- 입력을 더 명확하게 지정하려면 일반 이름을 가진 임시 변수를 사용하여 코드를 다시 작성하는 것이 좋다. 
+
+```{r}
+x <- df$a
+(x - min(x, na.rm = TRUE)) /
+  (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+```
+- 이 코드에는 데이터의 범위(range)계산을 세번하고 있는데, 한단계로 수행하는 것이 더 낫다. 
+
+```{r}
+rng <- range(x, na.rm = TRUE)
+ (x - rng[1]) / (rng[2] - rng[1])
+```
+- 중간 계산을 명명된 변수로 빼면 코드가 하는 일을 명확하게 할 수 있다. 
+- 코드를 단순화했고 작동하는지 확인했으므로 이제 함수로 변환시키자. 
+
+```{r}
+rescale01 <- function(x) {
+  rng <- range(x, na.rm = TRUE)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
+rescale01(c(0, 5, 10))
+```
+
+**함수 생성에는 세 가지 주요 단계가 있다.**
+
+1. 함수 이름을 지어야한다. 여기선 rescale01이라고 했는데, 함수가 0과 1 사이에 놓이도록 벡터를 다시 스케일하기 때문이다.   
+
+2. function 내부에 함수 입력값, 즉 인수를 나열한다. 여기에서는 인수가 x 한 개만 있다. 여러 개가 있었다면 호출은 function(x, y, z)와 같을 것이다.    
+
+3. 개발한 코드를 함수의 본문(body), 즉 function(...) 다음에 오는 **{** 블록에 넣는다.
+
+**우리는 함수를 생성한 후 작동되도록 노력하는 것보다 작동되는 코드를 우선 만들고, 이를 함수로 변환하는 것이 더 쉽다는 것을 알아야한다.** 
+
+```{r}
+rescale01(c(-10, 0, 10))
+rescale01(c(1, 2, 3, NA, 5))
+```
+- 함수 작성을 계속하다 보면 결국 이러한 비공식적, 대화식 테스트를 공식적, 자동화 테스트로 바꾸고 싶어진다. 이 프로세스를 **단위 테스트(unit testing)**라고 한다.  
+- 이제 함수가 있으니 원 예제를 단순화해보자 
+
+```{r}
+df$a <- rescale01(df$a)
+df$b <- rescale01(df$b)
+df$c <- rescale01(df$c)
+df$d <- rescale01(df$d)
+```
+
+- 원본과 비교하면 이 코드는 이해하기 쉽고, 한 종류의 복사하여 붙여넣기 오류도 제거했다.  
+
+- 함수의 다른 장점은 요구사항이 변경되면 한 곳에서만 변경 작업을 하면 된다는 것이다.   
+
+- 예를 들어 일부 변수가 무한값을 포함하면 rescale01()은 작동하지 않는다는 것을 알았다고 하자.
+
+```{r}
+x <- c(1:10, Inf)
+rescale01(x)
+```
+
+- 코드를 함수로 추출했기 때문에 한 곳만 수정하면 된다.  
+  
+  
+**finite = TRUE를 추가!** 
+```{r}
+rescale01 <- function(x) {
+  rng <- range(x, na.rm = TRUE, finite = TRUE)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
+rescale01(x)
+```
+- 이는 '반복하지 말라(do not repeat yourself, DRY)' 원칙의 중요한 부분
+
+### + 연습문제
+
+[연습문제 해답참조](https://jrnold.github.io/r4ds-exercise-solutions/functions.html)  
+
+1. TRUE가 rescale01()의 매개변수가 아닌 이유는 무엇인가? x가 결측값 하나를 포함하고 na.rm이 FALSE면 어떻게 되는가?  
+2. rescale01()의 두 번째 버전에서 무한값들은 변경되지 않았다. -Inf는 0으로, Inf는 1로 매핑되도록 rescale01()을 다시 작성하라.  
+```r
+rescale01 <- function(x) {
+  rng <- range(x, na.rm = TRUE, finite = TRUE)
+  y <- (x - rng[1]) / (rng[2] - rng[1])
+  y[y == -Inf] <- 0
+  y[y == Inf] <- 1
+  y
+}
+
+rescale01(c(Inf, -Inf, 0:5, NA))
+#> [1] 1.0 0.0 0.0 0.2 0.4 0.6 0.8 1.0  NA
+```
+
+3. 다음의 짧은 코드 조각을 함수로 변환하는 연습을 하라. 각 함수가 무엇을 하는지 생각해보라. 뭐라고 부르겠는가? 인수 몇 개가 필요한가? 좀 더 표현력이 있거나 덜 중복되도록 다시 작성할 수 있는가? 
+```{r}
+mean(is.na(x))
+
+x / sum(x, na.rm = TRUE)
+
+sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
+```
+4. 수치형 벡터의 분산과 왜도(skew)를 계산하는 함수를 작성하라. 
+
+![](img/exercise1.png)
+5. 같은 길이의 두 벡터를 입력으로 하여, 두 벡터 모두 NA인 위치를 반환하는 함수 both_na()를 작성하라.  
+6. 다름 두 함수는 무슨 작업을 하는가? 이 짧은 함수들이 유용한 이유는 무엇인가? 
+```{r}
+is_directory <- function(x) file.info(x)$isdir
+is_readable <- function(x) file.access(x, 4) == 0
+```
+7. '작은 토끼 Foo Foo'의 전체 가사를 읽어라. 이 노래에는 중복이 많다. 초기 파이핑 예제를 확장하여 전체 노래를 다시 만들고 함수를 사용하여 중복을 줄여보라.   
+  
+## 15.3 함수는 사람과 컴퓨터를 위한 것     
+
+- 일반적으로 함수 이름은 동사, 인수 이름은 명사여야한다. 
+
+```r
+#너무 짧음
+f()
+```  
+
+```r
+#동사가 아니거나 기술하지 않음
+my_awesome_function()
+```  
+
+```r
+#길지만 명확함
+impute_missing()
+collapse_years()
+```
+- 함수 이름이 여러 단어로 구성된 경우에는 각 단어를 언더스코어로 구분하는 **'스테이크 표기법(snake_case)'**을 사용하는 것이 좋다.   
+- 가장 중요한 것은 뭘 사용하냐는 것이 아닌 일관성을 유지하는 것이다. 
+  
+```r
+#절대 이렇게 하지 말것!
+col_mins <- function(x, y)
+rowMaxes <- function(y, x)  
+```
+
+  
+- 자동완성기능이 있기 때문에 접미사보단 접두사를 사용하는 것이 좋다.  
+
+```r
+# Good
+input_select()
+input_checkbox()
+input_text()
+
+# Not so good
+select_input()
+checkbox_input()
+text_input()
+```  
+  
+- 가능하면 기존 함수 및 변수를 덮어쓰지 마라    
+```r
+# 이렇게 하지 말 것!
+T <- FALSE
+c <- 10
+mean <- function(x) sum(x)
+```
+  
+### + 연습문제    
+
+[연습문제 해답참조](https://jrnold.github.io/r4ds-exercise-solutions/functions.html)    
+
+1. 다음 세 개의 함수 각각에 대한 소스 코드를 읽고, 이 함수들이 하는 일을 알아낸 다음, 더 나은 이름에 대해 브레인스토밍해라. 
+
+```r
+f1 <- function(string, prefix) {
+  substr(string, 1, nchar(prefix)) == prefix
+}
+f2 <- function(x) {
+  if (length(x) <= 1) return(NULL)
+  x[-length(x)]
+}
+f3 <- function(x, y) {
+  rep(y, length.out = length(x))
+}
+```
+2. 최근에 작성한 함수에 대해 더 나은 함수 이름과 인수에 대해 5분 동안 브레인스토밍해보라.  
+
+3. rnorm()과 MASS::mvrnorm()을 비교 대조하라. 어떻게 더 일관되게 만들겠는가?  
+
+4. norm_r(), norm_d()등이 rnorm(), dnorm()보다 나은 이유를 설명하는 예를 만들어라, 반대의 예도 만들어라  
+: 접두사가 같아야지 자동완성기능을 쓸 수 있다.
+
+
+## 15.4 조건부 실행
+  
+- if 문을 사용하면 코드를 조건부로 실행할 수 있다. 
+```r
+if (조건문) {
+  # 조건문이 TRUE 일 떄 수행되는 코드
+} else {
+  # 조건문이 FALSE 일 때 수행되는 코드
+}
+```
+
+- 아래 코드는 if문을 사용하는 간단한 함수이다. 이 함수의 목적은 벡터의 각 요소가 명명되었는지를 나타내는 논리형 벡터를 반환하는 것이다. 
+
+```{r}
+has_name <- function(x) {
+  nms <- names(x)
+  if (is.null(nms)) {
+    rep(FALSE, length(x))
+  } else {
+    !is.na(nms) & nms != ""
+  }
+}
+```  
+### - 15.4.1 조건문
+- 조건문은 TRUE 또는 FALSE로 평가되어야 한다. 벡터인 경우 경고메시지가 표시된다. NA인 경우에는 오류가 발생된다. 
+
+```r
+if (c(TRUE, FALSE)) {}  
+
+#> Warning in if (c(TRUE, FALSE)) {: the condition has length > 1 and only the
+#> first element will be used
+#> NULL
+
+if (NA) {}  
+
+#> Error in if (NA) {: missing value where TRUE/FALSE needed
+```
+
+- **|| (or) 와 && (and)**를 사용하여 논리 표현식을 조합할 수 있다. 이 연산자들은 앞의 조건이 만족되면 뒤의 조건들은 무시하는데, 이를 **'단락평가(short-circuit evaluation)'**라 한다.  즉, **||**는 첫 TRUE를 보는 즉시 다른 것 계산없이 TRUE를 반환한다. 마찬가지로 &&는 FALSE를 처음으로 보게 되면 즉시 FALSE를 반환한다.  
+
+- | 또는 &는 다중값에 적용하는 벡터화 연산이기 때문에 (fillter()에서 사용하는 이유) if문에서 절대 사용하면 안된다.   
+  
+- 논리형 벡터인 경우 any() 또는 all()을 사용하여 단일 값으로 축소할 수 있다.   
+
+```{r}
+identical(0L, 0)
+```
+- 부동 소수점 수치에도 주의해야 한다. 
+
+```{r}
+x <- sqrt(2) ^2
+x
+x == 2
+x - 2
+```
+
+### - 15.4.2 다중 조건 
+
+```r
+if (이 조건) {
+  # 저것 수행
+} else if (저 조건) {
+  # 다른 것 수행
+} else{
+  #
+}
+```
+  
+- 만약 if 문이 너무 길게 연속저긍로 나타났다면 **switch()함수**를 이용해라. 위치 또는 이름을 기반으로 선택한 코드를 평가할 수 있다.  
+
+```r
+#> function(x, y, op) {
+#>   switch(op,
+#>     plus = x + y,
+#>     minus = x - y,
+#>     times = x * y,
+#>     divide = x / y,
+#>     stop("Unknown op!")
+#>   )
+#> }
+```
+
+### - 15.4.3 코딩 스타일  
+
+- if 와 function 모두 중괄호 ({})가 뒤따라 나와야 하며, 본문은 두 칸 들여쓰기를 해야 한다. 
+```r
+# 좋음
+if (y < 0 && debug) {
+  message("Y 가 음수")
+}
+
+if (y == 0) {
+  log(x)
+} else {
+  y ^ x
+}
+
+# 나쁨
+if (y < 0 && debug)
+message("Y 가 음수")
+
+if (y == 0) {
+  log(x)
+} 
+else {
+  y ^ x
+}
+```
+
+### + 연습문제  
+  
+  [연습문제 해답참조](https://jrnold.github.io/r4ds-exercise-solutions/functions.html)    
+  
+1. if 와 ifelse()는 어떻게 다른가? 도움말을 주의 깊게 읽고, 주요 차이점을 보여주는 세 가지 예를 만들어라.  
+2. 시간에 따라 'good morning', 'good afternoon' 또는 'good everning'이라고 말하는 인사말 함수를 작성하라. (힌트 : 기본값으로 lubridate::now()를 사용하는 time 인수를 사용하라. 이렇게 하면 함수를 더 쉽게 테스트할 수 있다.)  
+3. fizzbuzz 함수를 구현하라. 단일 숫자를 입력으로 한다. 숫자가 3으로 나누어지면 'fizz'를 반환한다. 그렇지 않으면 숫자를 반환한다.  5로 나누어지면 'buzz'를 반환한다. 3과 5로 나누어지면 'fizzbuzz'반환한다. 그렇지 않으면 숫자를 반환한다. 함수를 작성하기 전에 작동하는 코드를 우선 작성해보라. 
+4. 다음의 중첨된(nested) if-else 문을 단순화하기 위해 cut()을 어떻게 사용하겠는가? 
+```r
+if (temp <= 0) {
+  "freezing"
+} else if (temp <= 10) {
+  "cold"
+} else if (temp <= 20) {
+  "cool"
+} else if (temp <= 30) {
+  "warm"
+} else {
+  "hot"
+}
+```
+< 대신 <=를 사용하면 어떻게 cut() 호출을 변경하겠는가? 이 문제에서 cut()의 다른 장점은 무엇인가? (힌트 : temp에 값이 많다면 어떻게 될까?)  
+5. switch()를 수치형과 함께 사용하면 어떻게 되나?  
+6. 다음의 switch() 호출은 어떤 일은 하는가? x가 'e'이면 어떻게 되는가? 
+```{r}
+switch(x, 
+  a = ,
+  b = "ab",
+  c = ,
+  d = "cd"
+)
+```
+## 15.5 함수 인수 
+
+- 함수 인수는 일반적으로 두 가지 종류로 크게 나뉜다. 
+1. 데이터를 제공하는 인수   
+2. 계산의 세부사항을 제어하는 인수   
+  
+- 기본값은 대개의 경우 가장 일반적인 값이어야 한다.  
+- 결측값은 중요하기 때문에 na.rm 기본값을 FALSE로 설정하는 것이 좋다. 대부분 코드에 na.rm을 넣는다고 하더라도 결측값을 조용히 무시하는 것이 기본값인 것은 좋지 않다.   
+- 세부사항 인수의 기본값을 대체하려면 전체 인수 이름을 사용해야한다.  
+```r
+# Good
+mean(1:10, na.rm = TRUE)
+
+# Bad
+mean(x = 1:10, , FALSE)
+mean(, TRUE, x = c(1:10, NA))
+```
+- 함수의 **=**양 옆이나 쉼표(,) 뒤쪽 등에는 항상 공백이 있어야한다. 그래야 중요한 함수 구성요소를 쉽게 찾을 수 있다. 
+```r
+# 좋음
+average <- mean(feet / 12 + inches, na.rm = TRUE)
+
+# 나쁨
+average<-mean(feet/12+inches,na.rm=TRUE)
+```
+  
+### - 15.5.1 이름 짓기    
+  
+- **x, y, z : 벡터**
+- **w : 가중치 벡터**
+- **df : 데이터프레임**
+- **i, j : 수치형 인텍스(일반적으로 행과 열)**
+- **n : 길이 혹은 행 개수**
+- **p : 열 개수**  
+  
+    
+### - 15.5.2 값 확인하기   
+- 함수를 많이 작성하다 보면 함수가 정확하게 어떻게 작동하는지 기억하지 못할 때가 있다.   
+
+- 이 문제를 피하려면 제약조건을 명시적으로 나타내는 것이 좋다.   
+```{r}
+wt_mean <- function(x, w) {
+  sum(x * w) / sum(w)
+}
+wt_var <- function(x, w) {
+  mu <- wt_mean(x, w)
+  sum(w * (x - mu) ^ 2) / sum(w)
+}
+wt_sd <- function(x, w) {
+  sqrt(wt_var(x, w))
+}
+```
+- 만약 이 때 x와 w 가 같은 길이가 아니라면 ..?   
+```{r}
+wt_mean(1:6, 1:3)
+```
+- 이 경우 R의 벡터 재활용 규칙 때문에 오류가 발생하지 않는다. 
+- 중요한 전제조건을 확인하고, 그것이 참이 아니라면 (stop()을 사용하여) 오류를 발생시키는 것이 좋다.
+
+```{r}
+wt_mean <- function(x, w) {
+  if (length(x) != length(w)) {
+    stop("`x` and `w` must be the same length", call. = FALSE)
+  }
+  sum(w * x) / sum(w)
+}
+```
+
+
+### - 15.5.3 점-점-점(...)
+
+- R 함수 중에는 임의 개수의 입력을 받는 함수가 많다. 
+```{r}
+sum(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+stringr::str_c("a", "b", "c", "d", "e", "f")
+```
+- 이 함수들은 특수 인수인 **...**에 의존한다. 
+- 이 특수 인수는 매치되지 않는 임의 개수의 인수를 가져온다.   
+- 이 **...**을 다른 함수로 보낼 수 있기 때문에 유용하다. 함수가 다른 함수를 둘러싸는 경우 편리하게 모두 담을 수 있다.  
+- 예를 들어 str_c()함수를 써보자 
+```r
+commas <- function(...) stringr::str_c(..., collapse = ", ")
+commas(letters[1:10])
+#> [1] "a, b, c, d, e, f, g, h, i, j"
+
+rule <- function(..., pad = "-") {
+  title <- paste0(...)
+  width <- getOption("width") - nchar(title) - 5
+  cat(title, " ", stringr::str_dup(pad, width), "\n", sep = "")
+}
+rule("Important output")
+#> Important output -----------------------------------------------------------
+```
+- 여기에 **...**을 썼기 때문에, 다루고 싶지 않은 어떤 인수도 str_c()에 전달할 수 있다.   
+- 다만, 이렇게 하면 인수 철자가 틀려도 오류가 발생하지 않으므로 이를  주의해야한다.   
+```{r}
+x <- c(1, 2)
+sum(x, na.mr = TRUE)
+```
+- 값만 가져오려면 **list(...)**를 사용하면 된다.  
+
+### - 15.5.4 지연평가  
+- R의 인수는 지연평가(lazy evaluation)된다. 즉, 필요할 때 까지 계산하지 않는다. 따라서 사용되지 않는 인수는 호출되지 않는다. 
+- 자세한 내용은 [사이트참조](http://adv-r.had.co.nz/Functions.html#lazy-evaluation)  
+  
+    
+      
+### + 15.5.5 연습문제    
+[연습문제 해답참조](https://jrnold.github.io/r4ds-exercise-solutions/functions.html)    
+
+1. commas(letters, collapse = "-")결과는 무엇인가? 이유는?  
+2. pad 인수에 여러 문자를 제공할 수 있다면 좋을 것이다. (예 : rule("Title", pad = "-+")). 왜 작동하지 않는가? 어떻게 고치겠는가? 
+3. mean()의 trim 인수는 어떤 일을 하는가? 언제 사용하겠는가? 
+4. cor()의 method 인수 기본값은 c("pearson", "kendall", "spearman")이다. 어떤 의미인가 ? 기본값으로 어떤 값이 사용되는가?  
+
+## 15.6 반환값  
+- 값을 반환할 때 고려해야하는 것은 두가지  
+1. 반환을 일찍하면 함수 읽기가 쉬워지는가?   
+2. 함수를 파이핑할 수 있게 만들 수 있는가?  
+
+### - 15.6.1 명시적 반환문  
+- 함수가 반환하는 값은 대개 함수가 평가하는 마지막 명령문이지만 return()을 사용하여 일찍 반환하도록 선택할 수 있다. 
+1. 입력이 빈 경우
+```
+complicated_function <- function(x, y, z) {
+  if (length(x) == 0 || length(y) == 0) {
+    return(0)
+  }
+    
+  # 복잡한 코드 구역 
+}
+```
+2. 하나의 복잡한 블록과 단순한 블록으로 구성된 if문이 있는 경우  
+```r
+f <- function() {
+  if (x) {
+    # 표현하는데
+    # 많은
+    # 라인이
+    # 필요한
+    # 것을 
+    # 하는
+    # 구역
+  } else {
+    # 짧은 것 반환
+  }
+}
+```
+3. 간단한 경우에 대해 반환을 일찍하는 경우   
+```r
+
+f <- function() {
+  if (!x) {
+    return(짧은 것)
+  }
+
+  # 긴
+  # 라인
+  # 으로
+  # 표현
+  # 하는
+  # 구역
+}
+```
+- 이렇게 하면 코드를 이해하기 위해 문맥을 깊이 볼 필요가 없어서, 코드 읽기가 쉬워진다.   
+
+### - 15.6.2 파이핑 가능한 함수 작성  
+- 파이핑 가능한 함수를 작성하려면 반환값에 대해 생각하는 게 중요하다.  
+- 반환값 객체 유형을 알면 파이프라인이 '작동'은 할 것이다.  
+- 예를 들어 dplyr과 tidyr의 객체 유형은 데이터프레임이다.  
+- 파이핑 가능한 함수에는 변환과 부수효과라는 두 가지 기본 유형이 있다. 
+- - 변환 함수 : 객체가 함수의 첫 번째 인수로 전달되고 수정된 객체가 반환  
+- - 부수효과 함수 : 전달된 객체가 변환하지 않는 대신 함수가 플롯을 그리거나 파일을 거장하는 것과 같은 동작 수행  
+- 부수효과 함수는 첫 번째 인수가 출력되지 않지만 파이프라인에서 사용될 수 있도록 '보이지않게' 반환해야 한다.  
+ex) 데이터프레임의 결측값 개수를 출력   
+```{r}
+show_missings <- function(df) {
+  n <- sum(is.na(df))
+  cat("Missing values: ", n, "\n", sep = "")
+  
+  invisible(df)
+}
+```
+- 대화식에서 호출하면 invisible()은 입력된 df를 출력하지 않음을 의미  
+```{r}
+show_missings(mtcars)
+```
+- 그러나 반환값은 여전히 존재, 기본값으로 출력되지 않을 뿐  
+```{r}
+x <- show_missings(mtcars) 
+class(x)
+dim(x)
+
+```
+- 그리고 파이프에서 사용할 수도 있다.  
+```r
+mtcars %>% 
+  show_missings() %>% 
+  mutate(mpg = ifelse(mpg < 20, NA, mpg)) %>% 
+  show_missings() 
+#> Missing values: 0
+#> Missing values: 18
+```
+
+## 15.7 환경  
+- 함수의 환경은 R이 이름과 연관된 값을 찾는 방법을 결정  
+```{r}
+f <- function(x) {
+  x + y
+} 
+```
+- 함수 내부에서 y가 정의되지 않았기 때문에 많은 프로그래밍 언어에서 위 함수는 오류
+- R은 어휘 스코핑(lexical scoping)이라는 규칙을 사용하여 이름과 관련된 값을 찾기 때문에 위 함수는 유효한 코드가 된다.  
+- 함수 내부에서 y가 정의되지 않았으므로 R은 함수가 정의된 환경에서 찾아본다.  
+```{r}
+y <- 100
+f(10)
+
+y <- 1000
+f(10)
+```
+

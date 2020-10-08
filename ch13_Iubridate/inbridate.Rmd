@@ -1,0 +1,789 @@
+---
+title: "lubridate로 하는 날짜와 시간"
+author: "LEE HAN"
+date: '2020 10 8 '
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+     
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 13.1 들어가기
+
+
+ R에서 날짜와 시간을 다루는 법을 볼것이다. 생각하면 날짜와 시간은 간단해 보인다
+일상 생활에서 늘 사용하고 복잡할게 없을 것 같다. 그러나 날짜와 시간에 대해 알면 복잡해 보일것이다.간단해 보이는 다음 세문제를 보자 
+
+- 1년은 항상 365일인가? 
+- 1일은 항상24시간인가? 
+- 1분은 항상 60초인가? 
+
+1년은 항상365일은 아니라는 것은 대부분 알고 있을 것이다.하지만 한 해가 윤년인지를 결정하는 규칙을 알고있는가? 세계 많은 곳에서 일광절약제(datlight saving time, DST)를 이용하고 있다.
+그래서 어떤날은 23시이고, 다른 날은 25시 라는 것을 아는사람도 있을 것이다. 또한 지구 자전이 느려지면서 윤초가 추가 되어 기끔씩 1분이 61초가 되다고 한다.
+날짜와 시간은 두가지 물리현상과 월, 시간대, 일광절을 포함해 많은 자연 현상을 조화시켜야하기때문에 쉬운문제가 아니다. 날짜와 시간은 속속히 배우지는 못하지만 데이터 분석 문제에 이용하는 기술들을 탄탄히 배울것이다.
+
+
+### 13.1.1 준비하기
+
+lubridate 패키지를 살펴볼것이다.이 패키지는 날짜와 시간을 처리하는데 필요한 함수를 담고 있어서 시간 날짜 데이터를 다루는데 유용하다
+
+<!--
+install.packages('lubridate')
+
+library(lubridate)
+
+install.packages('tidyverse')
+
+library(tidyverse)
+
+install.packages('nycflights13')
+
+library(nycflights13)
+-->
+
+- library(tidyverse)
+
+- library(lubridate)
+
+- library(nycflights13)
+
+
+## 13.2 날짜/시간 생성
+
+시각을 나타내는 날짜/시간의 세가지 유형
+
+- 데이트형(date): 날짜. 티블에서 (date)로 출력
+- 타임형(time):하루 중 시간, 티블에서 (time)로 출력
+- 데이트_타임형(date-time):날짜 더하기 시간. 티블에서 (dttm)로 출력
+
+
+현재의 데이트형 또는 데이트-타임형을 얻으려면 today() 또는 now() 사용한다.
+ 
+```{r, include=FALSE}
+
+library(tidyverse)
+
+library(lubridate)
+
+library(nycflights13)
+```
+
+```{r, fig.show='hide'}
+today()
+```
+
+```{r, include=FALSE}
+
+library(tidyverse)
+
+library(lubridate)
+
+library(nycflights13)
+```
+
+```{r, fig.show='hide'}
+now()
+```
+today()와 now()를 사용하면 오늘 날짜와 시간이 맟추어 출력됩니다.
+
+
+다른 방법으로 날짜/시간을 만드는 세가지가 있다.
+
+- 문자열에서
+
+- 개별 데이트-타임형 구성요소로부터
+
+- 기준의 날짜/ 시간객체로부터
+
+### 13.2.1 문자열에서 생성
+날짜/시간데이터는 종종 문자열로 제공된니다. lubridate가 제공하는 도우미를 사용하여 구성요소의 순서를 지정하면 형식이 자동으로 지정됩니다.
+입력한 날짜의 서식이 어떻냐에 따라서 ymd,mdy,dmy 처럼 순서를 빠꾸면 형태가 마춰집니다.
+Y=year(년) m=month(월) d=day(일)이기 때문에 자신이 입력할 데이터에 맞춰 함수를 바뀌 적용해줍니다.
+
+```{r, fig.show='hide'}
+ymd("2017-01-31")
+```
+
+
+```{r, fig.show='hide'}
+mdy("january 1st, 2017")
+```
+
+```{r, fig.show='hide'}
+dmy("31-jan-2017")
+```
+
+이 함수들은 따움표로 묶지 않은 숫자도 변환시켜준다.
+단일 날짜/시간 객체를 생성하는 방법들 중 가장 간결한 방법이며 날짜/ 시간 데이터를 필터링할때 사용할수있다.
+
+```{r, fig.show='hide'}
+ymd(20170131)
+```
+이렇게 년월일이 붙어있고, 문자열이 아니더라도 형태에 맞춰 출력되는 것을 볼 수 있다.
+ymd에서 시간을 추가하고 싶다면 "h" "m" "s"를 추가하면 됩니다.
+
+```{r, fig.show='hide'}
+ymd_hms("2017-01-31 20:11:59")
+```
+```{r, fig.show='hide'}
+mdy_hm("01/31/2017 08:01")
+```
+이렇게 어떤 날짜에 시간을 추가하면 형식에 맞게 출력이 된다.
+
+
+
+시간대를 추가한 날짜도 만들수있다.
+
+```{r, fig.show='hide'}
+ymd(20170131, tz = "UTC")
+```
+tz을 utc 설정하면 utc 타임 존에서의 시간으로 바뀌줍니다. 한국은 utc 존이기 때문에 위에서 출력했던 날짜와 같습니다.
+
+### 13.2.2 개별 구성요소에서 생성
+
+때로는 문자열이 아니라 데이트-타임형의 개별 구성요소들이 여러열에 걸쳐 있는 경우가 있다. 예시는 항공편데이터이다.
+
+```{r, fig.show='hide'}
+flights %>% 
+        select(year, month, day, hour, minute)
+```
+
+밑부분에서는 날짜/시간을 생성하려면 데이터형은 make_date()를, 데이터_타임형은 
+make_datetime()을 쓰면 된다.
+
+```{r, fig.show='hide'}
+flights %>% 
+        select(year, month, day, hour, minute) %>% 
+        mutate(departure = make_datetime(year, month, day, hour, minute))
+```
+
+이곳까지는 데이터_타임형 변수를 생성했으니 나머지 부분은
+make_datetime_100이라는 함수를 새로 만들어서 이 데이터를 변환해보았습니다.
+make_datetime()함수를 쓰는데 time의 변수를 넣어 변환해보왔다.
+
+```{r, fig.show='hide'}
+make_datetime_100 <- function(year, month, day, time) {
+        make_datetime(year, month, day, time %/% 100, time %% 100)
+}
+
+flights_dt <- flights %>% 
+        filter(!is.na(dep_time), !is.na(arr_time)) %>% 
+        mutate(
+                dep_time = make_datetime_100(year, month, day, dep_time),
+                arr_time = make_datetime_100(year, month, day, arr_time),
+                sched_dep_time = make_datetime_100(year, month, day, sched_dep_time),
+                sched_arr_time = make_datetime_100(year, month, day, sched_arr_time)
+        ) %>% 
+        select(origin, dest, ends_with("delay"), ends_with("time"))
+
+flights_dt
+```
+
+이 데이터를 시용하여 일 년 동안의 출발 시간의 분포를 시각화  할수있습니다.
+
+```{r year, fig.cap}
+flights_dt %>% 
+        ggplot(aes(dep_time)) + 
+        geom_freqpoly(binwidth = 86400) # 86400 seconds = 1 day
+```
+
+하루 동안의 데이터도 확인 할수있다.
+
+```{r day, fig.cap}
+flights_dt %>% 
+        filter(dep_time < ymd(20130102)) %>% 
+        ggplot(aes(dep_time)) + 
+        geom_freqpoly(binwidth = 600) # 600 s = 10 minutes
+```
+
+### 13.2.3 기타유형에서 생성
+
+date-time형과 date형를 전환 할수있다.
+
+as_datetime() ,as_date()가 수행한다.
+
+```{r, fig.show='hide'}
+as_datetime(today())
+```
+
+```{r, fig.show='hide'}
+as_date(now())
+```
+
+유닉스 기준 시간인 1970-01-01 기준으로 숫자를 더해 날짜-시간 데이터를 수정가능하다.
+
+
+```{r, fig.show='hide'}
+as_datetime(60 * 60 * 10)
+```
+
+```{r, fig.show='hide'}
+as_date(365 * 10 + 2)
+```
+
+as_datetime()에서 60초*60분*10시간을 더하면 1970-01-01 10시가 되고
+as_date()에서는 365일*10년+2월을 더하면 1980-01-01이된다.
+
+### 13.2.4 연습문제
+
+1. 유효하지 않은 날짜를 포함한 문자열를 파싱하면 어떻게 되는가?
+- ymd(c("2010-10-10", "bananas"))
+ 
+
+```{r, fig.show='hide'}
+ymd(c("2010-10-10", "bananas"))
+``` 
+ 
+2.today()의 tzone 인수의 역활은 무엇인가? 이인수는 왜 중요한가?
+
+
+3.적절한 lubridate 함수를 이용하여 다음 날짜를 각각 파싱하라.
+
+ - d1 <- "January 1, 2010"
+ - d2 <- "2015-Mar-07"
+ - d3 <- "06-Jun-2017"
+ - d4 <- "c("August 19 (2015)", July 1 (2015)")
+ - d5 <- "12/30/14" #2014년 12월 30일
+ 
+ d1
+ ```{r, fig.show='hide'}
+"January 1, 2010"
+``` 
+ d5
+ ```{r, fig.show='hide'}
+"12/30/14" #2014년 12월 30일
+```  
+ 
+## 13.3 날짜-시간형 구성요소
+ 날짜/시간 데이터를 date-time형 구조로 얻는 방법을알았으니 무엇을 할수있는지 살펴볼것이다.
+
+### 13.3.1 구성요소불러오기
+
+설정함수로 개별 부분을 불러올수있다.
+year() mouth() mday() yday()wday() hour() min-ute() second()
+
+```{r, fig.show='hide'}
+datetime <- ymd_hms("2016-07-08 12:34:56")
+```
+
+```{r, fig.show='hide'}
+year(datetime)
+```
+
+```{r, fig.show='hide'}
+month(datetime)
+```
+
+```{r, fig.show='hide'}
+mday(datetime)
+```
+
+```{r, fig.show='hide'}
+yday(datetime)
+```
+
+```{r, fig.show='hide'}
+wday(datetime)
+```
+
+month() 와 wday() 에서 label = TRUE 를 설정하여 월이나 일의 약식 이름을 반환할 수 있다. abbr = FALSE 를 설정하면 이름 전체를 반환할 수 있다.
+
+```{r, fig.show='hide' }
+month(datetime, label = TRUE)
+```
+
+```{r, fig.show='hide'}
+wday(datetime, label = TRUE, abbr = FALSE)
+```
+
+wday() 를 사용하여 주말보다 평일에 출발하는 항공편이 더 많다는 것을 확인할 수 있다.
+
+```{r wday, fig.cap}
+flights_dt %>% 
+  mutate(wday = wday(dep_time, label = TRUE)) %>% 
+  ggplot(aes(x = wday)) +
+    geom_bar()
+```
+
+출발 지연시간 평균을 매 시의 각 분(0~59 분)에 대해서 살펴보면 흥미로운 패턴이 있다. 20~30분과 50~60분에 출발하는 항공편은 나머지 시간보다 훨씬 덜 지연되는 것으로 보인다.
+
+```{r minute,eval=FALSE}
+flights_dt %>% 
+        mutate(minute = minute(dep_time)) %>% 
+        group_by(minute) %>% 
+        summarise(
+                avg_delay = mean(arr_delay, na.rm = TRUE),
+                n = n()) %>% 
+        ggplot(aes(minute, avg_delay)) +
+        geom_line()
+```
+
+```{r minute2, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+flights_dt %>% 
+        mutate(minute = minute(dep_time)) %>% 
+        group_by(minute) %>% 
+        summarise(
+                avg_delay = mean(arr_delay, na.rm = TRUE),
+                n = n()) %>% 
+        ggplot(aes(minute, avg_delay)) +
+        geom_line()
+```
+
+출발지연을 분단위로 보면 이러한 패턴을 볼 수 있다.20-30분 안에 출발하는 항공편과 50-60분은 나머지 시간보다 지연이 적다.
+
+
+실제 출발시간은 이런 패턴를 가지고 있다. 
+```{r minute3, eval=FALSE}
+sched_dep <- flights_dt %>% 
+  mutate(minute = minute(sched_dep_time)) %>% 
+  group_by(minute) %>% 
+  summarise(
+    avg_delay = mean(arr_delay, na.rm = TRUE),
+    n = n())
+  ggplot(sched_dep, aes(minute, avg_delay)) +
+    geom_line()
+```
+
+```{r minute4, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+sched_dep <- flights_dt %>% 
+  mutate(minute = minute(sched_dep_time)) %>% 
+  group_by(minute) %>% 
+  summarise(
+    avg_delay = mean(arr_delay, na.rm = TRUE),
+    n = n())
+  ggplot(sched_dep, aes(minute, avg_delay)) +
+    geom_line()
+```
+
+그러면 왜 실제 출발시간과 함께 그 패턴이 있는가? 사람에 의해 수집된 많은 데이터가 있다. 사람의 판단이 관여된 데이터로 작업할 때마다 이런 종류의 패턴을 항상 유의해야 한다
+
+```{r minute5, eval=FALSE}
+ggplot(sched_dep, aes(minute, n)) +
+        geom_line()
+```
+
+```{r minute6, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ggplot(sched_dep, aes(minute, n)) +
+        geom_line()
+```
+
+### 13.3.2 반올림
+
+개별 구성요소를 플롯하는 또 다른 방법은 floor_date() , round_date() , ceiling_date() 로 인근 시간 단위로 날짜를 반올림하는 것이다. 각 ceiling_date() 함수의 입력값으로는, 조정할 날짜 벡터와, 내림(floor), 올림(ceiling), 혹은 반올림해서 맞출 단위의 이름이다. 예를 들어 주당 항공편 수를 플롯할 수 있다.
+
+```{r round, eval=FALSE}
+flights_dt %>% 
+  count(week = floor_date(dep_time, "week")) %>% 
+  ggplot(aes(week, n)) +
+    geom_line()
+```
+
+```{r round2, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+flights_dt %>% 
+  count(week = floor_date(dep_time, "week")) %>% 
+  ggplot(aes(week, n)) +
+    geom_line()
+```
+날짜 반올림 전후 차이를 계산하는 것는 유용할 수 있다
+
+### 13.3.3 구성요소 설정 
+
+설정함수를 사용하여 날짜와 시간의 구성요소를 수정할수있다.
+
+```{r, fig.show='hide'}
+(datetime <- ymd_hms("2016-07-08 12:34:56"))
+```
+
+```{r, fig.show='hide'}
+year(datetime) <- 2020
+datetime
+```
+
+```{r, fig.show='hide'}
+month(datetime) <- 01
+datetime
+```
+
+```{r, fig.show='hide'}
+hour(datetime) <- hour(datetime) + 1
+datetime
+```
+수정하는 대신, update() 로 새로운 데이트-타임형을 생성할 수도 있다. 이 방법을 사용하여 여러 개의 값을 한 번에 설정할 수도 있다.
+
+```{r, fig.show='hide'}
+update(datetime, year = 2020, month = 2, mday = 2, hour = 2)
+```
+
+값이 너무 큰 경우에는 이월된다
+
+```{r, fig.show='hide'}
+ymd("2015-02-01") %>% 
+  update(mday = 30)
+```
+
+```{r, fig.show='hide'}
+ymd("2015-02-01") %>% 
+  update(hour = 400)
+```
+
+update() 를 사용하여 관심있는 해의 하루 동안 항공편의 분포를 볼 수 있다.
+
+```{r dep_hour, eval=FALSE}
+flights_dt %>% 
+  mutate(dep_hour = update(dep_time, yday = 1)) %>% 
+  ggplot(aes(dep_hour)) +
+    geom_freqpoly(binwidth = 300)
+```
+
+```{r dep_hour1, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+flights_dt %>% 
+  mutate(dep_hour = update(dep_time, yday = 1)) %>% 
+  ggplot(aes(dep_hour)) +
+    geom_freqpoly(binwidth = 300)
+```
+
+날짜의 상위 구성 요소를 상수로 설정하면, 하위 구성 요소의 패턴을 탐색할 수 있어서 매우 유용한 방법이다
+
+### 13.3.4 연습문제
+
+1. 하루 동안 비행시간의 분포는 한 해 동안 어떻게 변화했는가?
+
+2. dep_time, sched_dep_time, dep_delay 를 비교하라. 이들은 일관성이 있는가? 무엇을 발견했는지 설명하라.
+
+3. 출발, 도착 사이의 시간과 air_time 을 비교하라. 무엇을 발견했는지 설명하라. (힌트: 공항의 위치를 살펴보라.)
+
+4. 하루 동안 평균 지연시간은 어떻게 변화하는가? dep_time 또는 sched_dep_time 를 사용해야 하는가? 이유는 무엇인가?
+
+5. 지연 가능성을 최소화하려면 한 주 중 어느 요일에 떠나야 하는가?
+
+6. 왜 *diamondscarat* 과 *flightssched_dep_time* 분포가 비슷한가?
+
+7. 20-30분과 50-60분에서 출발이 빠른 것은 일찍 출발하도록 계획된 항공편 때문이라는 우리의 가설을 확인하라. (힌트: 항공편이 지연되었는지 여부를 알려주는 이진 변수를 생성하라.)
+
+## 13.4 시간범위
+
+다음으로 뺄셈, 덧셈, 나눗셈 같은 산술연산이 데이트형에 어떻게 동작하는지 알아보자. 여기에서는 시간 범위를 대표하는 중요한 클래스 세 가지를 배우게 된다.
+
+- 듀레이션형 (duration): 정확한 초를 나타냄.
+
+- 피리어드형 (period): 주와 월과 같은 인간의 단위를 나타냄.
+
+- 인터벌형 (interval): 시점과 종점을 나타냄.
+
+### 13.4.1 듀레이션형
+
+R에서 두 데이트형을 뺄셈을 하면 difftime형 객체가 생긴다.
+
+```{r, fig.show='hide'}
+# 해들리의 나이는?
+h_age <- today() - ymd(19791014)
+h_age
+```
+difftime 클래스 객체는 초, 분, 시, 일 또는 주의 시간 범위를 기록한다. 이러한 애매함 때문에 difftime형으로 작업하는 것이 약간 어려움이 있다. 따라서 lubridate 는 항상 초를 사용하는 대안 클래스, 듀레이션형 을 제공한다.
+
+```{r, fig.show='hide'}
+as.duration(h_age)
+```
+듀레이션형에는 편리한 생성자가 많다.
+
+```{r, fig.show='hide'}
+dseconds(15)
+```
+
+```{r, fig.show='hide'}
+dminutes(10)
+```
+
+```{r, fig.show='hide'}
+dhours(c(12, 24))
+```
+
+```{r, fig.message = FALSE, }
+
+ddays(0:5)
+```
+
+```{r, fig.show='hide'}
+dweeks(3)
+```
+
+```{r, fig.show='hide'}
+dyears(1)
+```
+
+듀레이션형은 항상 초 단위로 시간  범위를 기록한다. 이보다 큰 단위를 생성하려면 분, 시, 일, 주, 연을 표준비율로 변환해야 한다(분당 60초, 시당 60분, 일당 24시, 주당 7일, 연당 365일).
+
+듀레이션형을 더하거나 곱할 수 있다.
+
+```{r, fig.show='hide'}
+2 * dyears(1)
+```
+
+```{r, fig.show='hide'}
+dyears(1) + dweeks(12) + dhours(15)
+```
+
+일(day)에서 듀레이션형을 더하고 뺄 수 있다.
+
+```{r, fig.show='hide'}
+tomorrow <- today() + ddays(1)
+last_year <- today() - dyears(1)
+```
+
+그러나 듀레이션형은 정확하 초로 표시하므로 때로는 예상치 못한 결과를 얻을수 있다.
+
+```{r, fig.show='hide'}
+one_pm <- ymd_hms("2016-03-12 13:00:00", tz = "America/New_York")
+```
+
+```{r, fig.show='hide'}
+one_pm
+```
+
+```{r, fig.show='hide'}
+one_pm + ddays(1)
+```
+
+3월 12일 오후 1시의 1일 후가 왜 3월 13일 오후 2시인가? 날짜를 주의 깊게 보면 시간대가 바뀌어 있다. 일광절약제 때문에 3월 12일에는 23시만 있다. 따라서 하루에 해당하는 초를 더하면 다른 시간을 갖게 된다.
+
+### 13.4.2 피리어드형
+
+피리어드형dms 시간 범위이지만 정해진 초 길이가 없다. 대신 일과 월과 같은 ’사람의‘ 시간으로 동작한다. 따라서 작동 방식이 보다 직관적이다
+
+```{r, fig.show='hide'}
+one_pm
+```
+
+```{r, fig.show='hide'}
+one_pm + days(1)
+```
+
+듀레이션과 마찬가지로 피리어드형은 다수의 생성함수로 편리하게 생성할수 있다.
+
+```{r, fig.show='hide'}
+seconds(15)
+```
+
+```{r, fig.show='hide'}
+minutes(10)
+```
+
+```{r, fig.show='hide'}
+hours(c(12, 24))
+```
+
+```{r, fig.show='hide'}
+days(7)
+```
+
+```{r, fig.show='hide'}
+months(1:6)
+```
+
+```{r, fig.show='hide'}
+weeks(3)
+```
+
+```{r, fig.show='hide'}
+years(1)
+```
+
+피리어드 역시 더하거나 곱할 수 있다
+
+```{r, fig.show='hide'}
+10 * (months(6) + days(1))
+```
+
+```{r, fig.show='hide'}
+days(50) + hours(25) + minutes(2)
+```
+
+ Date형 더해진다. 듀레이션형과 달리 피리어드형은 더 정확히  계산해준니다.
+ 
+ ```{r, fig.show='hide'}
+# 윤년
+ymd("2016-01-01") + dyears(1)
+```
+
+```{r, fig.show='hide'}
+ymd("2016-01-01") + years(1)
+```
+
+```{r, fig.show='hide'}
+# 일광절약제
+one_pm + ddays(1)
+```
+
+```{r, fig.show='hide'}
+one_pm + days(1)
+```
+
+이제 피리어드형을 사용해서 비행 날짜에 관련된 문제를 해결해보자. 일부 항공편은 뉴욕시에서 출발하기 전에 목적지에 도착한 것으로 보여진다.
+
+```{r, fig.show='hide'}
+flights_dt %>% 
+  filter(arr_time < dep_time) 
+```
+
+이들은 심야 항공편이다. 우리는 출발과 도착시간 모두에 같은 날짜 정보를 사용했었지만, 이 항공편들은 도착시간이 다음날이다. 심야 항공편의 도착시간에 days(1) 을 더해서 문제를 해결할 수 있다.
+
+```{r, fig.show='hide'}
+flights_dt <- flights_dt %>% 
+  mutate(
+    overnight = arr_time < dep_time,
+    arr_time = arr_time + days(overnight * 1),
+    sched_arr_time = sched_arr_time + days(overnight * 1)
+  )
+```
+
+이제 모든 항공편이 물리학의 법칙을 벗어나지 않는다.
+
+```{r, fig.show='hide'}
+flights_dt %>%
+  filter(overnight, arr_time < dep_time)
+```
+
+### 13.4.3 인터벌형
+
+years(1) / ddays(365) 가 반환해야 하는 값은 명백하다.듀레이션형은 항상 초 단위로 표현하며 듀레이션형 1년은 365일에 해당하는 초로 정의되기 때문이다.
+
+올해가 2015년이라면 365를 반환해야하지만 2016년이면 366을 반환해야 한다! lubridate 가 하나의 명확한 답을 주기에 충분한 정보가 없다. 대신 경고와 함께 예측값을 준다.
+
+```{r, fig.show='hide'}
+years(1) / days(1)
+```
+
+더 정확한 값을 원한다면 인터벌형 을 사용해야 한다. 인터벌형은 시작점이 있는 지속 시간이어서 기간이 정확히 얼마인지 확인할 수 있다.
+
+```{r, fig.show='hide'}
+next_year <- today() + years(1)
+(today() %--% next_year) / ddays(1)
+```
+
+한 인터벌형이 피리어드형 얼마에 해당하는지 확인하려면 정수 나누기를 사용해야 한다.
+
+```{r fig.show='hide'}
+(today() %--% next_year) %/% days(1)
+```
+
+### 13.4.4 요약
+
+듀레이션형, 피리어드형, 인터벌형 중에서 선택은 어떻게 해야 하는가? 언제나 그렇듯이 주어진 문제를 해결하는 가장 간단한 데이터 구조를 선택하라. 단지 물리적인 시간만 고려하는 경우에는 듀레이션형을 사용하라. 사람의 시간을 추가해야 하는 경우에는 피리어드형을 사용하라. 사람이 사용하는 시간단위로 파악해야 하는 경우에는 인터벌형을 사용하라.
+
+그림은 유형 사이에 허용된 산술연산을 요약한 것이다.
+
+![](img/date.png)
+
+### 13.4.5 연습문제
+1.왜 months() 는 있고 dmonths() 는 없는가?
+
+2.R을 막 배우기 시작한 사람에게 days(overnight * 1) 을 설명하라. 어떻게 동작하는가?
+
+3.2015년 매월 첫 날짜를 주는 데이트형 벡터를 생성하라. 현재 연도의 매월 첫 날짜를 주는 데이트형 벡터를 생성하라.
+
+4,여러분의생일이 (데이트형으로) 주어질 때, 나이를 연으로 반환하는 함수를 작성하라.
+
+5.왜 다음은 작동하지 않는가? (today() %--% (today() + years(1)) / months(1)
+
+## 13.5 시간대
+
+시간대는 엄청나게 복잡한 주제인데, 지정학적 요소들과 상호작용이 있기 때문이다. 다행히 데이터 분석을 할 때 시간대가 항상 중요하지는 않기 때문에 세부사항을 모두 파고들지 않아도 되지만, 정면으로 맞서야 하는 문제가 몇 개 있다.
+
+첫 번째 문제는 일상적인 시간대 이름은 모호하다는 것이다. 예를 들어 여러분이 미국인이라면 아마 EST, 즉 동부 표준시가 익숙할 것이다. 그러나 호주와 캐나다에도 EST가 있다! 혼란을 방지하기 위해, R은 국제 표준 IANA 시간대를 사용한다. 이는 일반적으로 ’<대륙>/<도시>’ 형태로 ’/’를 쓰는 일관된 명명 체계를 사용한다 (모든 국가가 대륙에 위치하는 것은 아니기 때문에 몇 가지 예외도 있다). 예를 들면 ’America/New_York‘, ’Europe/Paris‘와 ’Pacific/Auckland‘ 등이 있다.
+
+시간대가 국가, 혹은 국가 내 지역과 관련되었다고 일반적으로 생각하면 왜 시간대가 도시를 사용하는지 궁금할 것이다. 이는 IANA 데이터베이스가 시간대 규칙을 수십 년 분량이나 기록해야 하기 때문이다. 수십 년 사이에 국가 이름은 꽤 자주 변경(또는 분리)되지만, 도시의 이름은 유지되는 편이다. 또 다른 문제는 이름은 현재의 행동뿐만 아니라 전체 역사를 반영해야 한다는 것이다. 예를 들어 ’America/New_York‘과 ’America/Detroit‘ 시간대가 있다. 두 도시는 현재 모두 동부 표준시간을 사용하지만 (디트로이트가 위치한) 미시간주는 1969-1972’에, 일광절약제를 따르지 않았기 때문에 이름이 따로 필요한 것이다. 이러한 이야기들이 있는 원시 시간대 데이터베이스(http://www.iana.org/time-zones) 를 읽어볼 만하다!
+
+Sys.timezone() 를 사용해서 현재 R이 인식하고 있는 시간대를 알아볼 수 있다. (우리나라 시간대는 “Asia/Seoul”이다.)
+
+```{r fig.show='hide'}
+Sys.timezone()
+```
+
+(R이 모르는 경우 NA 가 나올 것이다.)
+
+OlsonNames() 를 사용해서 모든 시간대 이름의 전체 목록을 볼 수 있다
+
+```{r fig.show='hide'}
+length(OlsonNames())
+```
+
+```{r fig.show='hide'}
+head(OlsonNames())
+```
+
+R에 있어서, 시간대는 출력 제어만 하는 데이트-타임형의 한 속성이다. 예를 들어 이 세 가지 객체는 같은 시점을 나타낸다.
+
+```{r fig.show='hide'}
+(x1 <- ymd_hms("2015-06-01 12:00:00", tz = "America/New_York"))
+```
+
+```{r fig.show='hide'}
+(x2 <- ymd_hms("2015-06-01 18:00:00", tz = "Europe/Copenhagen"))
+```
+
+```{r fig.show='hide'}
+(x3 <- ymd_hms("2015-06-02 04:00:00", tz = "Pacific/Auckland"))
+```
+
+이들이 같은 시점이라는 것을 뺄셈을 사용하여 확인할 수 있다
+
+```{r fig.show='hide'}
+x1 - x2
+```
+
+```{r fig.show='hide'}
+x1 - x3
+```
+
+별도 명시가 없는 한, lubridate 는 항상 UTC를 사용한다
+UTC는 DST가 없는데, 이로 인해 계산에 용이한 표현 방법이 된다. c() 와 같이 데이트-타임형을 조합하는 연산은 종종 시간대를 제거한다. 이 경우 데이트-타임형은 현지 시간대로 표시된다.
+
+```{r fig.show='hide'}
+x4 <- c(x1, x2, x3)
+x4
+```
+두 가지 방법으로 시간대를 변경할 수 있다.
+ 
+ - 시각을 유지하고 표시방법을 변경한다. 시각은 맞지만 자연스러운 표시를 원하면 이 방법을 쓰면 된다.
+ 
+ ```{r fig.show='hide'}
+x4a <- with_tz(x4, tzone = "Australia/Lord_Howe")
+x4a
+```
+```{r fig.show='hide'}
+x4a - x4
+```
+
+(이 예시는 시간대의 다른 어려운 점을 보여준다. 시간대 오프셋이 모두 정수-시 (integer hour) 인 것은 아니다!)
+
+
+
+
+- 기본 시각을 변경한다. 시각에 잘못된 시간대가 붙어 있어서 이를 수정해야 한다면 이 방법을 사용하라
+
+```{r fig.show='hide'}
+x4b <- force_tz(x4, tzone = "Australia/Lord_Howe")
+x4b
+```
+
+```{r fig.show='hide'}
+x4b <- force_tz(x4, tzone = "Australia/Lord_Howe")
+x4b
+```
+
+
+
+
+
+
+
+
+
+
