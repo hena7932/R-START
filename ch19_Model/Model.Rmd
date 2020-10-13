@@ -1,0 +1,395 @@
+---
+title: "Create Model"
+output: 
+  html_document:
+   toc : true
+   toc_float : true
+   toc_depth : 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 1.9.1 들어가기
+
+이번 장에서는 실제 데이터에 중점을 두고 데이터에 대한 이해를 돕기 위해  
+점진적으로 모델을 생성하는 방법을 보여준다  
+시각화를 통해 패턴을 찾은 다음 모델을 사용하여 패턴을 구체적이고 정확하게 만들 것이다
+
+### - 19.1.1 준비하기
+
+앞 장과 똑같은 도구를 사용하지만 실제 데이터셋 (ggplot2 패키지의 diamonds,  
+nycflights13 패키지의 flight) 을 추가할 것이다  
+그리고 flight 데이터셋의 날짜  및 시간 변수를 사용하기 위해서는 lubridate 패키지가 필요하다  
+
+```{r message = FALSE}
+library(tidyverse)
+library(modelr)
+options(na.action = na.warn)
+
+library(nycflights13)
+library(lubridate)
+```
+
+### 19.2 낮은 품질의 다이아몬드가 더 비싼 이유는 무엇인가?
+
+앞 장에서 다이아몬드의 품질과 가격 사이의 관계를 살펴보았다
+낮은 품질의 다이아몬드 (좋지않은 커팅, 색상, 낮은 투명도)가 더 높은  
+가격을 가진다는 것을 확인했다
+
+```{r}
+ggplot(diamonds, aes(cut, price)) + geom_boxplot()
+ggplot(diamonds, aes(color, price)) + geom_boxplot()
+ggplot(diamonds, aes(clarity, price)) + geom_boxplot()
+```
+
+가장 좋지않은 색상은 J이며 가장 좋지않은 투명도는 I1이다  
+
+**데이터 사전 내용**  
+olor
+diamond colour, from D (best) to J (worst)
+
+clarity
+a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))  
+
+### 19.2.1 가격과 캐럿
+중요한 혼란 변수인 다이아몬드의 무게가 존재하기 때문에 품질이 낮은 다이아몬드가 가격이  
+더 높은 것처럼 보인다.   다이아몬드의 무게는 가격을 결정하는 가장 중요한 요소이며  
+품질이 낮은 다이아몬드가 더 무거운 경향이 있다
+
+```{r}
+ggplot(diamonds, aes(carat, price)) + geom_hex(bins = 50)
+```
+
+
+carat 항목을 분리해서 다이아몬드의 다른 속성이 상대적으로 가격에 어떤 영향을 주는지  
+알 수 있다.  
+먼저 작업하기 쉽게 아래 두가지 항목으로 다이아몬드 데이터셋을 변경해보자  
+
+**1. 2.5캐럿보다 작은 다이아몬드로 한정한다.**  
+**2. 캐럿과 가격 변수를 로그 변환한다.**  
+
+```{r}
+diamonds2 <- diamonds %>%
+  filter(carat <= 2.5) %>%
+  mutate(lprice = log2(price), lcarat = log2(carat))
+```
+
+또, 이렇게 변환함으로써 무게와 가격의 관계를 좀 더 알기 쉽게해준다  
+
+```{r}
+ggplot(diamonds2, aes(lcarat, lprice)) + geom_hex(bins = 50)
+```
+
+로그 변환은 해당 패턴을 작업하기에 가장 쉬운 선형 패턴으로 만들어주기 때문에 매우 유용하다.  
+다음으로 넘어가서 가장 강한 선형패턴을 제거해보자.  먼저 모델의 패턴을 명확하게 만든다.  
+
+```{r}
+mod_diamond <- lm(lprice ~ lcarat, data = diamonds2)
+```
+
+다음, 모델이 데이터에 대해 말하는 내용을 살펴본다.  
+예측값에 대해 로그 변환을 되돌리는 역변환을 적용하면 원 데이터에 예측값을 겹쳐 그릴 수 있다.  
+
+```{r}
+grid <- diamonds2 %>%
+  data_grid(carat = seq_range(carat, 20)) %>%
+  mutate(lcarat = log2(carat)) %>%
+  add_predictions(mod_diamond, "lprice") %>%
+  mutate(price = 2 ^ lprice)
+```
+```{r}
+ggplot(diamonds2, aes(carat, price)) + 
+  geom_hex(bins = 50) + 
+  geom_line(data = grid, color = "red", size = 1)
+```
+
+이 모델이 옳다면 크기가 큰 다이아몬드는 생각보다 싸다  
+원인은 해당 데이터셋에 19000달러가 넘는 다이아몬드가 없는게 이유일 것이다  
+이제 강한 선형 패턴을 제대로 제거했는지 확인해보자  
+
+```{r}
+diamonds2 <- diamonds2 %>%
+  add_residuals(mod_diamond, "lresid")
+```
+```{r}
+ggplot(diamonds2, aes(lcarat, lresid)) + 
+  geom_hex(bins = 50)
+```
+
+여기서 알 수 있는점은 가격 대신 lresid를 이용하여 문제가 되었던 플롯을 다시 그릴 수 있다는것이다  
+
+```{r}
+ggplot(diamonds2, aes(cut, lresid)) + geom_boxplot()
+```
+
+
+```{r}
+ggplot(diamonds2, aes(color, lresid)) + geom_boxplot()
+ggplot(diamonds2, aes(clarity, lresid)) + geom_boxplot()
+
+```
+
+이제 가격과 커팅,색,투명도의 관계를 확인해보면 좋은 품질의 다이아몬드가 가격이 높아진것을 확인할 수 있다  
+
+### 19.2.2 더 복잡한 모델
+
+원한다면 관측한 효과를 모델로 이동하여 모델을 발전시킬 수 있다  
+예를들어 색, 커팅, 투명도를 모델에 포함하여 범주형 변수의 효과를 나타낼 수 있다  
+
+```{r}
+mod_diamond2 <- lm(lprice ~ lcarat + color + cut + clarity, data = diamonds2)
+```
+모델에 네가지 예측변수가 모두 포함되었다.  
+이제 시각화는 좀 더 어려워지겠지만 모든 변수가 독립적이므로 따로따로 그릴 수 있다.  
+이 과정을 쉽게 만들기 위해 data_grid 함수에 .model 인수를 사용할 것이다
+
+```{r}
+grid <- diamonds2 %>%
+  data_grid(cut, .model = mod_diamond2) %>%
+  add_predictions(mod_diamond2)
+grid
+```
+```{r}
+ggplot(grid, aes(cut, pred)) + geom_point()
+```
+
+명시적으로 제공되지 않은 변수를 모델이 필요로 한다면 data_grid() 함수가 자동으로  
+'대표적인' 값으로 채울 것이다.  
+**연속형 변수 > 중앙값**  
+**범주형 변수 > 빈번한 값**  
+```{r}
+
+```
+
+```{r}
+diamonds2 <- diamonds2 %>%
+  add_residuals(mod_diamond2, "lresid2")
+
+ggplot(diamonds2, aes(lcarat, lresid2)) + geom_hex(bins = 50)
+```
+이 데이터는 값이 큰 다이아몬드가 일부 존재한다는 것을 보여준다  
+값이2라는 것은 다이아몬드의 가격이 예상했던 가격의 4배라는 것을 나타낸다  
+
+```{r}
+diamonds2 %>%
+  filter(abs(lresid2) > 1) %>%
+  add_predictions(mod_diamond2) %>%
+  mutate(pred = round(2 ^ pred)) %>%
+  select(price, pred, carat:table, x:z) %>%
+  arrange(price)
+```
+여기에서 분명하게 눈에 띄는 것은 없지만, 모델에 문제가 있는지 혹은 데이터에 오류가 있는지  
+생각해보는데 시간을 투자할 가치가 있다.  
+만약 데이터에 오류가 있다면 부정확하게 낮은 가격으로 가격이 매겨진 다이아몬드를 사게 될 수 도 있다.
+
+### 19.3 일일 운항 횟수에 어떤 영향이 있는가?
+더 간단해보이는 데이터셋에 대해 비슷한 과정을 진행해보자  
+(뉴욕 비행기 데이터)  
+
+일자별 항공편의 빈도수를 ggplot으로 시각화 >  
+```{r message = FALSE}
+daily <- flights %>%
+  mutate(date = make_date(year, month, day)) %>%
+  group_by(date) %>%
+  summarize(n = n())
+```
+```{r}
+daily
+
+ggplot(daily, aes(date, n)) + geom_line()
+```
+
+### 19.3.1 요일
+요일효과가 매우 강하게 존재하기 때문에 장기적인 트렌드를 이해하기 쉽지 않다  
+요일별 항공편의 수에 대한 분포를 먼저 살펴보자.  
+
+```{r}
+daily <- daily %>%
+  mutate(wday = wday(date, label = TRUE))
+ggplot(daily, aes(wday, n)) + geom_boxplot()
+```
+
+평일에 이용수가 주말의 이용수보다 월등히 많은것을 알 수 있다.  
+
+이 패턴을 제거하는 한가지 방법은 모델을 사용하는 것이다.  
+먼저 모델을 생성하고 원 데이터에 예측값을 겹쳐서 나타낸다.  
+```{r}
+mod <- lm(n ~ wday, data = daily)
+grid <- daily %>%
+  data_grid(wday) %>%
+  add_predictions(mod, "n")
+
+ggplot(daily, aes(wday, n)) + geom_boxplot() + geom_point(data = grid, color = "red", size = 4)
+```
+
+다음으로 잔차를 계산 후 시각화한다  
+
+```{r}
+daily <- daily %>%
+  add_residuals(mod)
+daily %>%
+  ggplot(aes(date, resid)) + geom_ref_line(h = 0) + geom_line()
+```
+
+6월부분부터 그래프가 들쭉날쭉한것을 확인할 수 있다  
+각 요일을 플룻으로 그려보면 알 수 있을것이다  
+
+```{r}
+ggplot(daily, aes(date, resid, color = wday)) + geom_ref_line(h = 0) + geom_line()
+```
+
+그래프를 보면 토요일의 그래프가 예측에서 차이가 난다  
+여름에는 항공편이 예측값보다 많고 가을에는 적다  
+이런 패턴을 포작하기 위해 더 나은 방법을 알아보면  
+
+```{r}
+daily %>%
+  filter(resid < -100)
+```
+
+중간중간 미국의 공휴일이 껴있다  
+geom_smoot를 이용해 그래프로 살펴보면  
+
+```{r}
+daily %>%
+  ggplot(aes(date, resid)) + geom_ref_line(h = 0) + geom_line(color = "grey50") +
+  geom_smooth(se = FALSE, span = 0.20)
+```
+
+항공편은 1월, 12월에 적고 5월,9월에 많다.  
+하지만 데이터가 1년치 밖에 없어서 이유를 알기는 힘들다  
+
+### 19.3.2 주기적인 토요일 효과
+일단 토요일 비행 횟수를 정확하게 예측하지 못한 문제가 있다.  
+처음에는 데이터를 토요일로 한정해서 알아보자  
+
+```{r}
+daily %>%
+  filter(wday == "Sat") %>%
+  ggplot(aes(date, n)) + geom_point() + geom_line() + scale_x_date(
+    NULL, date_breaks = "1 month", date_labels = "%b"
+  )
+```
+
+위 패턴은 여름 휴가로 인해 발생한것으로 추측된다.  
+여름휴가는 대부분 6월 초에서 8월 말 사이이고 토요일에 휴가를 떠나도 상관이 없는것같다  
+그렇다면 가을보다 봄에 토요일 비행이 많은 이유는?  
+미국인에게 가을은 추수감사절과 크리스마스가 있어 휴가를 계획하는것은 일반적이지 않은듯하다  
+그렇다면 3개의 학기를 포함하는 학기 변수를 만들고 확인해보자  
+
+```{r}
+term <- function(date) {
+  cut(date, breaks = ymd(20130101, 20130605, 20130825, 20140101),
+  labels = c("spring", "summer", "fall")
+  )
+}
+
+daily <- daily %>%
+  mutate(term = term(date))
+
+daily %>%
+  filter(wday == "Sat") %>%
+  ggplot(aes(date, n, color = term)) +
+  geom_point(alpha = 1/3) + 
+  geom_line() + scale_x_date(
+    NULL, date_breaks = "1 month", date_labels = "%b"
+  )
+```
+
+위 데이터가 다른요일에 어떤 영향을 미치는지 확인하는것은 유용하다  
+
+```{r}
+daily %>%
+  ggplot(aes(wday, n, color = term)) + geom_boxplot()
+```
+
+학기 전반에 변동이 있는것으로 보이므로 각 학기에 대해 별도의 요일 효과를 적용하는 것이 합리적이다  
+요일 정보는 모델을 개선시키지만 기대 효과는 낮다  
+
+```{r}
+mod1 <- lm(n ~ wday, data = daily)
+mod2 <- lm(n ~ wday * term, data = daily)
+
+daily %>%
+gather_residuals(without_term = mod1, with_term = mod2) %>%
+ggplot(aes(date, resid, color = model)) +
+  geom_line(alpha = 0.75)
+```
+
+모델로 예측한값을 원래 데이터와 겹쳐그리면 문제를 확인할 수 있다  
+
+```{r}
+grid <- daily %>%
+  data_grid(wday, term) %>%
+  add_predictions(mod2, "n")
+
+ggplot(daily, aes(wday,n)) + 
+  geom_boxplot() + geom_point(data = grid, color = "red") + facet_wrap(~ term)
+```
+
+각 학기에 요일을 대입한 결과 조금 더 알기 쉽게 구분이 되었다  
+
+모델은 평균 효과를 찾지만 값이 큰 이상값이 많으므로 평균값은 일반값과 멀어진다  
+이 문제는 이상값에 영향을 덜 받는 MASS::rlm()을 사용하는 것이다  
+이 함수는 이상값이 추정값에 미치는 영향을 줄이고 요일 패턴을 제거하는 모델을 제공한다  
+
+```{r}
+mod3 <- MASS::rlm(n ~ wday * term, data = daily)
+
+daily %>%
+  add_residuals(mod3, "resid") %>%
+  ggplot(aes(date, resid)) + geom_hline(yintercept = 0, size = 2, color = "white") +
+  geom_line()
+```
+
+정기적인 추세와 양과 음의 이상값을 훨씬 쉽게 확인 가능하다  
+
+### 19.3.3 계산된 변수
+많은 모델과 시각화를 경험해보고 있다면 변수 생성 과정을 함수로 묶어 항상 같은 변형을 적용하는 것이 좋다.  
+예를 들어 다음과 같이 작성할 수 있다
+
+**compute_vars <- function(data)   
+{
+    data %>%
+    mutate(
+      term = term(date),
+      wday = wday(date, label = TRUE)
+    )
+}
+
+또 다른 옵션은 모델 수식에 변형을 바로 넣는 것이다
+
+두 방법 모두 합리적이다  
+변형된 변수를 명시적으로 만드는 것은 작업을 확인하거나 변수를 시각화에 이용하려는 경우 유용하다.  
+모델함수에 변형을 포함하면 모델 자체에서 변형되기 때문에 다양한 데이터셋으로 작업하는 경우에 좀 더 쉽게  
+사용이 가능하다
+
+### 19.3.4 연중시각 : 다른 접근법  
+이번에는 모델을 향상하기 위해 도메인 지식을 사용했다  
+모델에 명시적인 지식을 포함시키는 방법 대신 다차원의 데이터를 포함하도록 하는 방식도 있다.  
+그것은 더 유연한 모델을 사용하여 관심있는 패턴을 포착하는 것이다  
+이때 간단한 선형 추세는 적합하지 않기 때문에 1년의 기간에 대해서 매끄러운 곡선을 적합하기 위해  
+자연스러운 스플라인을 적용해볼 수 있다  
+
+```{r}
+library(splines)
+mod <- MASS::rlm(n ~ wday * ns(date, 5), data = daily)
+
+daily %>%
+  data_grid(wday, date = seq_range(date, n = 13)) %>%
+  add_predictions(mod) %>%
+  ggplot(aes(date, pred, color = wday)) + geom_line() + geom_point()
+```
+토요일의 비행회수가 다른 패턴과 확연히 다르다  
+이는 원래 데이터에서도 그랬으니 괜찮다  
+
+### 19.4 모델에 대해 더 학습하기
+모델링의 겉부분만 살펴보았다.  
+이와같은 방법을 사용하면 스스로 데이터 분석 역량을 향상하는데 사용할 수 있는  
+간단하고도 범용적인 도구를 얻을 수 있다  
+위에서 보았듯 아주 단순한 모델조차 변수 간의 관계를 알아내는 능력에 큰 변화를 가져올 수 있다  
+모델링에 대해서 배우는 이번 장은 다른장과 다른방식을 사용했다  
+대부분의 책들과 다른 관점에서 모델링에 접근하였고 모델링에 대한 분량이 상대적으로 적다  
+모델링은 그 내용만으로 책 한권분량이 나오므로 다른 책들도 읽어보길 이 책에서는 권장하고있다
