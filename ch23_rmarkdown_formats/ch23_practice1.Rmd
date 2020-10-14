@@ -1,0 +1,51 @@
+---
+title: "23. Practice1_R Markdown formats"
+author: "ne_choi"
+date: '2020 10 13 '
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# HEY HELLO  
+
+## step 1. word 추출(p.451)
+I want to export this code to word.  
+Please help me !!  
+
+Rmd 파일을 word로 추출하기:  
+rmarkdown::render("ch23_practice1.Rmd", output_format = "word_document")
+
+
+## step 2. code_folding(p.455)
+
+코드 청크 접기: `code_folding: hide`
+
+```{r}
+library(ggplot2)
+
+str(mpg)
+```
+
+## step 3. 노트북(p.453)
+output: html_notebook  
+
+위 코드를 YAML 헤더에 넣고 Knit 해보자  
+
++ csv 데이터 저장 기능 현재 기준(2020.10.14) 지원 되는지 확인하기 -> 안 되는 것 같음
+```{r}
+read.csv("temp.csv")
+```
+
+## step 4. 프리젠테이션 생성(p.454)
+output: ioslides_presentation   
+runtime: shiny  
+
+위 코드를 YAML 헤더에 넣고 Knit 해보자  
+

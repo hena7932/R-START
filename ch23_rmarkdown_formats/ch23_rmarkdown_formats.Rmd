@@ -1,0 +1,325 @@
+---
+title: "23. R Markdown formats (+workflow)"
+
+date: '2020 10 13 '
+output:
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: FALSE
+      smooth_scroll: TRUE
+    theme: united
+    highlight: textmate
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 23. R 마크다운 유형들  
+필요한 설치 파일  
+install.packages("leaflet")  
+install.packages("shiny")  
++ 창 위에 install 뜨는 것 있으면 모두 설치
+
+## 1. 들어가기  
+
+R 마크다운으로 생성할 수 있는 더 많은 출력 유형 알아보기 (현재까지 공부한 R 마크다운은 HTML 문서를 생성하는 방법)  
+
+* **출력 문서를 설정하는 방법**
+  - 영구적 방법: YAML 헤더 수정  
+```
+title: "Viridis Demo"
+output: html_document
+```
+
+  - 일시적 방법: 직접 rmarkdown::render() 호출  
+```
+rmarkdown::render("diamond-size.Rmd", output_format = "word_document")  
+```
+   -> 여러 출력 유형 생성하는 것을 프로그래밍할 때, 유용한 방법  
+
+RStudio의 knit 버튼을 클릭하면 output 필드의 첫 번째 형식으로 파일을 렌더링함  
+knit 버튼 옆의 드롭다운 메뉴를 클릭하여 다른 형식으로 렌더링할 수 있음  
+![img1](./img/img1.png){width="200"}  
+
+
+## 2. 출력 옵션  
+각 출력 형식은 R 함수와 연관  
+: `foo`나 `pkg::foo`로 작성할 수 있음(pkg를 생략하면 rmarkdown이 기본값이 됨)  
+
+출력을 만드는 함수 이름을 확인하면 도움말을 얻을 수 있기에 중요함  
+ex. html_document와 함께 설정 가능한 파라미터를 알기 위해서는 `?rmarkdown::html_document`를 해야 함
+
+기본 파라미터 값을 무시하는 방법: 확장된 출력 필드 이용  
+ex. 위치가 고정되지 않은(floating) 목차가 있는 html_document로 렌더링 하는 방법
+```
+output:
+  html_document: #html 문서 생성
+    toc: true #목차 추가
+    toc_float: true #스크롤에 맞춰 목차 이동
+```  
+
+포맷 리스트를 제공하기 때문에 다중 출력으로 렌더링할 수도 있음  
+```
+output:
+  html_document:
+    toc: true
+    toc_float: true
+  pdf_document: default #pdf 파일도 추출
+```
+cf. 기본 옵션을 덮어쓰지 않으려면 특수 구문을 주의  
+
+
+## 3. 문서  
+html_document 출력 시, 여러 변종을 적용하여 다양한 문서 생성 가능  
+
+```
+- pdf_document: LaTeX(오픈 소스 문서 레이아웃 시스템)이 있는 PDF를 생성  
+  (LaTeX 설치 필요)
+- word_document: 마이크로소프트 워드 문서(.docx)를 생성  
+- odt_document: 오픈 문서 텍스트 문서(.odt)를 생성  
+- rtf_document: 서식 있는 포맷 문서(.rtf)에 해당  
+- md_document: 마크다운 문서에 해당, 유용하지 않지만 회사의 CMS나 랩 위키가 마크다운을 사용할 경우 이용할 만함(랩 위키: 연구실 멤버 간 자료 공유 목적으로 게시하는 온라인 문서)  
+- github_document: 깃허브에서 공유할 수 있도록 설계뙨 md_document의 맞춤형 버전  
+```  
+
+의사결정권자에게 공유할 문서를 생성할 경우, 설정 청크에서 전역 옵션을 설정하면 코드를 표시하지 않을 수 있음  
+```
+knitr::opts_chunk$set(echo = FALSE)
+```  
+
+* html_document의 기타 옵션
+기본적으로는 코드 청크를 표시하지 않으며, 클릭해야 표시하는 옵션 설정 가능  
+```
+output:
+  html_document:  
+    code_folding: hide
+```
+
+
+
+## 4. 노트북  
+html_notebook은 html_document의 변형  
+랜더링된 출력은 서로 유사하지만 목적이 다름  
+html_document는 의사 결정권자와 의사소통하는 데 초점 -> 완전히 렌더링된 출력 포함  
+html_notebook은 다른 데이터 과학자들과의 공동작업에 초점 -> 완전히 렌더링된 출력 포함 **+ 소스 코드 전체 포함**  
+
+* **노트북이 생성한 .nb.html을 사용하는 2가지 방법  **
+- 웹 브라우저에서 해당 파일을 보고 렌더링된 출력을 볼 수 있음: 렌더링을 생성한 소스 코드의 임베디드 복사본이 포함되는 것이 html_document와의 차이  
+- RStudio에서 해당 파일을 편집할 수 있음: .nb.html 파일을 열 때, RStudio는 이를 생성한 .Rmd 파일을 자동으로 생성 -> 필요할 때마다 파일을 자동으로 불러올 수 있음  
+- csv 파일 불러올 수 있을 것이라고 쓰여 있는데 현재 기준으로 확인해보자
+  
+
+동료에게 분석 내용을 간단히 공유할 때는 `.nb.html` 파일을 이메일로 보내면 됨  
+단, 동료가 수정을 원하는 경우 깃허브를 사용하여 공동작업을 해야 함  
+```
+output:
+  html_notebook: default
+  github_document: default
+```
+ 
+html_notebook은 로컬 미리보기가 가능하고 이메일을 통해 공유할 수 있는 파일을 제공  
+github_document는 깃에서 확인할 수 있는 최소한의 md 파일을 생성 -> 코드뿐 아니라 분석 결과가 시간에 따라 변하는 과정을 볼 수 있음(깃허브는 이를 온라인으로 렌더링함)  
+
+## 5. 프리젠테이션  
+R 마크다운으로 프리젠테이션을 생성할 수도 있음  
+(키노트, 파워포인트보다 시각적 제어에 제약이 있으나, R 코드 결과를 자동으로 프리젠테이션에 삽입하여 시간을 절약할 수 있음)  
+내용은 슬라이드로 나누어지며, 첫 번째(#) 또는 두 번쨰(##) 레벨 헤더에서 새 슬라이드가 시작됨  
+수평선(***)을 삽입하면 헤더 없는 새로운 슬라이드가 생성됨  
+
+**R 마크다운에 내장된 프레젠테이션 형식 3가지**
+```
+- ioslides_presentation: ioslides를 이용한 HTML 프리젠테이션
+- slidy_presentation: W3C study를 이용한 HTML 프리젠테이션  
+- beamer_presentation: LaTeX Beamer를 이용한 HTML 프리젠테이션  
+```  
+
+* **추가**  
+패키지에서 지원하는 프리젠테이션 형식도 존재  
+```
+- revealjs::revealjs_presentation: reveal.js를 이용한 HTML 프리젠테이션(revealjs 패키지 필요)  
+- rmdshower: shower 프리젠테이션 엔진의 래퍼를 제공  
+```
+* 참고 링크 1. [rmdshower](https://github.com/MangoTheCat/rmdshower) / 2. [shower](https://github.com/shower/shower)  
+
+
+## 6. 대시보드  
+대시보드: 많은 양의 정보를 시각적으로 신속하게 전달할 수 있는 도구  
+flexdashboard를 사용하면 R 마크다운과 헤더의 레이아웃 표시 규칙으로 대시보드를 쉽게 생성할 수 있음  
+
+```
+- 레벨 1 헤더(#): 대시보드의 새로운 페이지 시작
+- 레벨 2 헤더(##): 새로운 열 시작  
+- 레벨 3 헤더(###): 새로운 행 시작  
+```  
+
+ex. 아래 대시보드는 대시보드 아래의 코드를 이용해 생성 
+![img2](./img/img2.png){width="500"}  
+```
+---
+title: "Diamonds distribution dashboard"
+output: flexdashboard::flex_dashboard
+---
+```
+```
+library(ggplot2)
+library(dplyr)  
+knitr::opts_chunk$set(fig.width = 5, fig.asp = 1/3) 
+
+## Column 1  
+### Carat  
+ggplot(diamonds, aes(carat)) + geom_histogram(binwidth = 0.1)  
+
+### Cut  
+ggplot(diamonds, aes(cut)) + geom_bar()  
+
+
+### Color  
+ggplot(diamonds, aes(color)) + geom_bar()
+
+
+## Column 2  
+### The largest diamonds  
+diamonds %>% 
+  arrange(desc(carat)) %>% 
+  head(100) %>% 
+  select(carat, cut, color, price) %>% 
+  DT::datatable()
+```
+
+flexdashboard에는 사이드바, 탭모음, 값상자, 게이지를 생성하는 간단한 도구가 있음  
+더 알아보기: http://rmarkdown.rstudio.com/flexdashboard  
+
+
+## 7. 대화형 동작  
+HTML 유형(문서, 노트북, 프리젠테이션, 대시보드)에는 대화형 구성요소 포함 가능  
+
+### 7.1 html 위젯
+HTML은 대화형 포맷으로 html 위젯(htmlwidgets, 대화형 HTML 시각화를 생성하는 R 함수)으로 대화형 동작을 이용할 수 있음  
+
+ex. 아래 leaflet 지도를 웹에서 보고 있다면 드래그나 확대 및 축소를 할 수 있음 
+
+install.packages("leaflet")
+
+```{r message = FALSE}
+library(leaflet)
+leaflet() %>%
+  setView(174.764, -36.877, zoom = 16) %>%
+  addTiles() %>%
+  addMarkers(174.764, -36.877, popup = "Maungawhau")
+```
+
+html 위젯은 HTML이나 자바스크립트를 몰라도 사용할 수 있음  
+
+* **추가** html 위젯을 제공하는 패키지(중 일부)
+- dygraphs: 대화형 시계열 시각화 패키지  
+- DT: 대화형 테이블 패키지  
+- threejs: 대화형 3d 플롯 패키지  
+- DiagrammeR: 다이어그램 패키지(플로 차트와 단순한 노트링크 다이어그램 같은)  
+
+html 위젯 더 알아보기: http://www.htmlwidgets/org  
+
+
+### 7.2 Shiny  
+html 위젯은 클라이언트측 대화형 기능을 제공 -> 모든 대화형 기능은 R과는 독립적으로 브라우저에서 일어남 -> R에 연결하지 않고 HTML 파일을 배포할 수 있음  
+단, HTML과 자바스크립트로 구현된 것을 하기에는 제약 사항이 많음 -> Shiny 기능을 사용하자  
+
+Shiny 기능: 자바스크립트가 아닌 R 코드를 사용하여 대화형 기능을 생성할 수 있게 하는 패키지  
+* **R 마크다운 문서에서 Shiny 코드 호출하기**
+- 헤더에 `runtime: shiny` 추가  
+```
+title: "Shiny Web App"
+output: html_document
+runtime: shiny
+```  
+
+- `입력` 함수를 이용하여 문서에 대화형 구성요소 추가 가능 
+
+install.packages("shiny")
+
+```{r message = FALSE} 
+library(shiny)
+
+textInput("name", "이름은 무엇입니까?") # Rmd에서 실행 시, 한글 깨질 수 있는데 knit하면 제대로 출력됨
+numericInput("age", "나이는 몇 살입니까?", NA, min = 0, max = 150)
+```
+`input$name`과 `imput$age`로 값을 참조할 수 있고, 이 값을 사용하는 코드는 값이 변경될 때마다 자동으로 다시 실행됨  
+
+* **추가**
+Shiny 대화형 기능은 서버측에서 작동하기 때문에 앱을 여기서는 보여줄 수 없음  
+자바스크립트를 몰라도 대화형 앱을 작성할 수는 있지만, 실행하기 위해서는 서버가 필요하다는 수송 문제가 있음  
+-> Shiny 앱을 온라인으로 실행하기 위해서는 Shiny 서버가 필요  
+본인 컴퓨터에서 Shiny 앱을 실행하면 Shiny는 직업 Shiny 서버를 자동으로 설정하지만, 온라인으로 이러한 대화형 기능을 공개하려면 퍼블릭 Shiny 서버가 필요  
+Shiny 기능 더 알아보기: http://shiny.rstudio.com  
+
+
+## 8. 웹사이트
+R 마크다운을 이용하여 완전한 웹사이트 생성하기  
+
+- 단일 디렉터리에 .Rmd 파일을 넣으면 index.Rmd가 홈페이지가 됨  
+- _site.yml이라는 이름의 YAML 파일을 추가하면 사이트 탐색 기능이 제공됨  
+ex. 
+```
+name: "my-website"
+navbar:
+  title: "My Website"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Viridis Colors"
+      href: 1-example.html
+    - text: :Terrain Colors"
+      href: 3-inline.html
+```  
+
+독립형 정적 웹사이트로 배포할 준비가 된 파일의 디렉터리인 _site를 빌드하거나, 웹사이트 디렉터리로 RStudio 프로젝트를 사용하고 있는 경우: rmarkdown::render_site()를 실행  
+RStudio가 IDE에 Build 탭을 추가하는데, 이 탭은 사이트를 빌드하고 미리볼 때 사용 가능  
+더 알아보기: http://rmarkdown.rstudio.com/rmarkdwon_websites.html  
+
+
+## 9. 기타 유형
+더 많은 출력 유형을 제공하는 패키지  
+- bookdown: 책을 저술할 때 유용한 패키지  
+- prettydoc: 약식 문서 포맷을 다양한 테마로 제공  
+- rticles: 선별된 과학 학술지의 유형에 맞도록 컴파일  
+
+더 많은 유형 알아보기: http://rmarkdown.rstudio.com/developer_custom_formats.html  
+
+
+## 10. 더 배우기
+다양한 유형으로 효과적인 의사소통 법을 배우고 싶은 경우 참고하면 좋을 자료  
+
+- 프리젠테이션 기술 개선: Neal Ford&Matthew McCollough&Nathaniel Schutta의 *PRESENTATION PATTERNS* 교재(번역서: 프레젠테이션 교과서, 2014, 위키북스)  
+- 학술 발표: [Leek 그룹의 발표 가이드](http://github.com/jtleek/talkguide)   
+- [Matt McGarrity의 대중연설 온라인 수업](https://www.coursera.org/learn/public-speaking)  
+- 대시보드 생성: Stephen Few의 Information Dash-board Design: The Effective Visaul Communication of Data  
+- 그래픽 디자인: The Non-Designer's Design Book(번역서: 디자이너가 아닌 사람들을 위한 디자인북, 2016, 라의눈)  
+
+
+# 24. R 마크다운 워크플로
+- R 마크다운은 콘솔과 스크립트 편집기를 통합하여 대화형 탐색과 장기 코드 캡쳐의 경계를 모호하게 만듦  
+- 청크 내에서 반복적으로 빠르게 편집하고 Cmd/Ctrl + Shift + Enter로 재실행 가능  
+
+- R 마크다운은 설명글과 코드를 긴밀하게 통합하기 때문에 중요함  
+-> `훌륭한 분석 노트북`으로 사용 가능(고전적 실험실 노트북과 비슷한 역할)
+```
+- 무엇을 했는지, 왜 했는지 기록하기  
+- 엄격하게 사고하기: 생각의 과정을 기록하고 반영하면 분석이 날카로워지고 공유 시에도 시간이 절약됨  
+- 다른 사람이 작업 내용을 이해할 수 있게 하기: 동료와 작업하기 쉬움  
+```  
+
+**실험실 노트북 사용에 관한 조언을 분석 노트북에 적용하기**  
+
+- 각 노트북 첫 번째 단락에 설명이 담긴 제목, 연상할 수 있는 파일 이름 및 분석 목적을 간략히 설명하라  
+- YAML 헤더 날짜 필드에 노트북에서 작업을 시작한 날짜를 기록하라  
+  date: 2020-10-09(모호성을 피하기 위해 ISO 8601 YYYY-MM-DD 형식을 사용하라)  
+- 분석 아이디어에 많은 시간을 투자했으나 사용하기 어려울 경우라도 삭제하지 말라  
+  실패 이유를 간략히 기록하여 노트북에 남기면 추후 분석 시 실패를 덜 겪게 됨  
+- 데이터 입력을 R 외부에서 하라(소량의 데이터 조각 기록 시는 tibble:tribble()이용하여 명확히 표시)  
+- 데이터 파일에서 오류 발견 시, 직접 수정하지 말고 코드로 값을 수정하고 수정 이유를 설명하라  
+- 업무 마감 전, 노트북이 knit되는지 확인하고 오류 시 바로 수정하라(캐싱 사용 시, 캐시 삭제)  
+- 코드가 장기 재생산성을 갖도록 코드에 사용되는 패키지 버전을 추적하라  
+  [packrat](http://rstudio.github.io/packrat) 사용: 패키지를 프로젝트 디렉터리나 [체크 포인트](https://github.com/RevolutionAnalytics/checkpoint)에 저장한 뒤, 지정된 날짜에 가능한 패키지를 재설치 <- 패키지를 현재 시점으로 재생성하지는 못하나, 어떤 것인지 확인이 가능  
+- 노트북을 개별 프로젝트에 저장하고 명확한 명명 스키마로 정리하라  
+

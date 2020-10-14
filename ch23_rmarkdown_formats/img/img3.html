@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)https://r4ds.had.co.nz/r-markdown-formats.html -->
+<html lang="" xml:lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>29 R Markdown formats | R for Data Science</title>
+  <meta name="description" content="This book will teach you how to do data science with R: You’ll learn how to get your data into R, get it into the most useful structure, transform it, visualise it and model it. In this book, you will find a practicum of skills for data science. Just as a chemist learns how to clean test tubes and stock a lab, you’ll learn how to clean data and draw plots—and many other things besides. These are the skills that allow data science to happen, and here you will find the best practices for doing each of these things with R. You’ll learn how to use the grammar of graphics, literate programming, and reproducible research to save time. You’ll also learn how to manage cognitive resources to facilitate discoveries when wrangling, visualising, and exploring data.">
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7">
+
+  <meta property="og:title" content="29 R Markdown formats | R for Data Science">
+  <meta property="og:type" content="book">
+  <meta property="og:url" content="https://r4ds.had.co.nz/">
+  <meta property="og:image" content="https://r4ds.had.co.nz/cover.png">
+  <meta property="og:description" content="This book will teach you how to do data science with R: You’ll learn how to get your data into R, get it into the most useful structure, transform it, visualise it and model it. In this book, you will find a practicum of skills for data science. Just as a chemist learns how to clean test tubes and stock a lab, you’ll learn how to clean data and draw plots—and many other things besides. These are the skills that allow data science to happen, and here you will find the best practices for doing each of these things with R. You’ll learn how to use the grammar of graphics, literate programming, and reproducible research to save time. You’ll also learn how to manage cognitive resources to facilitate discoveries when wrangling, visualising, and exploring data.">
+  <meta name="github-repo" content="hadley/r4ds">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="29 R Markdown formats | R for Data Science">
+  <meta name="twitter:site" content="@hadley">
+  <meta name="twitter:description" content="This book will teach you how to do data science with R: You’ll learn how to get your data into R, get it into the most useful structure, transform it, visualise it and model it. In this book, you will find a practicum of skills for data science. Just as a chemist learns how to clean test tubes and stock a lab, you’ll learn how to clean data and draw plots—and many other things besides. These are the skills that allow data science to happen, and here you will find the best practices for doing each of these things with R. You’ll learn how to use the grammar of graphics, literate programming, and reproducible research to save time. You’ll also learn how to manage cognitive resources to facilitate discoveries when wrangling, visualising, and exploring data.">
+  <meta name="twitter:image" content="https://r4ds.had.co.nz/cover.png">
+
+<meta name="author" content="Garrett Grolemund">
+<meta name="author" content="Hadley Wickham">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="https://r4ds.had.co.nz/graphics-for-communication.html">
+<link rel="next" href="https://r4ds.had.co.nz/r-markdown-workflow.html">
+<script type="text/javascript" async="" src="./img3_files/analytics.js.다운로드"></script><script src="./img3_files/jquery.min.js.다운로드"></script>
+<link rel="stylesheet" href="./img3_files/style.css">
+<link rel="stylesheet" href="./img3_files/18f06d1b984d7e1396eaca70d8336e0c40641c53.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="./img3_files/empty-anchor.js.다운로드"></script>
+<script src="./img3_files/htmlwidgets.js.다운로드"></script>
+<link rel="stylesheet" href="./img3_files/str_view.css">
+<script src="./img3_files/str_view.js.다운로드"></script>
+<link rel="stylesheet" href="./img3_files/leaflet.css">
+<script src="./img3_files/leaflet.js.다운로드"></script>
+<link rel="stylesheet" href="./img3_files/leafletfix.css">
+<script src="./img3_files/a705ba887e217fd2a1f0c4ce33b325b9861626f0.js.다운로드"></script>
+<link rel="stylesheet" href="./img3_files/rstudio_leaflet.css">
+<script src="./img3_files/leaflet.js(1).다운로드"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="./img3_files/js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115082821-1');
+</script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" type="text/css" href="./img3_files/r4ds.css">
+<script type="text/javascript" src="./img3_files/MathJax.js.다운로드"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+<body><div id="MathJax_Message" style="display: none;"></div>
+
+
+
+  <div class="book without-animation with-summary   font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary"><div class="book-search" role="search"><label for="search-box" aria-hidden="false" hidden="hidden">Type to search</label><input id="search-box" type="search" class="form-control" placeholder="Type to search (Enter for navigation)" title="Use Enter or the &lt;Down&gt; key to navigate to the next match, or the &lt;Up&gt; key to the previous match"></div>
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="https://r4ds.had.co.nz/">R for Data Science</a></strong></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="https://r4ds.had.co.nz/index.html"><i class="fa fa-check"></i>Welcome</a><ul style="display: none;">
+<li class="chapter" data-level="" data-path="index.html"><a href="https://r4ds.had.co.nz/index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#what-you-will-learn"><i class="fa fa-check"></i><b>1.1</b> What you will learn</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#how-this-book-is-organised"><i class="fa fa-check"></i><b>1.2</b> How this book is organised</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#what-you-wont-learn"><i class="fa fa-check"></i><b>1.3</b> What you won’t learn</a><ul style="display: none;">
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#big-data"><i class="fa fa-check"></i><b>1.3.1</b> Big data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#python-julia-and-friends"><i class="fa fa-check"></i><b>1.3.2</b> Python, Julia, and friends</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#non-rectangular-data"><i class="fa fa-check"></i><b>1.3.3</b> Non-rectangular data</a></li>
+<li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#hypothesis-confirmation"><i class="fa fa-check"></i><b>1.3.4</b> Hypothesis confirmation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#prerequisites"><i class="fa fa-check"></i><b>1.4</b> Prerequisites</a><ul style="display: none;">
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#r"><i class="fa fa-check"></i><b>1.4.1</b> R</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#rstudio"><i class="fa fa-check"></i><b>1.4.2</b> RStudio</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#the-tidyverse"><i class="fa fa-check"></i><b>1.4.3</b> The tidyverse</a></li>
+<li class="chapter" data-level="1.4.4" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#other-packages"><i class="fa fa-check"></i><b>1.4.4</b> Other packages</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#running-r-code"><i class="fa fa-check"></i><b>1.5</b> Running R code</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#getting-help-and-learning-more"><i class="fa fa-check"></i><b>1.6</b> Getting help and learning more</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#acknowledgements-1"><i class="fa fa-check"></i><b>1.7</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction.html"><a href="https://r4ds.had.co.nz/introduction.html#colophon"><i class="fa fa-check"></i><b>1.8</b> Colophon</a></li>
+</ul></li>
+<li class="part"><span><b>I Explore</b></span></li>
+<li class="chapter" data-level="2" data-path="explore-intro.html"><a href="https://r4ds.had.co.nz/explore-intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html"><i class="fa fa-check"></i><b>3</b> Data visualisation</a><ul style="display: none;">
+<li class="chapter" data-level="3.1" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#introduction-1"><i class="fa fa-check"></i><b>3.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="3.1.1" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#prerequisites-1"><i class="fa fa-check"></i><b>3.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#first-steps"><i class="fa fa-check"></i><b>3.2</b> First steps</a><ul style="display: none;">
+<li class="chapter" data-level="3.2.1" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#the-mpg-data-frame"><i class="fa fa-check"></i><b>3.2.1</b> The <code>mpg</code> data frame</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#creating-a-ggplot"><i class="fa fa-check"></i><b>3.2.2</b> Creating a ggplot</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#a-graphing-template"><i class="fa fa-check"></i><b>3.2.3</b> A graphing template</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#exercises"><i class="fa fa-check"></i><b>3.2.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#aesthetic-mappings"><i class="fa fa-check"></i><b>3.3</b> Aesthetic mappings</a><ul style="display: none;">
+<li class="chapter" data-level="3.3.1" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#exercises-1"><i class="fa fa-check"></i><b>3.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#common-problems"><i class="fa fa-check"></i><b>3.4</b> Common problems</a></li>
+<li class="chapter" data-level="3.5" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#facets"><i class="fa fa-check"></i><b>3.5</b> Facets</a><ul style="display: none;">
+<li class="chapter" data-level="3.5.1" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#exercises-2"><i class="fa fa-check"></i><b>3.5.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#geometric-objects"><i class="fa fa-check"></i><b>3.6</b> Geometric objects</a><ul style="display: none;">
+<li class="chapter" data-level="3.6.1" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#exercises-3"><i class="fa fa-check"></i><b>3.6.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#statistical-transformations"><i class="fa fa-check"></i><b>3.7</b> Statistical transformations</a><ul style="display: none;">
+<li class="chapter" data-level="3.7.1" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#exercises-4"><i class="fa fa-check"></i><b>3.7.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#position-adjustments"><i class="fa fa-check"></i><b>3.8</b> Position adjustments</a><ul style="display: none;">
+<li class="chapter" data-level="3.8.1" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#exercises-5"><i class="fa fa-check"></i><b>3.8.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#coordinate-systems"><i class="fa fa-check"></i><b>3.9</b> Coordinate systems</a><ul style="display: none;">
+<li class="chapter" data-level="3.9.1" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#exercises-6"><i class="fa fa-check"></i><b>3.9.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="data-visualisation.html"><a href="https://r4ds.had.co.nz/data-visualisation.html#the-layered-grammar-of-graphics"><i class="fa fa-check"></i><b>3.10</b> The layered grammar of graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="workflow-basics.html"><a href="https://r4ds.had.co.nz/workflow-basics.html"><i class="fa fa-check"></i><b>4</b> Workflow: basics</a><ul style="display: none;">
+<li class="chapter" data-level="4.1" data-path="workflow-basics.html"><a href="https://r4ds.had.co.nz/workflow-basics.html#coding-basics"><i class="fa fa-check"></i><b>4.1</b> Coding basics</a></li>
+<li class="chapter" data-level="4.2" data-path="workflow-basics.html"><a href="https://r4ds.had.co.nz/workflow-basics.html#whats-in-a-name"><i class="fa fa-check"></i><b>4.2</b> What’s in a name?</a></li>
+<li class="chapter" data-level="4.3" data-path="workflow-basics.html"><a href="https://r4ds.had.co.nz/workflow-basics.html#calling-functions"><i class="fa fa-check"></i><b>4.3</b> Calling functions</a></li>
+<li class="chapter" data-level="4.4" data-path="workflow-basics.html"><a href="https://r4ds.had.co.nz/workflow-basics.html#exercises-7"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html"><i class="fa fa-check"></i><b>5</b> Data transformation</a><ul style="display: none;">
+<li class="chapter" data-level="5.1" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="5.1.1" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#prerequisites-2"><i class="fa fa-check"></i><b>5.1.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="5.1.2" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#nycflights13"><i class="fa fa-check"></i><b>5.1.2</b> nycflights13</a></li>
+<li class="chapter" data-level="5.1.3" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#dplyr-basics"><i class="fa fa-check"></i><b>5.1.3</b> dplyr basics</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#filter-rows-with-filter"><i class="fa fa-check"></i><b>5.2</b> Filter rows with <code>filter()</code></a><ul style="display: none;">
+<li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#comparisons"><i class="fa fa-check"></i><b>5.2.1</b> Comparisons</a></li>
+<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#logical-operators"><i class="fa fa-check"></i><b>5.2.2</b> Logical operators</a></li>
+<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#missing-values"><i class="fa fa-check"></i><b>5.2.3</b> Missing values</a></li>
+<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#exercises-8"><i class="fa fa-check"></i><b>5.2.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#arrange-rows-with-arrange"><i class="fa fa-check"></i><b>5.3</b> Arrange rows with <code>arrange()</code></a><ul style="display: none;">
+<li class="chapter" data-level="5.3.1" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#exercises-9"><i class="fa fa-check"></i><b>5.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#select"><i class="fa fa-check"></i><b>5.4</b> Select columns with <code>select()</code></a><ul style="display: none;">
+<li class="chapter" data-level="5.4.1" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#exercises-10"><i class="fa fa-check"></i><b>5.4.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#add-new-variables-with-mutate"><i class="fa fa-check"></i><b>5.5</b> Add new variables with <code>mutate()</code></a><ul style="display: none;">
+<li class="chapter" data-level="5.5.1" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#mutate-funs"><i class="fa fa-check"></i><b>5.5.1</b> Useful creation functions</a></li>
+<li class="chapter" data-level="5.5.2" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#exercises-11"><i class="fa fa-check"></i><b>5.5.2</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarise"><i class="fa fa-check"></i><b>5.6</b> Grouped summaries with <code>summarise()</code></a><ul style="display: none;">
+<li class="chapter" data-level="5.6.1" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#combining-multiple-operations-with-the-pipe"><i class="fa fa-check"></i><b>5.6.1</b> Combining multiple operations with the pipe</a></li>
+<li class="chapter" data-level="5.6.2" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#missing-values-1"><i class="fa fa-check"></i><b>5.6.2</b> Missing values</a></li>
+<li class="chapter" data-level="5.6.3" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#counts"><i class="fa fa-check"></i><b>5.6.3</b> Counts</a></li>
+<li class="chapter" data-level="5.6.4" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#summarise-funs"><i class="fa fa-check"></i><b>5.6.4</b> Useful summary functions</a></li>
+<li class="chapter" data-level="5.6.5" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#grouping-by-multiple-variables"><i class="fa fa-check"></i><b>5.6.5</b> Grouping by multiple variables</a></li>
+<li class="chapter" data-level="5.6.6" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#ungrouping"><i class="fa fa-check"></i><b>5.6.6</b> Ungrouping</a></li>
+<li class="chapter" data-level="5.6.7" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#exercises-12"><i class="fa fa-check"></i><b>5.6.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#grouped-mutates-and-filters"><i class="fa fa-check"></i><b>5.7</b> Grouped mutates (and filters)</a><ul style="display: none;">
+<li class="chapter" data-level="5.7.1" data-path="transform.html"><a href="https://r4ds.had.co.nz/transform.html#exercises-13"><i class="fa fa-check"></i><b>5.7.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="workflow-scripts.html"><a href="https://r4ds.had.co.nz/workflow-scripts.html"><i class="fa fa-check"></i><b>6</b> Workflow: scripts</a><ul style="display: none;">
+<li class="chapter" data-level="6.1" data-path="workflow-scripts.html"><a href="https://r4ds.had.co.nz/workflow-scripts.html#running-code"><i class="fa fa-check"></i><b>6.1</b> Running code</a></li>
+<li class="chapter" data-level="6.2" data-path="workflow-scripts.html"><a href="https://r4ds.had.co.nz/workflow-scripts.html#rstudio-diagnostics"><i class="fa fa-check"></i><b>6.2</b> RStudio diagnostics</a></li>
+<li class="chapter" data-level="6.3" data-path="workflow-scripts.html"><a href="https://r4ds.had.co.nz/workflow-scripts.html#exercises-14"><i class="fa fa-check"></i><b>6.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html"><i class="fa fa-check"></i><b>7</b> Exploratory Data Analysis</a><ul style="display: none;">
+<li class="chapter" data-level="7.1" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#introduction-3"><i class="fa fa-check"></i><b>7.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="7.1.1" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#prerequisites-3"><i class="fa fa-check"></i><b>7.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#questions"><i class="fa fa-check"></i><b>7.2</b> Questions</a></li>
+<li class="chapter" data-level="7.3" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#variation"><i class="fa fa-check"></i><b>7.3</b> Variation</a><ul style="display: none;">
+<li class="chapter" data-level="7.3.1" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#visualising-distributions"><i class="fa fa-check"></i><b>7.3.1</b> Visualising distributions</a></li>
+<li class="chapter" data-level="7.3.2" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#typical-values"><i class="fa fa-check"></i><b>7.3.2</b> Typical values</a></li>
+<li class="chapter" data-level="7.3.3" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#unusual-values"><i class="fa fa-check"></i><b>7.3.3</b> Unusual values</a></li>
+<li class="chapter" data-level="7.3.4" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#exercises-15"><i class="fa fa-check"></i><b>7.3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#missing-values-2"><i class="fa fa-check"></i><b>7.4</b> Missing values</a><ul style="display: none;">
+<li class="chapter" data-level="7.4.1" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#exercises-16"><i class="fa fa-check"></i><b>7.4.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#covariation"><i class="fa fa-check"></i><b>7.5</b> Covariation</a><ul style="display: none;">
+<li class="chapter" data-level="7.5.1" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#cat-cont"><i class="fa fa-check"></i><b>7.5.1</b> A categorical and continuous variable</a></li>
+<li class="chapter" data-level="7.5.2" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#two-categorical-variables"><i class="fa fa-check"></i><b>7.5.2</b> Two categorical variables</a></li>
+<li class="chapter" data-level="7.5.3" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#two-continuous-variables"><i class="fa fa-check"></i><b>7.5.3</b> Two continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#patterns-and-models"><i class="fa fa-check"></i><b>7.6</b> Patterns and models</a></li>
+<li class="chapter" data-level="7.7" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#ggplot2-calls"><i class="fa fa-check"></i><b>7.7</b> ggplot2 calls</a></li>
+<li class="chapter" data-level="7.8" data-path="exploratory-data-analysis.html"><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html#learning-more"><i class="fa fa-check"></i><b>7.8</b> Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="workflow-projects.html"><a href="https://r4ds.had.co.nz/workflow-projects.html"><i class="fa fa-check"></i><b>8</b> Workflow: projects</a><ul style="display: none;">
+<li class="chapter" data-level="8.1" data-path="workflow-projects.html"><a href="https://r4ds.had.co.nz/workflow-projects.html#what-is-real"><i class="fa fa-check"></i><b>8.1</b> What is real?</a></li>
+<li class="chapter" data-level="8.2" data-path="workflow-projects.html"><a href="https://r4ds.had.co.nz/workflow-projects.html#where-does-your-analysis-live"><i class="fa fa-check"></i><b>8.2</b> Where does your analysis live?</a></li>
+<li class="chapter" data-level="8.3" data-path="workflow-projects.html"><a href="https://r4ds.had.co.nz/workflow-projects.html#paths-and-directories"><i class="fa fa-check"></i><b>8.3</b> Paths and directories</a></li>
+<li class="chapter" data-level="8.4" data-path="workflow-projects.html"><a href="https://r4ds.had.co.nz/workflow-projects.html#rstudio-projects"><i class="fa fa-check"></i><b>8.4</b> RStudio projects</a></li>
+<li class="chapter" data-level="8.5" data-path="workflow-projects.html"><a href="https://r4ds.had.co.nz/workflow-projects.html#summary"><i class="fa fa-check"></i><b>8.5</b> Summary</a></li>
+</ul></li>
+<li class="part"><span><b>II Wrangle</b></span></li>
+<li class="chapter" data-level="9" data-path="wrangle-intro.html"><a href="https://r4ds.had.co.nz/wrangle-intro.html"><i class="fa fa-check"></i><b>9</b> Introduction</a></li>
+<li class="chapter" data-level="10" data-path="tibbles.html"><a href="https://r4ds.had.co.nz/tibbles.html"><i class="fa fa-check"></i><b>10</b> Tibbles</a><ul style="display: none;">
+<li class="chapter" data-level="10.1" data-path="tibbles.html"><a href="https://r4ds.had.co.nz/tibbles.html#introduction-4"><i class="fa fa-check"></i><b>10.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="10.1.1" data-path="tibbles.html"><a href="https://r4ds.had.co.nz/tibbles.html#prerequisites-4"><i class="fa fa-check"></i><b>10.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="tibbles.html"><a href="https://r4ds.had.co.nz/tibbles.html#creating-tibbles"><i class="fa fa-check"></i><b>10.2</b> Creating tibbles</a></li>
+<li class="chapter" data-level="10.3" data-path="tibbles.html"><a href="https://r4ds.had.co.nz/tibbles.html#tibbles-vs.-data.frame"><i class="fa fa-check"></i><b>10.3</b> Tibbles vs.&nbsp;data.frame</a><ul style="display: none;">
+<li class="chapter" data-level="10.3.1" data-path="tibbles.html"><a href="https://r4ds.had.co.nz/tibbles.html#printing"><i class="fa fa-check"></i><b>10.3.1</b> Printing</a></li>
+<li class="chapter" data-level="10.3.2" data-path="tibbles.html"><a href="https://r4ds.had.co.nz/tibbles.html#subsetting"><i class="fa fa-check"></i><b>10.3.2</b> Subsetting</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="tibbles.html"><a href="https://r4ds.had.co.nz/tibbles.html#interacting-with-older-code"><i class="fa fa-check"></i><b>10.4</b> Interacting with older code</a></li>
+<li class="chapter" data-level="10.5" data-path="tibbles.html"><a href="https://r4ds.had.co.nz/tibbles.html#exercises-20"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html"><i class="fa fa-check"></i><b>11</b> Data import</a><ul style="display: none;">
+<li class="chapter" data-level="11.1" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#introduction-5"><i class="fa fa-check"></i><b>11.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="11.1.1" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#prerequisites-5"><i class="fa fa-check"></i><b>11.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#getting-started"><i class="fa fa-check"></i><b>11.2</b> Getting started</a><ul style="display: none;">
+<li class="chapter" data-level="11.2.1" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#compared-to-base-r"><i class="fa fa-check"></i><b>11.2.1</b> Compared to base R</a></li>
+<li class="chapter" data-level="11.2.2" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#exercises-21"><i class="fa fa-check"></i><b>11.2.2</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#parsing-a-vector"><i class="fa fa-check"></i><b>11.3</b> Parsing a vector</a><ul style="display: none;">
+<li class="chapter" data-level="11.3.1" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#numbers"><i class="fa fa-check"></i><b>11.3.1</b> Numbers</a></li>
+<li class="chapter" data-level="11.3.2" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#readr-strings"><i class="fa fa-check"></i><b>11.3.2</b> Strings</a></li>
+<li class="chapter" data-level="11.3.3" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#readr-factors"><i class="fa fa-check"></i><b>11.3.3</b> Factors</a></li>
+<li class="chapter" data-level="11.3.4" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#readr-datetimes"><i class="fa fa-check"></i><b>11.3.4</b> Dates, date-times, and times</a></li>
+<li class="chapter" data-level="11.3.5" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#exercises-22"><i class="fa fa-check"></i><b>11.3.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#parsing-a-file"><i class="fa fa-check"></i><b>11.4</b> Parsing a file</a><ul style="display: none;">
+<li class="chapter" data-level="11.4.1" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#strategy"><i class="fa fa-check"></i><b>11.4.1</b> Strategy</a></li>
+<li class="chapter" data-level="11.4.2" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#problems"><i class="fa fa-check"></i><b>11.4.2</b> Problems</a></li>
+<li class="chapter" data-level="11.4.3" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#other-strategies"><i class="fa fa-check"></i><b>11.4.3</b> Other strategies</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#writing-to-a-file"><i class="fa fa-check"></i><b>11.5</b> Writing to a file</a></li>
+<li class="chapter" data-level="11.6" data-path="data-import.html"><a href="https://r4ds.had.co.nz/data-import.html#other-types-of-data"><i class="fa fa-check"></i><b>11.6</b> Other types of data</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html"><i class="fa fa-check"></i><b>12</b> Tidy data</a><ul style="display: none;">
+<li class="chapter" data-level="12.1" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#introduction-6"><i class="fa fa-check"></i><b>12.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="12.1.1" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#prerequisites-6"><i class="fa fa-check"></i><b>12.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#tidy-data-1"><i class="fa fa-check"></i><b>12.2</b> Tidy data</a><ul style="display: none;">
+<li class="chapter" data-level="12.2.1" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#exercises-23"><i class="fa fa-check"></i><b>12.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#pivoting"><i class="fa fa-check"></i><b>12.3</b> Pivoting</a><ul style="display: none;">
+<li class="chapter" data-level="12.3.1" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#longer"><i class="fa fa-check"></i><b>12.3.1</b> Longer</a></li>
+<li class="chapter" data-level="12.3.2" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#wider"><i class="fa fa-check"></i><b>12.3.2</b> Wider</a></li>
+<li class="chapter" data-level="12.3.3" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#exercises-24"><i class="fa fa-check"></i><b>12.3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#separating-and-uniting"><i class="fa fa-check"></i><b>12.4</b> Separating and uniting</a><ul style="display: none;">
+<li class="chapter" data-level="12.4.1" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#separate"><i class="fa fa-check"></i><b>12.4.1</b> Separate</a></li>
+<li class="chapter" data-level="12.4.2" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#unite"><i class="fa fa-check"></i><b>12.4.2</b> Unite</a></li>
+<li class="chapter" data-level="12.4.3" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#exercises-25"><i class="fa fa-check"></i><b>12.4.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#missing-values-3"><i class="fa fa-check"></i><b>12.5</b> Missing values</a><ul style="display: none;">
+<li class="chapter" data-level="12.5.1" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#exercises-26"><i class="fa fa-check"></i><b>12.5.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#case-study"><i class="fa fa-check"></i><b>12.6</b> Case Study</a><ul style="display: none;">
+<li class="chapter" data-level="12.6.1" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#exercises-27"><i class="fa fa-check"></i><b>12.6.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="tidy-data.html"><a href="https://r4ds.had.co.nz/tidy-data.html#non-tidy-data"><i class="fa fa-check"></i><b>12.7</b> Non-tidy data</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html"><i class="fa fa-check"></i><b>13</b> Relational data</a><ul style="display: none;">
+<li class="chapter" data-level="13.1" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#introduction-7"><i class="fa fa-check"></i><b>13.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="13.1.1" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#prerequisites-7"><i class="fa fa-check"></i><b>13.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#nycflights13-relational"><i class="fa fa-check"></i><b>13.2</b> nycflights13</a><ul style="display: none;">
+<li class="chapter" data-level="13.2.1" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#exercises-28"><i class="fa fa-check"></i><b>13.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#keys"><i class="fa fa-check"></i><b>13.3</b> Keys</a><ul style="display: none;">
+<li class="chapter" data-level="13.3.1" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#exercises-29"><i class="fa fa-check"></i><b>13.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#mutating-joins"><i class="fa fa-check"></i><b>13.4</b> Mutating joins</a><ul style="display: none;">
+<li class="chapter" data-level="13.4.1" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#understanding-joins"><i class="fa fa-check"></i><b>13.4.1</b> Understanding joins</a></li>
+<li class="chapter" data-level="13.4.2" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#inner-join"><i class="fa fa-check"></i><b>13.4.2</b> Inner join</a></li>
+<li class="chapter" data-level="13.4.3" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#outer-join"><i class="fa fa-check"></i><b>13.4.3</b> Outer joins</a></li>
+<li class="chapter" data-level="13.4.4" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#join-matches"><i class="fa fa-check"></i><b>13.4.4</b> Duplicate keys</a></li>
+<li class="chapter" data-level="13.4.5" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#join-by"><i class="fa fa-check"></i><b>13.4.5</b> Defining the key columns</a></li>
+<li class="chapter" data-level="13.4.6" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#exercises-30"><i class="fa fa-check"></i><b>13.4.6</b> Exercises</a></li>
+<li class="chapter" data-level="13.4.7" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#other-implementations"><i class="fa fa-check"></i><b>13.4.7</b> Other implementations</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#filtering-joins"><i class="fa fa-check"></i><b>13.5</b> Filtering joins</a><ul style="display: none;">
+<li class="chapter" data-level="13.5.1" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#exercises-31"><i class="fa fa-check"></i><b>13.5.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13.6" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#join-problems"><i class="fa fa-check"></i><b>13.6</b> Join problems</a></li>
+<li class="chapter" data-level="13.7" data-path="relational-data.html"><a href="https://r4ds.had.co.nz/relational-data.html#set-operations"><i class="fa fa-check"></i><b>13.7</b> Set operations</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html"><i class="fa fa-check"></i><b>14</b> Strings</a><ul style="display: none;">
+<li class="chapter" data-level="14.1" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#introduction-8"><i class="fa fa-check"></i><b>14.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="14.1.1" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#prerequisites-8"><i class="fa fa-check"></i><b>14.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#string-basics"><i class="fa fa-check"></i><b>14.2</b> String basics</a><ul style="display: none;">
+<li class="chapter" data-level="14.2.1" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#string-length"><i class="fa fa-check"></i><b>14.2.1</b> String length</a></li>
+<li class="chapter" data-level="14.2.2" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#combining-strings"><i class="fa fa-check"></i><b>14.2.2</b> Combining strings</a></li>
+<li class="chapter" data-level="14.2.3" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#subsetting-strings"><i class="fa fa-check"></i><b>14.2.3</b> Subsetting strings</a></li>
+<li class="chapter" data-level="14.2.4" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#locales"><i class="fa fa-check"></i><b>14.2.4</b> Locales</a></li>
+<li class="chapter" data-level="14.2.5" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#exercises-32"><i class="fa fa-check"></i><b>14.2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions"><i class="fa fa-check"></i><b>14.3</b> Matching patterns with regular expressions</a><ul style="display: none;">
+<li class="chapter" data-level="14.3.1" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#basic-matches"><i class="fa fa-check"></i><b>14.3.1</b> Basic matches</a></li>
+<li class="chapter" data-level="14.3.2" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#anchors"><i class="fa fa-check"></i><b>14.3.2</b> Anchors</a></li>
+<li class="chapter" data-level="14.3.3" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#character-classes-and-alternatives"><i class="fa fa-check"></i><b>14.3.3</b> Character classes and alternatives</a></li>
+<li class="chapter" data-level="14.3.4" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#repetition"><i class="fa fa-check"></i><b>14.3.4</b> Repetition</a></li>
+<li class="chapter" data-level="14.3.5" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#grouping-and-backreferences"><i class="fa fa-check"></i><b>14.3.5</b> Grouping and backreferences</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#tools"><i class="fa fa-check"></i><b>14.4</b> Tools</a><ul style="display: none;">
+<li class="chapter" data-level="14.4.1" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#detect-matches"><i class="fa fa-check"></i><b>14.4.1</b> Detect matches</a></li>
+<li class="chapter" data-level="14.4.2" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#extract-matches"><i class="fa fa-check"></i><b>14.4.2</b> Extract matches</a></li>
+<li class="chapter" data-level="14.4.3" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#grouped-matches"><i class="fa fa-check"></i><b>14.4.3</b> Grouped matches</a></li>
+<li class="chapter" data-level="14.4.4" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#replacing-matches"><i class="fa fa-check"></i><b>14.4.4</b> Replacing matches</a></li>
+<li class="chapter" data-level="14.4.5" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#splitting"><i class="fa fa-check"></i><b>14.4.5</b> Splitting</a></li>
+<li class="chapter" data-level="14.4.6" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#find-matches"><i class="fa fa-check"></i><b>14.4.6</b> Find matches</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#other-types-of-pattern"><i class="fa fa-check"></i><b>14.5</b> Other types of pattern</a><ul style="display: none;">
+<li class="chapter" data-level="14.5.1" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#exercises-43"><i class="fa fa-check"></i><b>14.5.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#other-uses-of-regular-expressions"><i class="fa fa-check"></i><b>14.6</b> Other uses of regular expressions</a></li>
+<li class="chapter" data-level="14.7" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#stringi"><i class="fa fa-check"></i><b>14.7</b> stringi</a><ul style="display: none;">
+<li class="chapter" data-level="14.7.1" data-path="strings.html"><a href="https://r4ds.had.co.nz/strings.html#exercises-44"><i class="fa fa-check"></i><b>14.7.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="factors.html"><a href="https://r4ds.had.co.nz/factors.html"><i class="fa fa-check"></i><b>15</b> Factors</a><ul style="display: none;">
+<li class="chapter" data-level="15.1" data-path="factors.html"><a href="https://r4ds.had.co.nz/factors.html#introduction-9"><i class="fa fa-check"></i><b>15.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="15.1.1" data-path="factors.html"><a href="https://r4ds.had.co.nz/factors.html#prerequisites-9"><i class="fa fa-check"></i><b>15.1.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="15.1.2" data-path="factors.html"><a href="https://r4ds.had.co.nz/factors.html#learning-more-1"><i class="fa fa-check"></i><b>15.1.2</b> Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="factors.html"><a href="https://r4ds.had.co.nz/factors.html#creating-factors"><i class="fa fa-check"></i><b>15.2</b> Creating factors</a></li>
+<li class="chapter" data-level="15.3" data-path="factors.html"><a href="https://r4ds.had.co.nz/factors.html#general-social-survey"><i class="fa fa-check"></i><b>15.3</b> General Social Survey</a><ul style="display: none;">
+<li class="chapter" data-level="15.3.1" data-path="factors.html"><a href="https://r4ds.had.co.nz/factors.html#exercise"><i class="fa fa-check"></i><b>15.3.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="factors.html"><a href="https://r4ds.had.co.nz/factors.html#modifying-factor-order"><i class="fa fa-check"></i><b>15.4</b> Modifying factor order</a><ul style="display: none;">
+<li class="chapter" data-level="15.4.1" data-path="factors.html"><a href="https://r4ds.had.co.nz/factors.html#exercises-45"><i class="fa fa-check"></i><b>15.4.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="factors.html"><a href="https://r4ds.had.co.nz/factors.html#modifying-factor-levels"><i class="fa fa-check"></i><b>15.5</b> Modifying factor levels</a><ul style="display: none;">
+<li class="chapter" data-level="15.5.1" data-path="factors.html"><a href="https://r4ds.had.co.nz/factors.html#exercises-46"><i class="fa fa-check"></i><b>15.5.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html"><i class="fa fa-check"></i><b>16</b> Dates and times</a><ul style="display: none;">
+<li class="chapter" data-level="16.1" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#introduction-10"><i class="fa fa-check"></i><b>16.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="16.1.1" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#prerequisites-10"><i class="fa fa-check"></i><b>16.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#creating-datetimes"><i class="fa fa-check"></i><b>16.2</b> Creating date/times</a><ul style="display: none;">
+<li class="chapter" data-level="16.2.1" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#from-strings"><i class="fa fa-check"></i><b>16.2.1</b> From strings</a></li>
+<li class="chapter" data-level="16.2.2" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#from-individual-components"><i class="fa fa-check"></i><b>16.2.2</b> From individual components</a></li>
+<li class="chapter" data-level="16.2.3" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#from-other-types"><i class="fa fa-check"></i><b>16.2.3</b> From other types</a></li>
+<li class="chapter" data-level="16.2.4" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#exercises-47"><i class="fa fa-check"></i><b>16.2.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#date-time-components"><i class="fa fa-check"></i><b>16.3</b> Date-time components</a><ul style="display: none;">
+<li class="chapter" data-level="16.3.1" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#getting-components"><i class="fa fa-check"></i><b>16.3.1</b> Getting components</a></li>
+<li class="chapter" data-level="16.3.2" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#rounding"><i class="fa fa-check"></i><b>16.3.2</b> Rounding</a></li>
+<li class="chapter" data-level="16.3.3" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#setting-components"><i class="fa fa-check"></i><b>16.3.3</b> Setting components</a></li>
+<li class="chapter" data-level="16.3.4" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#exercises-48"><i class="fa fa-check"></i><b>16.3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#time-spans"><i class="fa fa-check"></i><b>16.4</b> Time spans</a><ul style="display: none;">
+<li class="chapter" data-level="16.4.1" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#durations"><i class="fa fa-check"></i><b>16.4.1</b> Durations</a></li>
+<li class="chapter" data-level="16.4.2" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#periods"><i class="fa fa-check"></i><b>16.4.2</b> Periods</a></li>
+<li class="chapter" data-level="16.4.3" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#intervals"><i class="fa fa-check"></i><b>16.4.3</b> Intervals</a></li>
+<li class="chapter" data-level="16.4.4" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#summary-1"><i class="fa fa-check"></i><b>16.4.4</b> Summary</a></li>
+<li class="chapter" data-level="16.4.5" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#exercises-49"><i class="fa fa-check"></i><b>16.4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16.5" data-path="dates-and-times.html"><a href="https://r4ds.had.co.nz/dates-and-times.html#time-zones"><i class="fa fa-check"></i><b>16.5</b> Time zones</a></li>
+</ul></li>
+<li class="part"><span><b>III Program</b></span></li>
+<li class="chapter" data-level="17" data-path="program-intro.html"><a href="https://r4ds.had.co.nz/program-intro.html"><i class="fa fa-check"></i><b>17</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="17.1" data-path="program-intro.html"><a href="https://r4ds.had.co.nz/program-intro.html#learning-more-2"><i class="fa fa-check"></i><b>17.1</b> Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="pipes.html"><a href="https://r4ds.had.co.nz/pipes.html"><i class="fa fa-check"></i><b>18</b> Pipes</a><ul style="display: none;">
+<li class="chapter" data-level="18.1" data-path="pipes.html"><a href="https://r4ds.had.co.nz/pipes.html#introduction-11"><i class="fa fa-check"></i><b>18.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="18.1.1" data-path="pipes.html"><a href="https://r4ds.had.co.nz/pipes.html#prerequisites-11"><i class="fa fa-check"></i><b>18.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="pipes.html"><a href="https://r4ds.had.co.nz/pipes.html#piping-alternatives"><i class="fa fa-check"></i><b>18.2</b> Piping alternatives</a><ul style="display: none;">
+<li class="chapter" data-level="18.2.1" data-path="pipes.html"><a href="https://r4ds.had.co.nz/pipes.html#intermediate-steps"><i class="fa fa-check"></i><b>18.2.1</b> Intermediate steps</a></li>
+<li class="chapter" data-level="18.2.2" data-path="pipes.html"><a href="https://r4ds.had.co.nz/pipes.html#overwrite-the-original"><i class="fa fa-check"></i><b>18.2.2</b> Overwrite the original</a></li>
+<li class="chapter" data-level="18.2.3" data-path="pipes.html"><a href="https://r4ds.had.co.nz/pipes.html#function-composition"><i class="fa fa-check"></i><b>18.2.3</b> Function composition</a></li>
+<li class="chapter" data-level="18.2.4" data-path="pipes.html"><a href="https://r4ds.had.co.nz/pipes.html#use-the-pipe"><i class="fa fa-check"></i><b>18.2.4</b> Use the pipe</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="pipes.html"><a href="https://r4ds.had.co.nz/pipes.html#when-not-to-use-the-pipe"><i class="fa fa-check"></i><b>18.3</b> When not to use the pipe</a></li>
+<li class="chapter" data-level="18.4" data-path="pipes.html"><a href="https://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr"><i class="fa fa-check"></i><b>18.4</b> Other tools from magrittr</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html"><i class="fa fa-check"></i><b>19</b> Functions</a><ul style="display: none;">
+<li class="chapter" data-level="19.1" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#introduction-12"><i class="fa fa-check"></i><b>19.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="19.1.1" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#prerequisites-12"><i class="fa fa-check"></i><b>19.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function"><i class="fa fa-check"></i><b>19.2</b> When should you write a function?</a><ul style="display: none;">
+<li class="chapter" data-level="19.2.1" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#exercises-50"><i class="fa fa-check"></i><b>19.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#functions-are-for-humans-and-computers"><i class="fa fa-check"></i><b>19.3</b> Functions are for humans and computers</a><ul style="display: none;">
+<li class="chapter" data-level="19.3.1" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#exercises-51"><i class="fa fa-check"></i><b>19.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#conditional-execution"><i class="fa fa-check"></i><b>19.4</b> Conditional execution</a><ul style="display: none;">
+<li class="chapter" data-level="19.4.1" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#conditions"><i class="fa fa-check"></i><b>19.4.1</b> Conditions</a></li>
+<li class="chapter" data-level="19.4.2" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#multiple-conditions"><i class="fa fa-check"></i><b>19.4.2</b> Multiple conditions</a></li>
+<li class="chapter" data-level="19.4.3" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#code-style"><i class="fa fa-check"></i><b>19.4.3</b> Code style</a></li>
+<li class="chapter" data-level="19.4.4" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#exercises-52"><i class="fa fa-check"></i><b>19.4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#function-arguments"><i class="fa fa-check"></i><b>19.5</b> Function arguments</a><ul style="display: none;">
+<li class="chapter" data-level="19.5.1" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#choosing-names"><i class="fa fa-check"></i><b>19.5.1</b> Choosing names</a></li>
+<li class="chapter" data-level="19.5.2" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#checking-values"><i class="fa fa-check"></i><b>19.5.2</b> Checking values</a></li>
+<li class="chapter" data-level="19.5.3" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#dot-dot-dot"><i class="fa fa-check"></i><b>19.5.3</b> Dot-dot-dot (…)</a></li>
+<li class="chapter" data-level="19.5.4" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#lazy-evaluation"><i class="fa fa-check"></i><b>19.5.4</b> Lazy evaluation</a></li>
+<li class="chapter" data-level="19.5.5" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#exercises-53"><i class="fa fa-check"></i><b>19.5.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#return-values"><i class="fa fa-check"></i><b>19.6</b> Return values</a><ul style="display: none;">
+<li class="chapter" data-level="19.6.1" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#explicit-return-statements"><i class="fa fa-check"></i><b>19.6.1</b> Explicit return statements</a></li>
+<li class="chapter" data-level="19.6.2" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#writing-pipeable-functions"><i class="fa fa-check"></i><b>19.6.2</b> Writing pipeable functions</a></li>
+</ul></li>
+<li class="chapter" data-level="19.7" data-path="functions.html"><a href="https://r4ds.had.co.nz/functions.html#environment"><i class="fa fa-check"></i><b>19.7</b> Environment</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html"><i class="fa fa-check"></i><b>20</b> Vectors</a><ul style="display: none;">
+<li class="chapter" data-level="20.1" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#introduction-13"><i class="fa fa-check"></i><b>20.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="20.1.1" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#prerequisites-13"><i class="fa fa-check"></i><b>20.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#vector-basics"><i class="fa fa-check"></i><b>20.2</b> Vector basics</a></li>
+<li class="chapter" data-level="20.3" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#important-types-of-atomic-vector"><i class="fa fa-check"></i><b>20.3</b> Important types of atomic vector</a><ul style="display: none;">
+<li class="chapter" data-level="20.3.1" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#logical"><i class="fa fa-check"></i><b>20.3.1</b> Logical</a></li>
+<li class="chapter" data-level="20.3.2" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#numeric"><i class="fa fa-check"></i><b>20.3.2</b> Numeric</a></li>
+<li class="chapter" data-level="20.3.3" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#character"><i class="fa fa-check"></i><b>20.3.3</b> Character</a></li>
+<li class="chapter" data-level="20.3.4" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#missing-values-4"><i class="fa fa-check"></i><b>20.3.4</b> Missing values</a></li>
+<li class="chapter" data-level="20.3.5" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#exercises-54"><i class="fa fa-check"></i><b>20.3.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#using-atomic-vectors"><i class="fa fa-check"></i><b>20.4</b> Using atomic vectors</a><ul style="display: none;">
+<li class="chapter" data-level="20.4.1" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#coercion"><i class="fa fa-check"></i><b>20.4.1</b> Coercion</a></li>
+<li class="chapter" data-level="20.4.2" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#test-functions"><i class="fa fa-check"></i><b>20.4.2</b> Test functions</a></li>
+<li class="chapter" data-level="20.4.3" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#scalars-and-recycling-rules"><i class="fa fa-check"></i><b>20.4.3</b> Scalars and recycling rules</a></li>
+<li class="chapter" data-level="20.4.4" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#naming-vectors"><i class="fa fa-check"></i><b>20.4.4</b> Naming vectors</a></li>
+<li class="chapter" data-level="20.4.5" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#vector-subsetting"><i class="fa fa-check"></i><b>20.4.5</b> Subsetting</a></li>
+<li class="chapter" data-level="20.4.6" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#exercises-55"><i class="fa fa-check"></i><b>20.4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20.5" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#lists"><i class="fa fa-check"></i><b>20.5</b> Recursive vectors (lists)</a><ul style="display: none;">
+<li class="chapter" data-level="20.5.1" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#visualising-lists"><i class="fa fa-check"></i><b>20.5.1</b> Visualising lists</a></li>
+<li class="chapter" data-level="20.5.2" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#subsetting-1"><i class="fa fa-check"></i><b>20.5.2</b> Subsetting</a></li>
+<li class="chapter" data-level="20.5.3" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#lists-of-condiments"><i class="fa fa-check"></i><b>20.5.3</b> Lists of condiments</a></li>
+<li class="chapter" data-level="20.5.4" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#exercises-56"><i class="fa fa-check"></i><b>20.5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20.6" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#attributes"><i class="fa fa-check"></i><b>20.6</b> Attributes</a></li>
+<li class="chapter" data-level="20.7" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#augmented-vectors"><i class="fa fa-check"></i><b>20.7</b> Augmented vectors</a><ul style="display: none;">
+<li class="chapter" data-level="20.7.1" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#factors-1"><i class="fa fa-check"></i><b>20.7.1</b> Factors</a></li>
+<li class="chapter" data-level="20.7.2" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#dates-and-date-times"><i class="fa fa-check"></i><b>20.7.2</b> Dates and date-times</a></li>
+<li class="chapter" data-level="20.7.3" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#tibbles-1"><i class="fa fa-check"></i><b>20.7.3</b> Tibbles</a></li>
+<li class="chapter" data-level="20.7.4" data-path="vectors.html"><a href="https://r4ds.had.co.nz/vectors.html#exercises-57"><i class="fa fa-check"></i><b>20.7.4</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html"><i class="fa fa-check"></i><b>21</b> Iteration</a><ul style="display: none;">
+<li class="chapter" data-level="21.1" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#introduction-14"><i class="fa fa-check"></i><b>21.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="21.1.1" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#prerequisites-14"><i class="fa fa-check"></i><b>21.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="21.2" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#for-loops"><i class="fa fa-check"></i><b>21.2</b> For loops</a><ul style="display: none;">
+<li class="chapter" data-level="21.2.1" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#exercises-58"><i class="fa fa-check"></i><b>21.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#for-loop-variations"><i class="fa fa-check"></i><b>21.3</b> For loop variations</a><ul style="display: none;">
+<li class="chapter" data-level="21.3.1" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#modifying-an-existing-object"><i class="fa fa-check"></i><b>21.3.1</b> Modifying an existing object</a></li>
+<li class="chapter" data-level="21.3.2" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#looping-patterns"><i class="fa fa-check"></i><b>21.3.2</b> Looping patterns</a></li>
+<li class="chapter" data-level="21.3.3" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#unknown-output-length"><i class="fa fa-check"></i><b>21.3.3</b> Unknown output length</a></li>
+<li class="chapter" data-level="21.3.4" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#unknown-sequence-length"><i class="fa fa-check"></i><b>21.3.4</b> Unknown sequence length</a></li>
+<li class="chapter" data-level="21.3.5" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#exercises-59"><i class="fa fa-check"></i><b>21.3.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21.4" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#for-loops-vs.-functionals"><i class="fa fa-check"></i><b>21.4</b> For loops vs.&nbsp;functionals</a><ul style="display: none;">
+<li class="chapter" data-level="21.4.1" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#exercises-60"><i class="fa fa-check"></i><b>21.4.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21.5" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#the-map-functions"><i class="fa fa-check"></i><b>21.5</b> The map functions</a><ul style="display: none;">
+<li class="chapter" data-level="21.5.1" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#shortcuts"><i class="fa fa-check"></i><b>21.5.1</b> Shortcuts</a></li>
+<li class="chapter" data-level="21.5.2" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#base-r"><i class="fa fa-check"></i><b>21.5.2</b> Base R</a></li>
+<li class="chapter" data-level="21.5.3" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#exercises-61"><i class="fa fa-check"></i><b>21.5.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21.6" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#dealing-with-failure"><i class="fa fa-check"></i><b>21.6</b> Dealing with failure</a></li>
+<li class="chapter" data-level="21.7" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#mapping-over-multiple-arguments"><i class="fa fa-check"></i><b>21.7</b> Mapping over multiple arguments</a><ul style="display: none;">
+<li class="chapter" data-level="21.7.1" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#invoking-different-functions"><i class="fa fa-check"></i><b>21.7.1</b> Invoking different functions</a></li>
+</ul></li>
+<li class="chapter" data-level="21.8" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#walk"><i class="fa fa-check"></i><b>21.8</b> Walk</a></li>
+<li class="chapter" data-level="21.9" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#other-patterns-of-for-loops"><i class="fa fa-check"></i><b>21.9</b> Other patterns of for loops</a><ul style="display: none;">
+<li class="chapter" data-level="21.9.1" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#predicate-functions"><i class="fa fa-check"></i><b>21.9.1</b> Predicate functions</a></li>
+<li class="chapter" data-level="21.9.2" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#reduce-and-accumulate"><i class="fa fa-check"></i><b>21.9.2</b> Reduce and accumulate</a></li>
+<li class="chapter" data-level="21.9.3" data-path="iteration.html"><a href="https://r4ds.had.co.nz/iteration.html#exercises-62"><i class="fa fa-check"></i><b>21.9.3</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV Model</b></span></li>
+<li class="chapter" data-level="22" data-path="model-intro.html"><a href="https://r4ds.had.co.nz/model-intro.html"><i class="fa fa-check"></i><b>22</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="22.1" data-path="model-intro.html"><a href="https://r4ds.had.co.nz/model-intro.html#hypothesis-generation-vs.-hypothesis-confirmation"><i class="fa fa-check"></i><b>22.1</b> Hypothesis generation vs.&nbsp;hypothesis confirmation</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html"><i class="fa fa-check"></i><b>23</b> Model basics</a><ul style="display: none;">
+<li class="chapter" data-level="23.1" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#introduction-15"><i class="fa fa-check"></i><b>23.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="23.1.1" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#prerequisites-15"><i class="fa fa-check"></i><b>23.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="23.2" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#a-simple-model"><i class="fa fa-check"></i><b>23.2</b> A simple model</a><ul style="display: none;">
+<li class="chapter" data-level="23.2.1" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#exercises-63"><i class="fa fa-check"></i><b>23.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="23.3" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#visualising-models"><i class="fa fa-check"></i><b>23.3</b> Visualising models</a><ul style="display: none;">
+<li class="chapter" data-level="23.3.1" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#predictions"><i class="fa fa-check"></i><b>23.3.1</b> Predictions</a></li>
+<li class="chapter" data-level="23.3.2" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#residuals"><i class="fa fa-check"></i><b>23.3.2</b> Residuals</a></li>
+<li class="chapter" data-level="23.3.3" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#exercises-64"><i class="fa fa-check"></i><b>23.3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#formulas-and-model-families"><i class="fa fa-check"></i><b>23.4</b> Formulas and model families</a><ul style="display: none;">
+<li class="chapter" data-level="23.4.1" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#categorical-variables"><i class="fa fa-check"></i><b>23.4.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="23.4.2" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#interactions-continuous-and-categorical"><i class="fa fa-check"></i><b>23.4.2</b> Interactions (continuous and categorical)</a></li>
+<li class="chapter" data-level="23.4.3" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#interactions-two-continuous"><i class="fa fa-check"></i><b>23.4.3</b> Interactions (two continuous)</a></li>
+<li class="chapter" data-level="23.4.4" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#transformations"><i class="fa fa-check"></i><b>23.4.4</b> Transformations</a></li>
+<li class="chapter" data-level="23.4.5" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#exercises-65"><i class="fa fa-check"></i><b>23.4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="23.5" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#missing-values-5"><i class="fa fa-check"></i><b>23.5</b> Missing values</a></li>
+<li class="chapter" data-level="23.6" data-path="model-basics.html"><a href="https://r4ds.had.co.nz/model-basics.html#other-model-families"><i class="fa fa-check"></i><b>23.6</b> Other model families</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html"><i class="fa fa-check"></i><b>24</b> Model building</a><ul style="display: none;">
+<li class="chapter" data-level="24.1" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#introduction-16"><i class="fa fa-check"></i><b>24.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="24.1.1" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#prerequisites-16"><i class="fa fa-check"></i><b>24.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="24.2" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#diamond-prices"><i class="fa fa-check"></i><b>24.2</b> Why are low quality diamonds more expensive?</a><ul style="display: none;">
+<li class="chapter" data-level="24.2.1" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#price-and-carat"><i class="fa fa-check"></i><b>24.2.1</b> Price and carat</a></li>
+<li class="chapter" data-level="24.2.2" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#a-more-complicated-model"><i class="fa fa-check"></i><b>24.2.2</b> A more complicated model</a></li>
+<li class="chapter" data-level="24.2.3" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#exercises-66"><i class="fa fa-check"></i><b>24.2.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="24.3" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#what-affects-the-number-of-daily-flights"><i class="fa fa-check"></i><b>24.3</b> What affects the number of daily flights?</a><ul style="display: none;">
+<li class="chapter" data-level="24.3.1" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#day-of-week"><i class="fa fa-check"></i><b>24.3.1</b> Day of week</a></li>
+<li class="chapter" data-level="24.3.2" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#seasonal-saturday-effect"><i class="fa fa-check"></i><b>24.3.2</b> Seasonal Saturday effect</a></li>
+<li class="chapter" data-level="24.3.3" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#computed-variables"><i class="fa fa-check"></i><b>24.3.3</b> Computed variables</a></li>
+<li class="chapter" data-level="24.3.4" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#time-of-year-an-alternative-approach"><i class="fa fa-check"></i><b>24.3.4</b> Time of year: an alternative approach</a></li>
+<li class="chapter" data-level="24.3.5" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#exercises-67"><i class="fa fa-check"></i><b>24.3.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="24.4" data-path="model-building.html"><a href="https://r4ds.had.co.nz/model-building.html#learning-more-about-models"><i class="fa fa-check"></i><b>24.4</b> Learning more about models</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html"><i class="fa fa-check"></i><b>25</b> Many models</a><ul style="display: none;">
+<li class="chapter" data-level="25.1" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#introduction-17"><i class="fa fa-check"></i><b>25.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="25.1.1" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#prerequisites-17"><i class="fa fa-check"></i><b>25.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="25.2" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#gapminder"><i class="fa fa-check"></i><b>25.2</b> gapminder</a><ul style="display: none;">
+<li class="chapter" data-level="25.2.1" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#nested-data"><i class="fa fa-check"></i><b>25.2.1</b> Nested data</a></li>
+<li class="chapter" data-level="25.2.2" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#list-columns"><i class="fa fa-check"></i><b>25.2.2</b> List-columns</a></li>
+<li class="chapter" data-level="25.2.3" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#unnesting"><i class="fa fa-check"></i><b>25.2.3</b> Unnesting</a></li>
+<li class="chapter" data-level="25.2.4" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#model-quality"><i class="fa fa-check"></i><b>25.2.4</b> Model quality</a></li>
+<li class="chapter" data-level="25.2.5" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#exercises-68"><i class="fa fa-check"></i><b>25.2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="25.3" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#list-columns-1"><i class="fa fa-check"></i><b>25.3</b> List-columns</a></li>
+<li class="chapter" data-level="25.4" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#creating-list-columns"><i class="fa fa-check"></i><b>25.4</b> Creating list-columns</a><ul style="display: none;">
+<li class="chapter" data-level="25.4.1" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#with-nesting"><i class="fa fa-check"></i><b>25.4.1</b> With nesting</a></li>
+<li class="chapter" data-level="25.4.2" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#from-vectorised-functions"><i class="fa fa-check"></i><b>25.4.2</b> From vectorised functions</a></li>
+<li class="chapter" data-level="25.4.3" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#from-multivalued-summaries"><i class="fa fa-check"></i><b>25.4.3</b> From multivalued summaries</a></li>
+<li class="chapter" data-level="25.4.4" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#from-a-named-list"><i class="fa fa-check"></i><b>25.4.4</b> From a named list</a></li>
+<li class="chapter" data-level="25.4.5" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#exercises-69"><i class="fa fa-check"></i><b>25.4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="25.5" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#simplifying-list-columns"><i class="fa fa-check"></i><b>25.5</b> Simplifying list-columns</a><ul style="display: none;">
+<li class="chapter" data-level="25.5.1" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#list-to-vector"><i class="fa fa-check"></i><b>25.5.1</b> List to vector</a></li>
+<li class="chapter" data-level="25.5.2" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#unnesting-1"><i class="fa fa-check"></i><b>25.5.2</b> Unnesting</a></li>
+<li class="chapter" data-level="25.5.3" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#exercises-70"><i class="fa fa-check"></i><b>25.5.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="25.6" data-path="many-models.html"><a href="https://r4ds.had.co.nz/many-models.html#making-tidy-data-with-broom"><i class="fa fa-check"></i><b>25.6</b> Making tidy data with broom</a></li>
+</ul></li>
+<li class="part"><span><b>V Communicate</b></span></li>
+<li class="chapter" data-level="26" data-path="communicate-intro.html"><a href="https://r4ds.had.co.nz/communicate-intro.html"><i class="fa fa-check"></i><b>26</b> Introduction</a></li>
+<li class="chapter" data-level="27" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html"><i class="fa fa-check"></i><b>27</b> R Markdown</a><ul style="display: none;">
+<li class="chapter" data-level="27.1" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#introduction-18"><i class="fa fa-check"></i><b>27.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="27.1.1" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#prerequisites-18"><i class="fa fa-check"></i><b>27.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="27.2" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#r-markdown-basics"><i class="fa fa-check"></i><b>27.2</b> R Markdown basics</a><ul style="display: none;">
+<li class="chapter" data-level="27.2.1" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#exercises-71"><i class="fa fa-check"></i><b>27.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="27.3" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#text-formatting-with-markdown"><i class="fa fa-check"></i><b>27.3</b> Text formatting with Markdown</a><ul style="display: none;">
+<li class="chapter" data-level="27.3.1" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#exercises-72"><i class="fa fa-check"></i><b>27.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="27.4" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#code-chunks"><i class="fa fa-check"></i><b>27.4</b> Code chunks</a><ul style="display: none;">
+<li class="chapter" data-level="27.4.1" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#chunk-name"><i class="fa fa-check"></i><b>27.4.1</b> Chunk name</a></li>
+<li class="chapter" data-level="27.4.2" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#chunk-options"><i class="fa fa-check"></i><b>27.4.2</b> Chunk options</a></li>
+<li class="chapter" data-level="27.4.3" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#table"><i class="fa fa-check"></i><b>27.4.3</b> Table</a></li>
+<li class="chapter" data-level="27.4.4" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#caching"><i class="fa fa-check"></i><b>27.4.4</b> Caching</a></li>
+<li class="chapter" data-level="27.4.5" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#global-options"><i class="fa fa-check"></i><b>27.4.5</b> Global options</a></li>
+<li class="chapter" data-level="27.4.6" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#inline-code"><i class="fa fa-check"></i><b>27.4.6</b> Inline code</a></li>
+<li class="chapter" data-level="27.4.7" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#exercises-73"><i class="fa fa-check"></i><b>27.4.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="27.5" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#troubleshooting"><i class="fa fa-check"></i><b>27.5</b> Troubleshooting</a></li>
+<li class="chapter" data-level="27.6" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#yaml-header"><i class="fa fa-check"></i><b>27.6</b> YAML header</a><ul style="display: none;">
+<li class="chapter" data-level="27.6.1" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#parameters"><i class="fa fa-check"></i><b>27.6.1</b> Parameters</a></li>
+<li class="chapter" data-level="27.6.2" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#bibliographies-and-citations"><i class="fa fa-check"></i><b>27.6.2</b> Bibliographies and Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="27.7" data-path="r-markdown.html"><a href="https://r4ds.had.co.nz/r-markdown.html#learning-more-3"><i class="fa fa-check"></i><b>27.7</b> Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html"><i class="fa fa-check"></i><b>28</b> Graphics for communication</a><ul style="display: none;">
+<li class="chapter" data-level="28.1" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#introduction-19"><i class="fa fa-check"></i><b>28.1</b> Introduction</a><ul style="display: none;">
+<li class="chapter" data-level="28.1.1" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#prerequisites-19"><i class="fa fa-check"></i><b>28.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="28.2" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#label"><i class="fa fa-check"></i><b>28.2</b> Label</a><ul style="display: none;">
+<li class="chapter" data-level="28.2.1" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#exercises-74"><i class="fa fa-check"></i><b>28.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="28.3" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#annotations"><i class="fa fa-check"></i><b>28.3</b> Annotations</a><ul style="display: none;">
+<li class="chapter" data-level="28.3.1" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#exercises-75"><i class="fa fa-check"></i><b>28.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="28.4" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#scales"><i class="fa fa-check"></i><b>28.4</b> Scales</a><ul style="display: none;">
+<li class="chapter" data-level="28.4.1" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#axis-ticks-and-legend-keys"><i class="fa fa-check"></i><b>28.4.1</b> Axis ticks and legend keys</a></li>
+<li class="chapter" data-level="28.4.2" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#legend-layout"><i class="fa fa-check"></i><b>28.4.2</b> Legend layout</a></li>
+<li class="chapter" data-level="28.4.3" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#replacing-a-scale"><i class="fa fa-check"></i><b>28.4.3</b> Replacing a scale</a></li>
+<li class="chapter" data-level="28.4.4" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#exercises-76"><i class="fa fa-check"></i><b>28.4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="28.5" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#zooming"><i class="fa fa-check"></i><b>28.5</b> Zooming</a></li>
+<li class="chapter" data-level="28.6" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#themes"><i class="fa fa-check"></i><b>28.6</b> Themes</a></li>
+<li class="chapter" data-level="28.7" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots"><i class="fa fa-check"></i><b>28.7</b> Saving your plots</a><ul style="display: none;">
+<li class="chapter" data-level="28.7.1" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#figure-sizing"><i class="fa fa-check"></i><b>28.7.1</b> Figure sizing</a></li>
+<li class="chapter" data-level="28.7.2" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#other-important-options"><i class="fa fa-check"></i><b>28.7.2</b> Other important options</a></li>
+</ul></li>
+<li class="chapter" data-level="28.8" data-path="graphics-for-communication.html"><a href="https://r4ds.had.co.nz/graphics-for-communication.html#learning-more-4"><i class="fa fa-check"></i><b>28.8</b> Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html"><i class="fa fa-check"></i><b>29</b> R Markdown formats</a><ul style="display: block;">
+<li class="chapter" data-level="29.1" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#introduction-20"><i class="fa fa-check"></i><b>29.1</b> Introduction</a></li>
+<li class="chapter" data-level="29.2" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#output-options"><i class="fa fa-check"></i><b>29.2</b> Output options</a></li>
+<li class="chapter" data-level="29.3" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#documents"><i class="fa fa-check"></i><b>29.3</b> Documents</a></li>
+<li class="chapter" data-level="29.4" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#notebooks"><i class="fa fa-check"></i><b>29.4</b> Notebooks</a></li>
+<li class="chapter" data-level="29.5" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#presentations"><i class="fa fa-check"></i><b>29.5</b> Presentations</a></li>
+<li class="chapter" data-level="29.6" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#dashboards"><i class="fa fa-check"></i><b>29.6</b> Dashboards</a></li>
+<li class="chapter active" data-level="29.7" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#interactivity"><i class="fa fa-check"></i><b>29.7</b> Interactivity</a><ul style="display: none;">
+<li class="chapter" data-level="29.7.1" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#htmlwidgets"><i class="fa fa-check"></i><b>29.7.1</b> htmlwidgets</a></li>
+<li class="chapter" data-level="29.7.2" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#shiny"><i class="fa fa-check"></i><b>29.7.2</b> Shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="29.8" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#websites"><i class="fa fa-check"></i><b>29.8</b> Websites</a></li>
+<li class="chapter" data-level="29.9" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#other-formats"><i class="fa fa-check"></i><b>29.9</b> Other formats</a></li>
+<li class="chapter" data-level="29.10" data-path="r-markdown-formats.html"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#learning-more-5"><i class="fa fa-check"></i><b>29.10</b> Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="30" data-path="r-markdown-workflow.html"><a href="https://r4ds.had.co.nz/r-markdown-workflow.html"><i class="fa fa-check"></i><b>30</b> R Markdown workflow</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body fixed">
+      <div class="body-inner">
+        <div class="book-header fixed" role="navigation" style="background-color: rgb(255, 255, 255);">
+          <a class="btn pull-left js-toolbar-action" aria-label="Toggle Sidebar" title="Toggle Sidebar" href="https://r4ds.had.co.nz/r-markdown-formats.html#"><i class="fa fa-align-justify"></i></a><a class="btn pull-left js-toolbar-action" aria-label="Search" title="Search" href="https://r4ds.had.co.nz/r-markdown-formats.html#"><i class="fa fa-search"></i></a><div class="dropdown pull-left font-settings js-toolbar-action"><a class="btn toggle-dropdown" aria-label="Font Settings" title="Font Settings" href="https://r4ds.had.co.nz/r-markdown-formats.html#"><i class="fa fa-font"></i></a><div class="dropdown-menu dropdown-right"><div class="dropdown-caret"><span class="caret-outer"></span><span class="caret-inner"></span></div><div class="buttons"><button class="button size-2 font-reduce">A</button><button class="button size-2 font-enlarge">A</button></div><div class="buttons"><button class="button size-2 ">Serif</button><button class="button size-2 ">Sans</button></div><div class="buttons"><button class="button size-3 ">White</button><button class="button size-3 ">Sepia</button><button class="button size-3 ">Night</button></div></div></div><a class="btn pull-left js-toolbar-action" aria-label="Edit" title="Edit" href="https://r4ds.had.co.nz/r-markdown-formats.html#"><i class="fa fa-edit"></i></a><a class="btn pull-left js-toolbar-action" aria-label="Information about the toolbar" title="Information about the toolbar" href="https://r4ds.had.co.nz/r-markdown-formats.html#"><i class="fa fa-info"></i></a><h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="https://r4ds.had.co.nz/">R for Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-markdown-formats" class="section level1">
+<h1><span class="header-section-number">29</span> R Markdown formats</h1>
+<div id="introduction-20" class="section level2">
+<h2><span class="header-section-number">29.1</span> Introduction</h2>
+<p>So far you’ve seen R Markdown used to produce HTML documents. This chapter gives a brief overview of some of the many other types of output you can produce with R Markdown. There are two ways to set the output of a document:</p>
+<ol style="list-style-type: decimal">
+<li><p>Permanently, by modifying the YAML header:</p>
+<div class="sourceCode" id="cb784"><button type="button" class="copy-to-clipboard-button" title="Copy to clipboard" aria-label="Copy to clipboard"><i class="fa fa-copy"></i></button><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb784-1"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb784-1" aria-hidden="true"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Viridis Demo"</span></span>
+<span id="cb784-2"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb784-2" aria-hidden="true"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span></code></pre></div></li>
+<li><p>Transiently, by calling <code>rmarkdown::render()</code> by hand:</p>
+<div class="sourceCode" id="cb785"><button type="button" class="copy-to-clipboard-button" title="Copy to clipboard" aria-label="Copy to clipboard"><i class="fa fa-copy"></i></button><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb785-1" aria-hidden="true"></a>rmarkdown<span class="op">::</span><span class="kw">render</span>(<span class="st">"diamond-sizes.Rmd"</span>, <span class="dt">output_format =</span> <span class="st">"word_document"</span>)</span></code></pre></div>
+<p>This is useful if you want to programmatically produce multiple types of
+output.</p></li>
+</ol>
+<p>RStudio’s knit button renders a file to the first format listed in its <code>output</code> field. You can render to additional formats by clicking the dropdown menu beside the knit button.</p>
+<p><img src="./img3_files/rmarkdown-knit.png" width="206" style="display: block; margin: auto;"></p>
+</div>
+<div id="output-options" class="section level2">
+<h2><span class="header-section-number">29.2</span> Output options</h2>
+<p>Each output format is associated with an R function. You can either write <code>foo</code> or <code>pkg::foo</code>. If you omit <code>pkg</code>, the default is assumed to be rmarkdown. It’s important to know the name of the function that makes the output because that’s where you get help. For example, to figure out what parameters you can set with <code>html_document</code>, look at <code>?rmarkdown::html_document</code>.</p>
+<p>To override the default parameter values, you need to use an expanded <code>output</code> field. For example, if you wanted to render an <code>html_document</code> with a floating table of contents, you’d use:</p>
+<div class="sourceCode" id="cb786"><button type="button" class="copy-to-clipboard-button" title="Copy to clipboard" aria-label="Copy to clipboard"><i class="fa fa-copy"></i></button><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb786-1"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb786-1" aria-hidden="true"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb786-2"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb786-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
+<span id="cb786-3"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb786-3" aria-hidden="true"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb786-4"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb786-4" aria-hidden="true"></a><span class="at">    </span><span class="fu">toc_float</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>You can even render to multiple outputs by supplying a list of formats:</p>
+<div class="sourceCode" id="cb787"><button type="button" class="copy-to-clipboard-button" title="Copy to clipboard" aria-label="Copy to clipboard"><i class="fa fa-copy"></i></button><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb787-1"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb787-1" aria-hidden="true"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb787-2"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb787-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
+<span id="cb787-3"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb787-3" aria-hidden="true"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb787-4"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb787-4" aria-hidden="true"></a><span class="at">    </span><span class="fu">toc_float</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb787-5"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb787-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">pdf_document</span><span class="kw">:</span><span class="at"> default</span></span></code></pre></div>
+<p>Note the special syntax if you don’t want to override any of the default options.</p>
+</div>
+<div id="documents" class="section level2">
+<h2><span class="header-section-number">29.3</span> Documents</h2>
+<p>The previous chapter focused on the default <code>html_document</code> output. There are a number of basic variations on that theme, generating different types of documents:</p>
+<ul>
+<li><p><code>pdf_document</code> makes a PDF with LaTeX (an open source document layout
+system), which you’ll need to install. RStudio will prompt you if you
+don’t already have it.</p></li>
+<li><p><code>word_document</code> for Microsoft Word documents (<code>.docx</code>).</p></li>
+<li><p><code>odt_document</code> for OpenDocument Text documents (<code>.odt</code>).</p></li>
+<li><p><code>rtf_document</code> for Rich Text Format (<code>.rtf</code>) documents.</p></li>
+<li><p><code>md_document</code> for a Markdown document. This isn’t typically useful by
+itself, but you might use it if, for example, your corporate CMS or
+lab wiki uses markdown.</p></li>
+<li><p><code>github_document</code>: this is a tailored version of <code>md_document</code>
+designed for sharing on GitHub.</p></li>
+</ul>
+<p>Remember, when generating a document to share with decision makers, you can turn off the default display of code by setting global options in the setup chunk:</p>
+<div class="sourceCode" id="cb788"><button type="button" class="copy-to-clipboard-button" title="Copy to clipboard" aria-label="Copy to clipboard"><i class="fa fa-copy"></i></button><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb788-1" aria-hidden="true"></a>knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">echo =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p>For <code>html_document</code>s another option is to make the code chunks hidden by default, but visible with a click:</p>
+<div class="sourceCode" id="cb789"><button type="button" class="copy-to-clipboard-button" title="Copy to clipboard" aria-label="Copy to clipboard"><i class="fa fa-copy"></i></button><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb789-1"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb789-1" aria-hidden="true"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb789-2"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb789-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
+<span id="cb789-3"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb789-3" aria-hidden="true"></a><span class="at">    </span><span class="fu">code_folding</span><span class="kw">:</span><span class="at"> hide</span></span></code></pre></div>
+</div>
+<div id="notebooks" class="section level2">
+<h2><span class="header-section-number">29.4</span> Notebooks</h2>
+<p>A notebook, <code>html_notebook</code>, is a variation on a <code>html_document</code>. The rendered outputs are very similar, but the purpose is different. A <code>html_document</code> is focused on communicating with decision makers, while a notebook is focused on collaborating with other data scientists. These different purposes lead to using the HTML output in different ways. Both HTML outputs will contain the fully rendered output, but the notebook also contains the full source code. That means you can use the <code>.nb.html</code> generated by the notebook in two ways:</p>
+<ol style="list-style-type: decimal">
+<li><p>You can view it in a web browser, and see the rendered output. Unlike
+<code>html_document</code>, this rendering always includes an embedded copy of
+the source code that generated it.</p></li>
+<li><p>You can edit it in RStudio. When you open an <code>.nb.html</code> file, RStudio will
+automatically recreate the <code>.Rmd</code> file that generated it. In the future, you
+will also be able to include supporting files (e.g.&nbsp;<code>.csv</code> data files), which
+will be automatically extracted when needed.</p></li>
+</ol>
+<p>Emailing <code>.nb.html</code> files is a simple way to share analyses with your colleagues. But things will get painful as soon as they want to make changes. If this starts to happen, it’s a good time to learn Git and GitHub. Learning Git and GitHub is definitely painful at first, but the collaboration payoff is huge. As mentioned earlier, Git and GitHub are outside the scope of the book, but there’s one tip that’s useful if you’re already using them: use both <code>html_notebook</code> and <code>github_document</code> outputs:</p>
+<div class="sourceCode" id="cb790"><button type="button" class="copy-to-clipboard-button" title="Copy to clipboard" aria-label="Copy to clipboard"><i class="fa fa-copy"></i></button><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb790-1"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb790-1" aria-hidden="true"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb790-2"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb790-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">html_notebook</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb790-3"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb790-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">github_document</span><span class="kw">:</span><span class="at"> default</span></span></code></pre></div>
+<p><code>html_notebook</code> gives you a local preview, and a file that you can share via email. <code>github_document</code> creates a minimal md file that you can check into git. You can easily see how the results of your analysis (not just the code) change over time, and GitHub will render it for you nicely online.</p>
+</div>
+<div id="presentations" class="section level2">
+<h2><span class="header-section-number">29.5</span> Presentations</h2>
+<p>You can also use R Markdown to produce presentations. You get less visual control than with a tool like Keynote or PowerPoint, but automatically inserting the results of your R code into a presentation can save a huge amount of time. Presentations work by dividing your content into slides, with a new slide beginning at each first (<code>#</code>) or second (<code>##</code>) level header. You can also insert a horizontal rule (<code>***</code>) to create a new slide without a header.</p>
+<p>R Markdown comes with three presentation formats built-in:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>ioslides_presentation</code> - HTML presentation with ioslides</p></li>
+<li><p><code>slidy_presentation</code> - HTML presentation with W3C Slidy</p></li>
+<li><p><code>beamer_presentation</code> - PDF presentation with LaTeX Beamer.</p></li>
+</ol>
+<p>Two other popular formats are provided by packages:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>revealjs::revealjs_presentation</code> - HTML presentation with reveal.js.
+Requires the <strong>revealjs</strong> package.</p></li>
+<li><p><strong>rmdshower</strong>, <a href="https://github.com/MangoTheCat/rmdshower" class="uri">https://github.com/MangoTheCat/rmdshower</a>, provides a
+wrapper around the <strong>shower</strong>, <a href="https://github.com/shower/shower" class="uri">https://github.com/shower/shower</a>,
+presentation engine</p></li>
+</ol>
+</div>
+<div id="dashboards" class="section level2">
+<h2><span class="header-section-number">29.6</span> Dashboards</h2>
+<p>Dashboards are a useful way to communicate large amounts of information visually and quickly. Flexdashboard makes it particularly easy to create dashboards using R Markdown and a convention for how the headers affect the layout:</p>
+<ul>
+<li>Each level 1 header (<code>#</code>) begins a new page in the dashboard.</li>
+<li>Each level 2 header (<code>##</code>) begins a new column.</li>
+<li>Each level 3 header (<code>###</code>) begins a new row.</li>
+</ul>
+<p>For example, you can produce this dashboard:</p>
+<p><img src="./img3_files/rmarkdown-flexdashboard.png" width="75%" style="display: block; margin: auto;"></p>
+<p>Using this code:</p>
+<pre><code>---
+title: "Diamonds distribution dashboard"
+output: flexdashboard::flex_dashboard
+---
+
+```{r setup, include = FALSE}
+library(ggplot2)
+library(dplyr)
+knitr::opts_chunk$set(fig.width = 5, fig.asp = 1/3)
+```
+
+## Column 1
+
+### Carat
+
+```{r}
+ggplot(diamonds, aes(carat)) + geom_histogram(binwidth = 0.1)
+```
+
+### Cut
+
+```{r}
+ggplot(diamonds, aes(cut)) + geom_bar()
+```
+
+### Colour
+
+```{r}
+ggplot(diamonds, aes(color)) + geom_bar()
+```
+
+## Column 2
+
+### The largest diamonds
+
+```{r}
+diamonds %&gt;% 
+  arrange(desc(carat)) %&gt;% 
+  head(100) %&gt;% 
+  select(carat, cut, color, price) %&gt;% 
+  DT::datatable()
+```</code></pre>
+<p>Flexdashboard also provides simple tools for creating sidebars, tabsets, value boxes, and gauges. To learn more about flexdashboard visit <a href="http://rmarkdown.rstudio.com/flexdashboard/" class="uri">http://rmarkdown.rstudio.com/flexdashboard/</a>.</p>
+</div>
+<div id="interactivity" class="section level2">
+<h2><span class="header-section-number">29.7</span> Interactivity</h2>
+<p>Any HTML format (document, notebook, presentation, or dashboard) can contain interactive components.</p>
+<div id="htmlwidgets" class="section level3">
+<h3><span class="header-section-number">29.7.1</span> htmlwidgets</h3>
+<p>HTML is an interactive format, and you can take advantage of that interactivity with <strong>htmlwidgets</strong>, R functions that produce interactive HTML visualisations. For example, take the <strong>leaflet</strong> map below. If you’re viewing this page on the web, you can drag the map around, zoom in and out, etc. You obviously can’t do that in a book, so rmarkdown automatically inserts a static screenshot for you.</p>
+<div class="sourceCode" id="cb792"><button type="button" class="copy-to-clipboard-button" title="Copy to clipboard" aria-label="Copy to clipboard"><i class="fa fa-copy"></i></button><pre class="sourceCode r"><code class="sourceCode r"><span id="cb792-1"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb792-1" aria-hidden="true"></a><span class="kw">library</span>(leaflet)</span>
+<span id="cb792-2"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb792-2" aria-hidden="true"></a><span class="kw">leaflet</span>() <span class="op">%&gt;%</span></span>
+<span id="cb792-3"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb792-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">setView</span>(<span class="fl">174.764</span>, <span class="fl">-36.877</span>, <span class="dt">zoom =</span> <span class="dv">16</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb792-4"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb792-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">addTiles</span>() <span class="op">%&gt;%</span></span>
+<span id="cb792-5"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb792-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">addMarkers</span>(<span class="fl">174.764</span>, <span class="fl">-36.877</span>, <span class="dt">popup =</span> <span class="st">"Maungawhau"</span>) </span></code></pre></div>
+<div id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width: 70%; height: 415.296px; position: relative; outline: none;" class="leaflet html-widget html-widget-static-bound leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(0px, 0px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt="" role="presentation" src="./img3_files/39999.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-32px, 104px, 0px); opacity: 1;"><img alt="" role="presentation" src="./img3_files/39999(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(224px, 104px, 0px); opacity: 1;"><img alt="" role="presentation" src="./img3_files/39998.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-32px, -152px, 0px); opacity: 1;"><img alt="" role="presentation" src="./img3_files/39998(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(224px, -152px, 0px); opacity: 1;"><img alt="" role="presentation" src="./img3_files/40000.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-32px, 360px, 0px); opacity: 1;"><img alt="" role="presentation" src="./img3_files/40000(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(224px, 360px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-shadow-pane"><img src="./img3_files/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(177px, 207px, 0px);"></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-marker-pane"><img src="./img3_files/marker-icon-2x.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(177px, 207px, 0px); z-index: 207;"></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(1.65332e+07px, 1.02398e+07px, 0px) scale(32768);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="https://r4ds.had.co.nz/r-markdown-formats.html#" title="Zoom in" role="button" aria-label="Zoom in">+</a><a class="leaflet-control-zoom-out" href="https://r4ds.had.co.nz/r-markdown-formats.html#" title="Zoom out" role="button" aria-label="Zoom out">−</a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control"><a href="http://leafletjs.com/" title="A JS library for interactive maps">Leaflet</a> | © <a href="http://openstreetmap.org/">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a></div></div></div></div>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[-36.877,174.764],16,[]],"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[-36.877,174.764,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Maungawhau",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-36.877,-36.877],"lng":[174.764,174.764]}},"evals":[],"jsHooks":[]}</script>
+<p>The great thing about htmlwidgets is that you don’t need to know anything about HTML or JavaScript to use them. All the details are wrapped inside the package, so you don’t need to worry about it.</p>
+<p>There are many packages that provide htmlwidgets, including:</p>
+<ul>
+<li><p><strong>dygraphs</strong>, <a href="http://rstudio.github.io/dygraphs/" class="uri">http://rstudio.github.io/dygraphs/</a>, for interactive time
+series visualisations.</p></li>
+<li><p><strong>DT</strong>, <a href="http://rstudio.github.io/DT/" class="uri">http://rstudio.github.io/DT/</a>, for interactive tables.</p></li>
+<li><p><strong>threejs</strong>, <a href="https://github.com/bwlewis/rthreejs" class="uri">https://github.com/bwlewis/rthreejs</a> for interactive 3d plots.</p></li>
+<li><p><strong>DiagrammeR</strong>, <a href="http://rich-iannone.github.io/DiagrammeR/" class="uri">http://rich-iannone.github.io/DiagrammeR/</a> for diagrams
+(like flow charts and simple node-link diagrams).</p></li>
+</ul>
+<p>To learn more about htmlwidgets and see a more complete list of packages that provide them visit <a href="http://www.htmlwidgets.org/" class="uri">http://www.htmlwidgets.org/</a>.</p>
+</div>
+<div id="shiny" class="section level3">
+<h3><span class="header-section-number">29.7.2</span> Shiny</h3>
+<p>htmlwidgets provide <strong>client-side</strong> interactivity — all the interactivity happens in the browser, independently of R. On one hand, that’s great because you can distribute the HTML file without any connection to R. However, that fundamentally limits what you can do to things that have been implemented in HTML and JavaScript. An alternative approach is to use <strong>shiny</strong>, a package that allows you to create interactivity using R code, not JavaScript.</p>
+<p>To call Shiny code from an R Markdown document, add <code>runtime: shiny</code> to the header:</p>
+<div class="sourceCode" id="cb793"><button type="button" class="copy-to-clipboard-button" title="Copy to clipboard" aria-label="Copy to clipboard"><i class="fa fa-copy"></i></button><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb793-1"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb793-1" aria-hidden="true"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Shiny Web App"</span></span>
+<span id="cb793-2"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb793-2" aria-hidden="true"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span>
+<span id="cb793-3"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb793-3" aria-hidden="true"></a><span class="fu">runtime</span><span class="kw">:</span><span class="at"> shiny</span></span></code></pre></div>
+<p>Then you can use the “input” functions to add interactive components to the document:</p>
+<div class="sourceCode" id="cb794"><button type="button" class="copy-to-clipboard-button" title="Copy to clipboard" aria-label="Copy to clipboard"><i class="fa fa-copy"></i></button><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb794-1" aria-hidden="true"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb794-2"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb794-2" aria-hidden="true"></a></span>
+<span id="cb794-3"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb794-3" aria-hidden="true"></a><span class="kw">textInput</span>(<span class="st">"name"</span>, <span class="st">"What is your name?"</span>)</span>
+<span id="cb794-4"><a href="https://r4ds.had.co.nz/r-markdown-formats.html#cb794-4" aria-hidden="true"></a><span class="kw">numericInput</span>(<span class="st">"age"</span>, <span class="st">"How old are you?"</span>, <span class="ot">NA</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">150</span>)</span></code></pre></div>
+<p><img src="./img3_files/rmarkdown-shiny.png" width="357" style="display: block; margin: auto;">
+You can then refer to the values with <code>input$name</code> and <code>input$age</code>, and the code that uses them will be automatically re-run whenever they change.</p>
+<p>I can’t show you a live shiny app here because shiny interactions occur on the <strong>server-side</strong>. This means that you can write interactive apps without knowing JavaScript, but you need a server to run them on. This introduces a logistical issue: Shiny apps need a Shiny server to be run online. When you run shiny apps on your own computer, shiny automatically sets up a shiny server for you, but you need a public facing shiny server if you want to publish this sort of interactivity online. That’s the fundamental trade-off of shiny: you can do anything in a shiny document that you can do in R, but it requires someone to be running R.</p>
+<p>Learn more about Shiny at <a href="http://shiny.rstudio.com/" class="uri">http://shiny.rstudio.com/</a>.</p>
+</div>
+</div>
+<div id="websites" class="section level2">
+<h2><span class="header-section-number">29.8</span> Websites</h2>
+<p>With a little additional infrastructure you can use R Markdown to generate a complete website:</p>
+<ul>
+<li><p>Put your <code>.Rmd</code> files in a single directory. <code>index.Rmd</code> will become
+the home page.</p></li>
+<li><p>Add a YAML file named <code>_site.yml</code> provides the navigation for the site.
+For example:</p>
+<pre><code>name: "my-website"
+navbar:
+  title: "My Website"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Viridis Colors"
+      href: 1-example.html
+    - text: "Terrain Colors"
+      href: 3-inline.html</code></pre></li>
+</ul>
+<p>Execute <code>rmarkdown::render_site()</code> to build <code>_site</code>, a directory of files ready to deploy as a standalone static website, or if you use an RStudio Project for your website directory. RStudio will add a Build tab to the IDE that you can use to build and preview your site.</p>
+<p>Read more at <a href="http://rmarkdown.rstudio.com/rmarkdown_websites.html" class="uri">http://rmarkdown.rstudio.com/rmarkdown_websites.html</a>.</p>
+</div>
+<div id="other-formats" class="section level2">
+<h2><span class="header-section-number">29.9</span> Other formats</h2>
+<p>Other packages provide even more output formats:</p>
+<ul>
+<li><p>The <strong>bookdown</strong> package, <a href="https://github.com/rstudio/bookdown" class="uri">https://github.com/rstudio/bookdown</a>,
+makes it easy to write books, like this one. To learn more, read
+<a href="https://bookdown.org/yihui/bookdown/"><em>Authoring Books with R Markdown</em></a>,
+by Yihui Xie, which is, of course, written in bookdown. Visit
+<a href="http://www.bookdown.org/" class="uri">http://www.bookdown.org</a> to see other bookdown books written by the
+wider R community.</p></li>
+<li><p>The <strong>prettydoc</strong> package, <a href="https://github.com/yixuan/prettydoc/" class="uri">https://github.com/yixuan/prettydoc/</a>,
+provides lightweight document formats with a range of attractive
+themes.</p></li>
+<li><p>The <strong>rticles</strong> package, <a href="https://github.com/rstudio/rticles" class="uri">https://github.com/rstudio/rticles</a>, compiles a
+selection of formats tailored for specific scientific journals.</p></li>
+</ul>
+<p>See <a href="http://rmarkdown.rstudio.com/formats.html" class="uri">http://rmarkdown.rstudio.com/formats.html</a> for a list of even more formats. You can also create your own by following the instructions at <a href="http://rmarkdown.rstudio.com/developer_custom_formats.html" class="uri">http://rmarkdown.rstudio.com/developer_custom_formats.html</a>.</p>
+</div>
+<div id="learning-more-5" class="section level2">
+<h2><span class="header-section-number">29.10</span> Learning more</h2>
+<p>To learn more about effective communication in these different formats I recommend the following resources:</p>
+<ul>
+<li><p>To improve your presentation skills, I recommend
+<a href="https://amzn.com/0321820800"><em>Presentation Patterns</em></a>, by Neal Ford,
+Matthew McCollough, and Nathaniel Schutta. It provides a set of effective
+patterns (both low- and high-level) that you can apply to improve your
+presentations.</p></li>
+<li><p>If you give academic talks, I recommend reading the <a href="https://github.com/jtleek/talkguide"><em>Leek group guide
+to giving talks</em></a>.</p></li>
+<li><p>I haven’t taken it myself, but I’ve heard good things about Matt
+McGarrity’s online course on public speaking:
+<a href="https://www.coursera.org/learn/public-speaking" class="uri">https://www.coursera.org/learn/public-speaking</a>.</p></li>
+<li><p>If you are creating a lot of dashboards, make sure to read Stephen Few’s
+<a href="https://amzn.com/0596100167">Information Dashboard Design: The Effective Visual Communication
+of Data</a>. It will help you create dashboards
+that are truly useful, not just pretty to look at.</p></li>
+<li><p>Effectively communicating your ideas often benefits from some
+knowledge of graphic design. <a href="http://amzn.com/0133966151"><em>The Non-Designer’s Design
+Book</em></a> is a great place to start.</p></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="https://r4ds.had.co.nz/graphics-for-communication.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="https://r4ds.had.co.nz/r-markdown-workflow.html" class="navigation navigation-next " aria-label="Next page" style="margin-right: 0px;"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="./img3_files/6ce2ea056ec4620b3daabbd3c6229d14a2cc269f.js.다운로드"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/hadley/r4ds/edit/master/rmarkdown-formats.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+
+</body></html>

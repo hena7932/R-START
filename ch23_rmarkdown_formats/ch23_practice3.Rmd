@@ -1,0 +1,17 @@
+---
+title: "ch23_practice3"
+author: "ne_choi"
+date: '2020 10 14 '
+output:
+ html_document:
+   toc: TRUE
+   toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+I'll export this code to pdf
+
+rmarkdown::render("ch23_practice3.Rmd", output_format = "pdf_document")
