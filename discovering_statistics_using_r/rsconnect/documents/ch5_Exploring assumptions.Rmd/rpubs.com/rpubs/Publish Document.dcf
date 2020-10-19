@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/677048/faa60d715b2846f088157ae493bf24d3
+bundleId: https://api.rpubs.com/api/v1/document/677048/faa60d715b2846f088157ae493bf24d3
+url: http://rpubs.com/tofka67/677048
+when: 1603028335.06365

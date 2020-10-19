@@ -1,0 +1,36 @@
+Encoding: UTF-8
+Package: WRS
+Type: Package
+Title: A Package of R.R. Wilcox' Robust Statistics Functions
+Version: 0.37.1
+Date: 2020-10-12
+Author: Rand R. Wilcox <rwilcox@usc.edu>
+Maintainer: Felix Schönbrodt <felix@nicebread.de>
+URL: https://github.com/nicebread/WRS/
+BugReports: rwilcox@usc.edu
+Suggests:
+    MASS,
+    akima,
+    robustbase,
+    cobs,
+    robust,
+    mgcv,
+    scatterplot3d,
+    quantreg,
+    rrcov,
+    lars,
+    pwr,
+    trimcluster,
+    mc2d,
+    psych,
+    Rfit,
+    DepthProc,
+    class,
+    fda,
+    parallel,
+	e1071,
+	rankFD
+Description: This is a packaged version of the robust statistic functions
+    provided by R. R. Wilcox (http://dornsife.usc.edu/labs/rwilcox/software/).
+License: file LICENSE
+LazyLoad: yes
