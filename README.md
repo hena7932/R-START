@@ -4,7 +4,7 @@
  
  - 2018.02 단국대학교 공예학과 졸업
  - 2014.03 단국대학교 공예학과 입학
- - 2014.02 JAKARTA INTERNATION KOREA SCHOOL 졸업
+ - 2014.02 JAKARTA INTERNATIONER KOREA SCHOOL 졸업
  
 **경력**
  
@@ -21,7 +21,7 @@
   
   자격증
   
-  - 보석 감정사
+  - 
   
  
  
