@@ -2,7 +2,14 @@
 title: "R 1"
 author: "LEE HAN NA"
 date: '2020 10 26 '
-output: html_document
+output:
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: FALSE
+      smooth_scroll: TRUE
+    theme: united
+    highlight: textmate
 ---
 
 ```{r setup, include=FALSE}
