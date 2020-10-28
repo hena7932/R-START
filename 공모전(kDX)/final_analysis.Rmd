@@ -1,0 +1,200 @@
+---
+title: "Untitled"
+author: "Unnamed"
+date: '2020 10 21 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# 라이브러리
+library(ggplot2)
+library(purrr)
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(readr)
+library(forcats)
+
+library(readxl)
+library(jsonlite)
+library(lubridate)
+library(reshape2)
+library(ggrepel)
+```
+
+```{r}
+# 데이터 전처리 과정 여기에
+shinhancard <- read_xlsx("data/Shinhancard.xlsx")
+head(shinhancard)
+```
+
+```{r}
+shinhancard <- shinhancard %>%
+  select(-c(6:8))
+shinhancard$일별 <- as.Date(shinhancard$일별, format = "%Y%m%d")
+shinhancard <- shinhancard %>%
+  separate(업종, c(" ", "업종"), sep = 5)
+shinhancard <- shinhancard %>%
+  select(-4)
+head(shinhancard)
+```
+
+- 위 데이터를 불러오니 불필요한 6:8 변수가 불러온 것을 확인할 수 있다.
+- 실제 엑셀 데이터를 열어도 빈값임을 확인할 수 있다.
+- 따라서, 6:8 변수는 삭제한다.
+
+```{r}
+shinhan_covid <- shinhancard %>%
+  mutate(
+    코로나 = case_when(
+      일별 >= "2019-02-01" & 일별 < "2019-05-01"  ~ "2019",
+      일별 >= "2020-02-01" & 일별 < "2020-05-01"  ~ "2020",
+      TRUE ~ "기타")) %>%
+  filter(코로나 == 2019 | 코로나 == 2020)
+head(shinhan_covid)
+```
+
+첫번째
+-	외식업의 현황을 확인하기 위해 시계열 그래프를 생성함
+-	업종 내의 항목을 표현하기 위해 groupby 설정
+-	시계열 그래프의 가독성을 높이기 위해 중앙선을 추가
+
+```{r}
+shinhancard %>%
+  rename(date = "일별") %>%  
+  group_by(date, 업종) %>% 
+  summarise(mean = mean(`카드이용건수(천건)`)) %>%  
+  filter(data <- 업종 =="한식"| 업종 =="일식/중식/양식"| 
+           업종 =="제과/커피/패스트푸드"| 업종 =="기타요식") %>%
+  ggplot(aes(x=date)) + 
+  geom_smooth(aes(y=mean, colour = 업종), se= F) +
+  geom_line(aes(y=mean, colour = 업종)) + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(vjust=0.6, size = 12, face = "bold"), 
+        axis.text.y = element_text(size =12, face = 'bold'), 
+        axis.title=element_text(size=14, face='bold'),
+        title = element_text(size=15, face='bold'),
+        legend.position = "top", 
+        legend.text = element_text(size= 18))+
+  labs(title="신한카드", 
+       subtitle="외식업종 카드 사용현황", 
+       caption="Source: shinhancard", 
+       y="이용건수", x= "구매기간") 
+```
+
+
+
+두번째
+-	업종별 카드사용 현황을 세부적으로 확인 하기위해 바형 그래프로 설정함
+
+```{r}
+shinhancard %>%
+  group_by(업종, 일별) %>%
+  count(`카드이용건수(천건)`) %>%
+  filter(data <- 업종 =="한식"| 업종 =="일식/중식/양식"| 
+           업종 =="제과/커피/패스트푸드"| 업종 =="기타요식") %>%
+  ggplot(aes(x = 업종, y= `카드이용건수(천건)`)) + 
+  geom_bar(stat = "identity", position= 'dodge', width=.8, fill= "#FF6666") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 14, face = "bold"), 
+        axis.text.y = element_text(size =12, face = 'bold'), 
+        axis.title=element_text(size=14, face='bold'),
+        title = element_text(size=15, face='bold'),
+        legend.position = "top") +
+  labs(title="신한카드", 
+       subtitle="외식업종 카드 사용현황", 
+       caption="source: shinhancard",
+       x= " ")
+```
+
+
+
+세번째
+-	외식업의 현황을 좀더 자세하게 확인하기 위하여 연령대별로 기간그래프를 생성함?
+-	평소에는 20대의 매출이 많았으나 코로나 대책인 거리두기의 일환으로 20대의 매출이 크게 감소한 것으로 생각됨
+
+```{r}
+shinhancard %>%
+  rename(date = "일별") %>%  
+  group_by(date, 업종, 연령대별) %>%  
+  filter(연령대별 %in% c("20대", "30대", "40대", "50대")) %>%
+  summarise(mean = mean(`카드이용건수(천건)`)) %>%
+  filter(data <- 업종 =="한식"| 업종 =="일식/중식/양식"| 
+           업종 =="제과/커피/패스트푸드"| 업종 =="기타요식") %>%
+  ggplot(aes(x=date)) + 
+  geom_smooth(aes(y=mean, colour = 연령대별),se=F, size=1.5) + 
+  labs(title="신한카드", 
+       subtitle="외식업종 카드 사용현황", 
+       caption="Source: shinhancard", 
+       y="구매횟수", x= "구매기간") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(vjust=0.6, size = 12, face = "bold"), 
+        axis.text.y = element_text(size =12, face = 'bold'), 
+        axis.title=element_text(size=14, face='bold'),
+        title = element_text(size=15, face='bold'),
+        legend.position = "top")
+```
+
+
+
+네번째
+-	연령대별 지출항목을 좀더 명확히 확인하기 위해 연령대별로 업종을 나눔
+-	20, 30대의 매출이 가장 높은 업종은 기타요식(유흥음식/주점, 나이트클럽)으로 확인되고 40,50대의 경우 한식의 비중이 가장 높은 것을 확인됨
+
+```{r}
+shinhancard %>%
+  rename(date = "일별") %>%  
+  group_by(date, 업종, 연령대별) %>%  
+  filter(연령대별 %in% c("20대", "30대", "40대", "50대")) %>%
+  summarise(mean = mean(`카드이용건수(천건)`)) %>%
+  filter(data <- 업종 =="한식"| 업종 =="일식/중식/양식"| 
+           업종 =="제과/커피/패스트푸드"| 업종 =="기타요식") %>%
+  ggplot(aes(x=date)) + 
+  geom_smooth(aes(y=mean, colour = 업종),se=F, size=1.5) + 
+  facet_grid(연령대별 ~ .) + 
+  labs(title="신한카드", 
+       subtitle="외식업종 카드 사용현황", 
+       caption="Source: shinhancard", 
+       y="구매횟수", x= "구매기간") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(vjust=0.6, size = 12, face = "bold"), 
+        axis.text.y = element_text(size =12, face = 'bold'), 
+        axis.title=element_text(size=14, face='bold'),
+        title = element_text(size=15, face='bold'),
+        legend.position = "top")
+```
+
+
+
+다섯번째
+-	시계열그래프, 기간그래프를 확인한 결과 코로나 시기에 맞물려 감소하다 다시 증가하는 추세를 보여, 증감이 모두 코로나로 인해 발생한 것인지 확인하기 위해 전년동월 데이터를 활용하기로 함
+-	전년도, 금년도 데이터를 비교한 결과 전년대비 업종별 매출이 모두 감소한 것을 확인하여 코로나로 인해 매출이 감소한 것으로 추정함 
+-	전년도 데이터를 비교하기 위해 mutate를 사용하여 코로나 함수를 설정함
+
+```{r}
+shinhan_covid %>%
+  group_by(일별, 업종, 연령대별, 코로나) %>% 
+  summarise(업종, `카드이용건수(천건)`) %>% 
+  filter(연령대별 %in% c("20대", "30대", "40대", "50대")) %>%
+  filter(data <- 업종 =="한식"| 업종 =="일식/중식/양식"| 
+           업종 =="제과/커피/패스트푸드"| 업종 =="기타요식") %>% 
+  ggplot(aes(x = 업종, y= `카드이용건수(천건)`, fill= 연령대별)) + 
+  geom_bar(stat = "identity", position = 'dodge', width=.6) +
+  facet_grid(. ~코로나) +
+  labs(title="신한카드", 
+       subtitle="외식업종 전년대비 카드 사용현황", 
+       caption="source: shinhancard",
+       x= " ") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=45, vjust=0.6, size = 12, face = "bold"), 
+        axis.text.y = element_text(size =12, face = 'bold'), 
+        axis.title=element_text(size=14, face='bold'),
+        title = element_text(size=15, face='bold'),
+        legend.position = "top")
+```
+
+
+
