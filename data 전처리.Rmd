@@ -1,0 +1,41 @@
+---
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#필터기능 ==> filter()
+#행정렬 ==> arrange()
+#선택 ==> select()
+#합산하는 열 추가 ==> mutate()
+# 요약하는 항목을 만들고 싶다 ==> summarise()
+
+# int ==>숫자형
+# dbl ==> real numbers
+# chr ==> 문자열
+# date ==> stands for dates # GA ==> date
+
+    readr::guess_encoding("data/청년기업.csv",  n_max = 100) # 대표자 정보 청년
+
+     young <- read.csv("data/청년기업.csv", fileEncoding = "UTF-8")
+
+     glimpse(young)
+
+# Filter() 필터, 조건
+
+
+
+## 방법 1
+
+     <- filter(young, 기준년월 == 2019-01, 등록일자 == 2019-12-11)
+
+### (data, 조건1 == 원하는 값, 조건2 == 원하는 값)
+
+## 방법2
+        
+        mar <- young %>% filter( year == 2019-01)
+ 
+### %>% chin (연결고리) data %>% 연결고리 filter(조건 == 원하는 값, 조건2 == 원하는 값)
+
+
