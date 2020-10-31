@@ -1,20 +1,31 @@
 ---
+title: "data 전처리"
+
+output:
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: FALSE
+      smooth_scroll: TRUE
+    theme: united
+    highlight: textmate
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#필터기능 ==> filter()
-#행정렬 ==> arrange()
-#선택 ==> select()
-#합산하는 열 추가 ==> mutate()
-# 요약하는 항목을 만들고 싶다 ==> summarise()
+# 데이터전처리
+ 필터기능 ==> filter()
+ 행정렬 ==> arrange()
+ 선택 ==> select()
+ 합산하는 열 추가 ==> mutate()
+ 요약하는 항목을 만들고 싶다 ==> summarise()
 
-# int ==>숫자형
-# dbl ==> real numbers
-# chr ==> 문자열
-# date ==> stands for dates # GA ==> date
+ int ==>숫자형
+ dbl ==> real numbers
+ chr ==> 문자열
+ date ==> stands for dates # GA ==> date
 
     readr::guess_encoding("data/청년기업.csv",  n_max = 100) # 대표자 정보 청년
 
@@ -24,18 +35,44 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Filter() 필터, 조건
 
-
-
 ## 방법 1
 
      <- filter(young, 기준년월 == 2019-01, 등록일자 == 2019-12-11)
 
-### (data, 조건1 == 원하는 값, 조건2 == 원하는 값)
+    (data, 조건1 == 원하는 값, 조건2 == 원하는 값)
 
 ## 방법2
         
         mar <- young %>% filter( year == 2019-01)
  
-### %>% chin (연결고리) data %>% 연결고리 filter(조건 == 원하는 값, 조건2 == 원하는 값)
+    %>% chin (연결고리) data %>% 연결고리 filter(조건 == 원하는 값, 조건2 == 원하는 값)
 
+# 주제는 select() 사용하기
+ 
+  변수 추출
 
+## 방법 1
+             
+    select(young, 시도명, 시군구명, 행정동명)
+
+## 방법 2
+
+    select(young, 시도명:행정동명)
+
+## 방법 3
+    
+    select(young, - (시도명:행정동명))
+
+## 방법 4
+
+### 앞에서 부터 시작된 공통된 문자
+
+    select(young, starts_with("업종"))
+
+### 뒤에서 부터
+
+    select(young, ends_with("코드"))
+
+### 특정 문자열
+
+    select(young, contains("명"))
