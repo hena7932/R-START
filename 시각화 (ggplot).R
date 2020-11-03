@@ -82,3 +82,58 @@ SD %>%
         title = element_text(size=10, face='bold'),
         legend.position = "top") +
   labs(title="시도명")
+
+# 시도명 코드(상위)
+top10 <- SD %>%            # 데이터에서
+  arrange(desc(n)) %>%   # 내림차순으로 나열
+  head(10)                # 상위 10개만 추출 후, 최종적으로 top10 에 저장
+top10 %>%
+  ggplot(aes(x = reorder(시도명, -n), y = n)) +
+  geom_bar(stat = "identity", position= 'dodge', width=.5, fill= "#EC5A96") +
+  coord_flip() + # 가로형코드
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 10, face = "bold"),
+        axis.text.y = element_text(size =10, face = 'bold'),
+        axis.title=element_text(size=10, face='bold'),
+        title = element_text(size=10, face='bold'),
+        legend.position = "top") +
+  labs(title="시도",
+       caption="TC_EN_YGMN_ENTRPRS_INFO",
+       subtitle="top10",
+       y="시도수", x= "시도")
+
+#하위10개
+bottom10 <- SD %>% #하위10개
+  arrange(n) %>%
+  head(10)
+bottom10 %>%
+  ggplot(aes(x = reorder(시도명, -n), y = n)) +
+  geom_bar(stat = "identity", position= 'dodge', width=.5, fill= "#F64F5C") +
+  coord_flip() +# 가로형코드
+  ylim(0, 1500000) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 10, face = "bold"),
+        axis.text.y = element_text(size =10, face = 'bold'),
+        axis.title=element_text(size=10, face='bold'),
+        title = element_text(size=10, face='bold'),
+        legend.position = "top") +
+  labs(title="시도",
+       caption="TC_EN_YGMN_ENTRPRS_INFO",
+       subtitle="botton 10",
+       y="시도수", x= "시도")
+
+#시도명 (4개만)
+SD %>%
+  filter(시도명 %in% c("서울", "경기", "부산", "인천")) %>% 
+  ggplot(aes(x = 시도명, y = n)) +
+  geom_bar(stat = "identity", position= 'dodge', width=.5, fill= "#FF6666") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 10, face = "bold"),
+        axis.text.y = element_text(size =10, face = 'bold'),
+        axis.title=element_text(size=10, face='bold'),
+        title = element_text(size=10, face='bold'),
+        legend.position = "top") +
+  labs(title="시도명",
+       caption="TC_EN_YGMN_ENTRPRS_INFO",
+       subtitle="서울, 경기, 부산, 인천",
+       y="시도수", x= "시도")
