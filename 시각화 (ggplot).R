@@ -137,3 +137,94 @@ SD %>%
        caption="TC_EN_YGMN_ENTRPRS_INFO",
        subtitle="서울, 경기, 부산, 인천",
        y="시도수", x= "시도")
+
+#상워10개
+top10 <- offic %>%            # 데이터에서
+  arrange(desc(n)) %>%   # 올림차순으로 나열
+  head(10)                # 상위 10개만 추출 후, 최종적으로 top10 에 저장
+top10 %>%
+  ggplot(aes(x = reorder(업종대분류, n), y = n)) +
+  geom_bar(stat = "identity", position= 'dodge', width=.5, fill= "#EC5A96") +
+  theme_minimal() +
+  coord_flip() +
+  theme(axis.text.x = element_text(vjust=0.4, size = 5, face = "bold"),
+        axis.text.y = element_text(size =8, face = 'bold'),
+        axis.title=element_text(size=6, face='bold'),
+        title = element_text(size=10, face='bold'),
+        legend.position = "top") +
+  labs(title="업종대분류",
+       subtitle="top10",
+       y="", x= "업종")
+
+#하위10개
+bottom10 <- offic %>% #하위10개
+  arrange(n) %>%
+  head(10)
+bottom10 %>%
+  ggplot(aes(x = reorder(업종대분류, n), y = n)) +
+  geom_bar(stat = "identity", position= 'dodge', width=.5, fill= "#F64F5C") +
+  coord_flip() +# 가로형코드
+  ylim(0, 76000) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(vjust=0.4, size = 5, face = "bold"),
+        axis.text.y = element_text(size =8, face = 'bold'),
+        axis.title=element_text(size=6, face='bold'),
+        title = element_text(size=10, face='bold'),
+        legend.position = "top") +
+  labs(title="업종대분류",
+       subtitle="bottom10",
+       y="", x= "업종")
+
+#시도명 (4개만)
+four <- gugi %>%
+  filter(시군구명 %in% c("화성시", "평택시", "안성시", "오산시")) 
+
+four %>%
+  ggplot(aes(x = 업종대분류, y = n)) +
+  geom_bar(stat = "identity", position= 'dodge', width=.5, fill= "#FF6666") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 10, face = "bold"),
+        axis.text.y = element_text(size =10, face = 'bold'),
+        axis.title=element_text(size=10, face='bold'),
+        title = element_text(size=10, face='bold'),
+        legend.position = "top") +
+  labs(title="시도명",
+       caption="TC_EN_YGMN_ENTRPRS_INFO",
+       subtitle="서울, 경기, 부산, 인천",
+       y="시도수", x= "시도")
+#화성
+ha <- four %>%
+  filter(시군구명 == '화성시') %>%
+  select(업종대분류) 
+
+ha = count(ha, 업종대분류)
+
+ha %>%
+  ggplot(aes(x = reorder(업종대분류, -n), y = n)) +
+  geom_bar(stat = "identity", position= 'dodge', width=.5, fill= "#ECC846") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=45, vjust=0.6, size = 6, face = "bold"),
+        axis.text.y = element_text(size =10, face = 'bold'),
+        axis.title=element_text(size=10, face='bold'),
+        title = element_text(size=10, face='bold'),
+        legend.position = "top") +
+  labs(title="화성",
+       y="", x= "업종")
+
+AN <- four %>%
+  filter(시군구명 == '오산시') %>%
+  select(업종대분류) 
+
+AN = count(AN, 업종대분류)
+
+AN %>%
+  ggplot(aes(x = reorder(업종대분류, -n), y = n)) +
+  geom_bar(stat = "identity", position= 'dodge', width=.5, fill= "#6B007B") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=45, vjust=0.6, size = 6, face = "bold"),
+        axis.text.y = element_text(size =10, face = 'bold'),
+        axis.title=element_text(size=10, face='bold'),
+        title = element_text(size=10, face='bold'),
+        legend.position = "top") +
+  labs(title="안성",
+       y="", x= "업종")
