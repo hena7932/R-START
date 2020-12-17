@@ -1,0 +1,254 @@
+---
+title: "12ch forcats로 하는 팩터형"
+output:
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: FALSE
+      smooth_scroll: TRUE
+    theme: united
+    highlight: textmate
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 12.1 forcats로하는팩터형 들어가기
+R에서 팩터형은 범주형 변수에 사용되는데, 범주형변수란 가질수 있는 값이 미리고정되고 또알려진 변수를 말한다.팩터형은 문자형 벡터를 알파벳순이 아닌 순서로 표시하고 싶을 떄도이용할수있다. 팩터형의 역사적 맥락을 자세히 보려면 로커 팽의 (stringASfactor:an unauthorized biography) 와 토마스럼리 의
+ (stringasfacter=sigh)를 읽오보길 바랍니다
+ 
+
+### 12.1.1 forcats로하는 팩터형 준비하기
+팩터형을 다루기위해 forcats 패키지를 사용하려는데,이패키지에는 범주형ㅇ 뱐수(팩터형의 다른말)
+에적요하는 도구들이있다 forcats는 tidyverse 핵심 구성원에 포함되어있지 않기 떄문에 명시적으로 로드해야 한다.
+
+```{r}
+library(tidyverse)
+library(forcats)
+```
+
+## 12.2 팩터형 생성하기
+월을 기록한 변수가 있다고 가정하자
+
+```{r}
+x1 <- c("Dec","Apr","Jan","Mar")
+```
+
+1.12개의 달 외의 오타를 입력했을떄,경고가 발생되지않아 실수를 알아채기 어렵다
+```{r}
+x2 <- c("Dec","Apr","Jam","Mar")
+```
+
+2.유용한 순서로 정렬되지 않는다
+```{r}
+sort(x1)
+```
+
+팩터형을 이용하면 이러한 문제를 모두 해결할수있다.팩터형을 생성하기위해서는 유요한 레벨들의 리스트를 생성하는 것부터 시작해야 한다
+
+```{r}
+month_levels <- c("Jan","Fed","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
+```
+
+이제 팩터형을 사용할수있다
+그리고 이레벨 집합에 포함되지 않는값은 조용히 NA로 변환된다
+
+```{r}
+y2 <- factor(x2, levels = month_levels) 
+y2
+
+```
+
+경고가발생되길 원하는 경우에는 readr::parse_factor()를 사용하면 된다.
+
+```{r}
+y2 <- parse_factor(x2, levels = month_levels)
+
+```
+
+## 12.3 종합사회조사
+시카고 대학 독립연구기관인 NORC 에서 장기간 수행한 미국내 설문조사(General Social Survey)의 샘플 데이터이다.수천개의 문항이있는데, 이중에서도 팩터형과 작업할떄 자주발생하는 문제를 보여주는 것들을 gss_cat 으로 선택했다.
+
+```{r}
+gss_cat
+
+```
+
+팩터형이 티블로 저장되면 해당하는 레벨들을 쉽게 볼수없게 된다.볼수있는 한가지 방법은 count()이다
+
+```{r}
+gss_cat %>%
+  count(race)
+
+```
+
+또는 그래프로도 볼수있다
+
+```{r}
+ggplot(gss_cat, aes(race)) +
+  geom_bar()
+```
+
+기본적으로 ggplot2는 값이없는 레벨을 제거한다.다음과같이
+강제적으로 표시하도록 할수있다
+
+
+```{r}
+ggplot(gss_cat, aes(race)) +
+  geom_bar() +
+  scale_x_discrete(drop = FALSE)
+```
+
+
+이레벨들은 유효하지만 이 데이터셋에서 나타나지 않는 값을 나타낸다.dplyr 에는 drop 옵션이 아직 없짐나 행후 제공될 예정이다.펙터형으로 작업할떄 자주하는 작업 두가지는 레벨의 순서와 값을 변경하는 것이다.
+
+
+## 12.4 팩터 순서 수정하기
+시각화에서 팩터 레벨의 순서를 변경하는 것이 유용할 떄가 종종 있다.예를들어 종교에 따른 하루 tv시청시간의 평균을 탐색하고 싶다고 해보자.
+
+```{r}
+relig_summary <- gss_cat %>%
+  group_by(relig) %>%
+  summarize(
+    age = mean(age, na.rm = TRUE),
+    tvhours = mean(tvhours, na.rm = TRUE),
+  )
+
+ggplot(relig_summary, aes(tvhours, relig)) + geom_point()
+```
+
+전반적인 패턴이 없기 떄문에 이플롯을 헤석하기는 어렵다.fct_reorder()를 사용하여 relig의 레벨을 재정렬 해서 개선할수 있다. fct_reorder()에는 세개의 인수가있다
+
+*f:레벨을 수정할 팩터
+
+*x:레벨을 재정렬하기 위해 사용할 수치형 벡터
+
+*선택적으로 fun:f의 각 값에 대해 x값이 여러개가 있을떄 사용할 함수. 기본값은 median 이다
+
+
+```{r}
+rincome_summary <- gss_cat %>%
+  group_by(rincome) %>%
+  summarize(
+    age = mean(age, na.rm = TRUE),
+    tvhours = mean(tvhours, na.rm = TRUE),
+  )
+
+ggplot(rincome_summary, aes(age, fct_reorder(rincome, age))) + geom_point()
+```
+
+여기에서 레벨을 임의로 재정렬하는 것은 좋은 생각이 아니다
+rincome은 이미 원칙있게 정렬되어 있어서 건드리지 말아야 하기떄문이다. fct_reorder() 는레벨이 임의적으로 정렬된 팩터의 경우에만 사용해야한다
+해당없음(Not applicable) 을 다른 특별한 레벨들과 함께 앞으로 가져오는 것이 좋다 fct_relevel()을사용하면된다
+팩터형 f와 앞으로 옮기고자 하는레벨 을 입력하면된다.
+
+```{r}
+ggplot(rincome_summary, aes(age, fct_relevel(rincome, "Not applicable"))) +
+  geom_point()
+```
+
+재정렬이 유용한 경우가 있는데,플롯의 선에 색상을 입힐떄이다.fct_reorder2()는 가장 큰x값과 연관된 y값으로 팩터형을 재정렬한다.선 색상 은 범례와 정렬 되므로 이렇게하면
+플롯 읽기가 쉬워진다
+
+```{r}
+by_age <- gss_cat %>%
+  filter(!is.na(age)) %>%
+  group_by(age, marital) %>%
+  count() %>%
+  mutate(prop = n / sum(n))
+
+ggplot(by_age, aes(age, prop, color = marital)) +
+  geom_line(na.rm = TRUE)
+
+ggplot(by_age, aes(age, prop, color = fct_reorder2(marital, age, prop))) +
+  geom_line() +
+  labs(color = "marital")
+```
+
+fct_infreq()를 사용해 빈도 오름차순 으로 레벨을 정리할수있다추가변수가 필요 없어서 재정렬 방법중 가장 간단한 유형이다fct_rev()와 조합하여사용할수있다
+
+
+
+```{r}
+gss_cat %>%
+  mutate(marital = marital %>% fct_infreq() %>% fct_rev()) %>% ggplot(aes(marital)) +
+  geom_bar()
+```
+
+## 12.5 팩터 레벨 수정하기
+
+레벨의 순서 변경보다 값을 변경하는게 강력한 방법이다.
+화면출력시 라벨을 명확히 할수 있고, 레벨을 병합하여 상위 레벨 시각화를 할수있다. fct_recode 가 일반적이며 각레벨값을 변경할수있다. 예를들어 gss_cat$partyid 를보자
+
+```{r}
+gss_cat %>% count(partyid)
+
+```
+
+이레벨들을 풀어쓰고 병렬구조를 사용해보자
+
+
+```{r}
+gss_cat %>%
+  mutate(partyid = fct_recode(partyid,
+    "Republican, strong" = "strong republican",
+    "Republican, weak" = "Not str republican",
+    "Independent, near rep" = "Ind,near rep",
+    "Independent, near dem" = "Ind,near dem",
+    "Democrat, weak" = "Not str democrat",
+    "Democrat, strong" = "strong democrat"
+  )) %>%
+  count(partyid)
+
+```
+
+fct_recode()명시적으로 언급되지 안은 레벨은 그대로둔다.
+존재하지 않은 레벨을 참조하면 경고가 발생한다.
+그룹을 결합하려면 레벨들을 같은 새로운 레벨로 할당하면된다
+
+```{r}
+gss_cat %>%
+  mutate(partyid = fct_recode(partyid,
+    "Republican, strong" = "strong republican",
+    "Republican, weak" = "Not str republican",
+    "Independent, near rep" = "Ind,near rep",
+    "Independent, near dem" = "Ind,near dem",
+    "Democrat, weak" = "Not str democrat",
+    "Democrat, strong" = "strong democrat"
+    )) %>%
+    count(partyid)
+#> #> # A tibble: 8 x 2
+#>         partyid  n
+#>        <fctr>   <int>
+#> 1      other     548     
+#> 2 Republican, strong 2314
+#> 3 Republican, weak 3032
+#> 4 Independent, near rep 1791
+#> 5 Independent 4119
+#> 6 Independent, near dem 2499
+#> # ... with 2 more rows
+```
+
+가끔은 플룻이나 테이블을 간단히 만들기위해 소규모 그룹 모두를 묶고 싶을수도있다 fct_lump()가 바로그떄쓰는작업이다
+
+```{r}
+gss_cat %>%
+  mutate(relig = fct_lump(relig)) %>%
+  count(relig)
+
+```
+
+
+기본동작은 묶은 그룹이 가장 작은 그룹이 되는 조건을 유지하면서 작은 그룹 들을 점진적으로 묶는다
+N 인수를 사용하여 유지하고 싶은 그룹 개수(other 제외)를 지정할수있다
+
+```{r}
+gss_cat %>%
+  mutate(relig = fct_lump(relig, n = 10)) %>%
+  count(relig, sort = TRUE) %>%
+  print(n = Inf)
+
+```
+
+**출처 : R을 할용한 데이터 과학**  
