@@ -1,0 +1,480 @@
+---
+title: "국회의원은 어떤활동을 하고 있는가?"
+output:
+  html_document:
+    toc: TRUE
+    toc_float: 
+      collapsed: FALSE
+      smooth_scroll: TRUE
+    theme: united
+    highlight: textmate
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# **배경** 
+
+## 국회 의원이란??
+국민의 대표 기관인 국회의 구성원을 국회 의원
+
+모든 국민이 국가의 일을 결정하는 데 직접 참여하기는 어려워, 대한민국은 국민의 대표가 되어 국가의 일에 참여하는 국회 의원을 뽑습니다.국회 의원의 임기는 4년입니다.
+국민은 선거를 통하여 국회 의원을 선출, 국회 의원이 되려면 대한민국의 국민이어야 하며, 만 25세 이상이 되어야 합니다.
+
+국회의원은 지역 대표와 비례 대표가 있고 국회 의원 선거를 할 때는 자신의 지역구 국회 의원 후보와, 자신이 지지하는 정당에게 한 번씩 투표를 합니다. 국민이 직접 선출하는 방법으로 지역 대표인 지역구 의원을 뽑고, 각 정당의 득표율에 따라 비례대표를 추가로 선출합니다.
+
+# **질문**
+ 대한민국의 핵심기관인 국회가 제대로 일하고 있는지를 시각화를 통해 실제 국회의 결정에 영향을 받는 국민들이 쉽고 직관적으로 이해할 수 있도록 구성해보고자 합니다. 
+
+## 1. 각 대수 국회 입활활동 평가
+
+* 각 대수의 국회에서 동안 얼마나 입법활동을 어떻게 하고는가?
+
+* 각 대수의 활동 정도의 변화가 있었는가?
+
+## 2. 국회의원들은 몇번을 하는지?
+
+* 국회의원 한 횟수
+
+* 최근 뽐힌 20대, 21대의 국회의원 한 횟수
+
+## 3. 각 국회의 주요 핵심사안
+
+ * 국회의 핵심 키워드가 무엇이는지?
+
+**위의 데이터를 분석해보면서 우리 국민의 대표가 과연 어떤 일을 하고 있는지, 혹은 제대로 일을 하고 있는지 알아볼 수 있을 것이라 생각합니다. 또한 계속 변화하는 사회의 흐름에 맞추어 입법활동을 충분히 개선하고 있는지,공익적 입법활동을 하고 있는지에 대한 답변을 제공하려 노력하겠습니다**
+
+# **데이터 로딩 및 한글 환경 설정**
+
+시각화에 필요한 R 패키지들을 불러오고, 한글을 쓸 수 있도록 환경 설정하는 작업
+
+```{r setup2, include=FALSE}
+library(tibble)
+library(readr)
+library(lubridate)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(plotly)
+library(showtext)
+library(corrplot)
+library(tidyverse)
+library(ggthemes)
+library(showtext)
+library(sqldf)
+
+sessionInfo()
+```
+```{r, warning=F}
+options(scipen=999)# 범례수 
+
+font_add_google('Nanum Pen Script', 'NanumGothic')# 글씨체 
+showtext_auto() # 글씨체 불러오기
+```
+
+국회의원 및 발의안 데이터를 각각 newpeo, pro , sug 의 이름으로 불러왔습니다.
+
+```{r}
+# 데이터불러오기
+newpeo <- read.csv("data/new_people.csv")
+pro <- read_csv("data/process.csv")
+sug <- read_csv("data/suggest.csv")
+```
+
+## *1. 각 대수 국회 입활활동 평가*
+
+국회의원들의 역할이라고 할 수 있는 입법활동을 얼마나 많이 했는지를 알아보려 합니다.
+일단은 각 대수별로 국회의원들이 법안을 발의한 수를 살펴보려 합니다.
+
+### 각 대수별 국회의원 수
+
+우리나라 국회 대수별 국회의원 수
+
+```{r, eval=FALSE}
+# options(repr.plot.width = 3, repr.plot.height = 2, repr.plot.res = 300)
+options(repr.plot.width=8, repr.plot.height=5)
+ newpeo%>%
+    select(대수:생년월일) %>%
+    filter(대수 >= 15) %>%
+    mutate(대수 = paste(대수, "대")) %>%
+    group_by(대수) %>%
+    summarize(n = n()) %>%
+    ggplot(., aes(x = as.factor(대수), n)) +
+    geom_bar(stat = "identity", col = "gray10", width = 0.75, fill = "orangered3") +
+    geom_text(aes(y = n + 15, label = n), size = 12, family="notosanskr")+
+    ylim(NA, 400) + 
+     theme(legend.position = "none",
+      panel.grid.major.x=element_blank(),
+      title = element_text(size = 40, family="NanumGothic"),
+      axis.title = element_text(size = 30, family="NanumGothic"), 
+      axis.text = element_text(size = 30, family="NanumGothic"), 
+      axis.line = element_line(size = 0.4, colour = "grey")) +
+    labs(title = "국회 대수별 국회의원 수",
+         x = "", y = "인원 수 (명)")
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+options(repr.plot.width=8, repr.plot.height=5)
+ newpeo%>%
+    select(대수:생년월일) %>%
+    filter(대수 >= 15) %>%
+    mutate(대수 = paste(대수, "대")) %>%
+    group_by(대수) %>%
+    summarize(n = n()) %>%
+    ggplot(., aes(x = as.factor(대수), n)) +
+    geom_bar(stat = "identity", col = "gray10", width = 0.75, fill = "orangered3") +
+    geom_text(aes(y = n + 15, label = n), size = 12, family="notosanskr")+
+    ylim(NA, 400) + 
+     theme(legend.position = "none",
+      panel.grid.major.x=element_blank(),
+      title = element_text(size = 40, family="NanumGothic"),
+      axis.title = element_text(size = 30, family="NanumGothic"), 
+      axis.text = element_text(size = 30, family="NanumGothic"), 
+      axis.line = element_line(size = 0.4, colour = "grey")) +
+    labs(title = "국회 대수별 국회의원 수",
+         x = "", y = "인원 수 (명)")
+```
+**위의 그래프는 각 대수 별 국회의원 수의 변화를 보여줍다. 그래프에서 우리는 제15대에 국회의원의 수가 가장 많았으며, 현재 개원한 21대를 제외하고는 제16대 국회의 의원 수가 정수에서 가장 변화가 적다는 것을 보여줍다.**
+
+### 각 대수 별로 국회는 얼마나 일을 많이 했을까?
+
+제15대부터 제21대 사이의 국회의원들의 법안발의 수
+
+```{r, eval=FALSE}
+sug %>% 
+    group_by(대수) %>% 
+    dplyr::filter(대수 >= 15) %>%
+    summarise(n = n()) %>% 
+    ggplot(., aes(x = factor(대수, labels = paste0(15:21, "대")),
+                  y = n)) +
+    geom_bar(stat = "identity", col = "gray10", width = 0.75, fill = "orangered3") +
+    geom_text(aes(y = n + 1000, label = n), size = 12, family = "NanumGothic") +
+    theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 30, family="NanumGothic"), 
+          axis.text = element_text(size = 30, family="NanumGothic"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "대수별 국회 법안 발의건수 (15대~21대)",
+        x = "", y = "발의건수")
+```
+```{r, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+sug %>% 
+    group_by(대수) %>% 
+    dplyr::filter(대수 >= 15) %>%
+    summarise(n = n()) %>% 
+    ggplot(., aes(x = factor(대수, labels = paste0(15:21, "대")),
+                  y = n)) +
+    geom_bar(stat = "identity", col = "gray10", width = 0.75, fill = "orangered3") +
+    geom_text(aes(y = n + 1000, label = n), size = 10, family = "notosanskr") +
+    theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 20, family="notosanskr"), 
+          axis.text = element_text(size = 20, family="notosanskr"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "대수별 국회 법안 발의건수 (15대~21대)",
+        x = "", y = "발의건수")
+```
+
+위의 그래프에서 대수를 거듭할수록 국회의원들의 법안 발의 수의 총량이 큰 폭으로 증가하는 것을 확인
+
+* 제20대 국회는 총 2,1594 건의 가장 높은 입법 발의건수를 보여주고 있습니다.
+* 제21대 국회의 경우 2020년 6월 5일에 개원하여 약 6개월 동안 4,015 건을 발의한 것을 확인할 수 있습니다.
+
+제21대 국회의 폐원일이 2024년점을 볼 때, 제21대 국회는 제20대 국회와 비슷하거나 더 많은 발의가 이루어질 수 있다고 볼 수 있습니다.
+
+### 각 대수별 국회의원 1인 당 법안 발의건수
+
+국회의원의 수는 국회 대수별로 다르기 때문에 우리는 국회의원 1명을 기준으로 보았을 때, 각 국회별 국회의원 인당 법안 발의 수
+
+```{r, eval=FALSE}
+member <- newpeo %>%
+    filter(대수 >= 15) %>%
+    group_by(대수) %>%
+    summarize(n = n()) %>% 
+    select(대수, MEM_NM = n)
+
+sum_suggest <- sug %>% 
+    group_by(대수) %>% 
+    dplyr::filter(대수 >= 15) %>%
+    summarise(n = n()) 
+
+sum_member <- left_join(sum_suggest, member, by = c("대수" = "대수"))
+    
+sum_member %>%
+    mutate(LawPer = round(n / MEM_NM, 1)) %>%
+    ggplot(., aes(x = factor(AGE, labels = paste0(15:21, "대")),
+                  y = LawPer)) +
+    geom_bar(stat = "identity", col = "gray10", width = 0.75, fill = "orangered3") +
+    geom_text(aes(y = LawPer + 3, label = LawPer), size = 12, family = "NanumGothic") +
+    theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 30, family="NanumGothic"), 
+          axis.text = element_text(size = 30, family="NanumGothic"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "대수별 국회의원 1인 당 법안 발의건수 (15대~21대)",
+        x = "", y = "발의건수")
+```
+```{r, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+member <- newpeo %>%
+    filter(대수 >= 15) %>%
+    group_by(대수) %>%
+    summarize(n = n()) %>% 
+    select(대수, MEM_NM = n)
+
+sum_suggest <- sug %>% 
+    group_by(대수) %>% 
+    dplyr::filter(대수 >= 15) %>%
+    summarise(n = n()) 
+
+sum_member <- left_join(sum_suggest, member, by = c("대수" = "대수"))
+    
+sum_member %>%
+    mutate(LawPer = round(n / MEM_NM, 1)) %>%
+    ggplot(., aes(x = factor(대수, labels = paste0(15:21, "대")),
+                  y = LawPer)) +
+    geom_bar(stat = "identity", col = "gray10", width = 0.75, fill = "orangered3") +
+    geom_text(aes(y = LawPer + 3, label = LawPer), size = 12, family = "NanumGothic") +
+    theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 30, family="NanumGothic"), 
+          axis.text = element_text(size = 30, family="NanumGothic"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "대수별 국회의원 1인 당 법안 발의건수 (15대~21대)",
+        x = "", y = "발의건수")
+
+```
+
+* 제20대 국회에 이르러서는 국회의원 1인당 법안발의 건수가 제15대에 비해 약 27배 증가
+* 제20대 국회의 국회의원 1인당 법안발의 건수는 직전의 제19대와 비교하여서도 약 1.5배이다
+
+이제 막 개원한 제21대 국회를 제외한다면, 국회의원들이 시간이 갈수록 입법활동을 수행하고 있다는 것을 확인
+
+### 전체 발의안
+전체 발의된 안건 62,658건 중 이제까지 15대 국회에서부터 발의 된 안건들, 60,428건을 가지고 각 국회의 활동성 평가
+```{r}
+sug <- sug %>%
+    mutate(Year = format(as.Date(제안일), "%Y") %>% as.integer(),
+           Month = format(as.Date(제안일), "%m") %>% as.integer()/12,
+           datenum = Year + Month) %>% 
+    filter(datenum > 1996.5)
+dim(sug)[1]
+```
+
+### 국회의원들은 1년 중 많은 일은 하는 달은 언제인가??
+
+```{r, eval=FALSE}
+sug %>% 
+    filter(datenum <= 2020.5) %>%
+    mutate(Month = format(as.Date(제안일), "%m")) %>%
+    group_by(Month) %>% 
+    summarise(n = n()) %>% 
+    ggplot(., aes(x = factor(Month, labels = paste0(1:12, "월")),
+                  y = n)) +
+    geom_bar(stat = "identity", col = "gray10", width = 0.75, fill = "orangered3") +
+    geom_text(aes(y = n + 200, label = n), size = 12, family = "NanumGothic") +
+    theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 30, family="NanumGothic"), 
+          axis.text = element_text(size = 30, family="NanumGothic"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "월별 국회 법안 발의건수 (15대~20대)",
+        x = "", y = "발의건수")
+```
+```{r, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+sug %>% 
+    filter(datenum <= 2020.5) %>%
+    mutate(Month = format(as.Date(제안일), "%m")) %>%
+    group_by(Month) %>% 
+    summarise(n = n()) %>% 
+    ggplot(., aes(x = factor(Month, labels = paste0(1:12, "월")),
+                  y = n)) +
+    geom_bar(stat = "identity", col = "gray10", width = 0.75, fill = "orangered3") +
+    geom_text(aes(y = n + 200, label = n), size = 12, family = "NanumGothic") +
+    theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 30, family="NanumGothic"), 
+          axis.text = element_text(size = 30, family="NanumGothic"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "월별 국회 법안 발의건수 (15대~20대)",
+        x = "", y = "발의건수")
+```
+
+## 2. 국회의원들은 몇번을 하는지?(20대,21대)
+
+### 전제 국회의원한 횟수
+```{r, eval=FALSE}
+x21<-subset(newpeo, 대수=='21')
+
+x20 <- subset(newpeo, 대수=='20')
+
+#전체 국회의원 의원 횟수 추출
+count<-sqldf("select 이름,생년월일,count(이름) from newpeo group by 이름,생년월일 order by count(이름) desc")
+
+total_count<-count %>% 
+  group_by(`count(이름)`) %>% 
+  summarize(count=n())
+
+nrow(count)
+table(count$`count(이름)`)
+prop.table(table(count$`count(이름)`))
+(ggplot(total_count,aes(x=`count(이름)`,y=count))+geom_bar(stat='identity',fill='blue')
+  +geom_text(aes(label=paste(`count(이름)`,"선")),vjust=-.3,size=5)
+  +theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 30, family="NanumGothic"), 
+          axis.text = element_text(size = 30, family="NanumGothic"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "국회의원 의원한 횟수",
+        x = "횟수", y = "인원"))
+```
+```{r, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+x21<-subset(newpeo, 대수=='21')
+
+x20 <- subset(newpeo, 대수=='20')
+
+#전체 국회의원 의원 횟수 추출
+count<-sqldf("select 이름,생년월일,count(이름) from newpeo group by 이름,생년월일 order by count(이름) desc")
+
+total_count<-count %>% 
+  group_by(`count(이름)`) %>% 
+  summarize(count=n())
+
+nrow(count)
+table(count$`count(이름)`)
+prop.table(table(count$`count(이름)`))
+(ggplot(total_count,aes(x=`count(이름)`,y=count))+geom_bar(stat='identity',fill='blue')
+  +geom_text(aes(label=paste(`count(이름)`,"선")),vjust=-.3,size=5)
+  +theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 30, family="NanumGothic"), 
+          axis.text = element_text(size = 30, family="NanumGothic"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "국회의원 의원한 횟수",
+        x = "횟수", y = "인원"))
+```
+
+*역대 국회의원은 총 3,066명이고 재선(2번)이상 국회의원을 한 사람은 약 1,309명으로 나타났습니다.*
+
+###  20대, 21대의 국회의원한 횟수
+#### 20대 국회의원
+```{r, eval=FALSE}
+#20대 국회의원 의원 횟수 추출
+x20_count<-sqldf("select * from x20 left join count on x20.이름 = count.이름 and x20.생년월일 = count.생년월일")
+x20_count<-x20_count[,c("대수",'이름','생년월일','count(이름)')]
+
+table(x20_count$`count(이름)`)
+prop.table(table(x20_count$`count(이름)`))
+
+x20_count2<-x20_count %>% 
+  group_by(`count(이름)`) %>% 
+  summarize(count=n())
+nrow(x20_count)
+
+(ggplot(x20_count2,aes(x=`count(이름)`,y=count))+geom_bar(stat='identity',fill='orange')
+  +geom_text(aes(label=paste(`count(이름)`,"선")),vjust=-.3,size=5)
+  +labs(title='20대 국회의원 의원 횟수',x="횟수",y='인원')
+  +theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 30, family="NanumGothic"), 
+          axis.text = element_text(size = 30, family="NanumGothic"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "20대 국회의원 인원 한 횟수",
+        x = "횟수", y = "인원"))
+```
+```{r, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+#20대 국회의원 의원 횟수 추출
+x20_count<-sqldf("select * from x20 left join count on x20.이름 = count.이름 and x20.생년월일 = count.생년월일")
+x20_count<-x20_count[,c("대수",'이름','생년월일','count(이름)')]
+
+table(x20_count$`count(이름)`)
+prop.table(table(x20_count$`count(이름)`))
+
+x20_count2<-x20_count %>% 
+  group_by(`count(이름)`) %>% 
+  summarize(count=n())
+nrow(x20_count)
+
+(ggplot(x20_count2,aes(x=`count(이름)`,y=count))+geom_bar(stat='identity',fill='orange')
+  +geom_text(aes(label=paste(`count(이름)`,"선")),vjust=-.3,size=5)
+  +labs(title='20대 국회의원 의원 횟수',x="횟수",y='인원')
+  +theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 30, family="NanumGothic"), 
+          axis.text = element_text(size = 30, family="NanumGothic"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "20대 국회의원 인원 한 횟수",
+        x = "횟수", y = "인원"))
+```
+
+20대 국회의원에서는 총 319명으로 나타났습니다
+319명의 국회의원중 230명(72.1%)이 재선(2회)이상이었습니다.
+
+#### 21대 국회의원
+```{r, eval=FALSE}
+#21대 국회의원 의원 횟수 추출
+x21_count<-sqldf("select * from x21 left join count on x21.이름 = count.이름 and x21.생년월일 = count.생년월일")
+x21_count<-x21_count[,c("대수",'이름','생년월일','count(이름)')]
+
+table(x21_count$`count(이름)`)
+prop.table(table(x21_count$`count(이름)`))
+
+x21_count2<-x21_count %>% 
+  group_by(`count(이름)`) %>% 
+  summarize(count=n())
+nrow(x21_count)
+
+(ggplot(x21_count2,aes(x=`count(이름)`,y=count))+geom_bar(stat='identity',fill='red')
+  +geom_text(aes(label=paste(`count(이름)`,"선")),vjust=-.3,size=5)
+  +labs(title='20대 국회의원 의원 횟수',x="횟수",y='인원')
+  +theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 30, family="NanumGothic"), 
+          axis.text = element_text(size = 30, family="NanumGothic"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "21대 국회의원 인원 한 횟수",
+        x = "횟수", y = "인원"))
+```
+```{r, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+#20대 국회의원 의원 횟수 추출
+x21_count<-sqldf("select * from x21 left join count on x21.이름 = count.이름 and x21.생년월일 = count.생년월일")
+x21_count<-x21_count[,c("대수",'이름','생년월일','count(이름)')]
+
+table(x21_count$`count(이름)`)
+prop.table(table(x21_count$`count(이름)`))
+
+x21_count2<-x21_count %>% 
+  group_by(`count(이름)`) %>% 
+  summarize(count=n())
+nrow(x21_count)
+
+(ggplot(x21_count2,aes(x=`count(이름)`,y=count))+geom_bar(stat='identity',fill='red')
+  +geom_text(aes(label=paste(`count(이름)`,"선")),vjust=-.3,size=5)
+  +labs(title='20대 국회의원 의원 횟수',x="횟수",y='인원')
+  +theme(legend.position = "none",
+          panel.grid.major.x=element_blank(),
+          title = element_text(size = 40, family="NanumGothic"),
+          axis.title = element_text(size = 30, family="NanumGothic"), 
+          axis.text = element_text(size = 30, family="NanumGothic"), 
+          axis.line = element_line(size = 0.4, colour = "grey10")) +
+    labs(title = "21대 국회의원 인원 한 횟수",
+        x = "횟수", y = "인원"))
+```
+
+21대 국회의원에서는 총 300명으로 나타났습니다
+300명의 국회의원중 151명(49.67%)이 재선(2회)이상이었습니다.
+20대와 21대를 비교 해보니 21대 국회의원에서 재선이상의 비율이 크게 줄어들은것을 알수 있습니다.
+
+
+

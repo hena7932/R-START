@@ -129,4 +129,4 @@ y
 - 상단 오른쪽 창의 Enviroment에서 생성한 객체를 모두 볼 수 있다.
 ![](image/enviroment.png)
 
-
+**출처 : R을 할용한 데이터 과학**  
